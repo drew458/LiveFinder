@@ -1,36 +1,29 @@
 package it.uniroma3.siw.auth.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@Column(nullable=false)
+	private String nome;
+	
+	@Column(nullable=false)
+	private String cognome;
 
-	@Column(nullable = false, unique = true, length = 45)
+	@Column(nullable = false)
 	private String email;
 
-	@Column(nullable = false, length = 64)
+	@Column(nullable = false)
 	private String password;
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
 	
 	public Long getId() {
 		return id;
@@ -56,21 +49,41 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
 	}
 
 	public User() {	}
 
-	public User(Long id, String email, String password, Set<Role> roles) {
-		super();
+	public User(Long id, String nome, String cognome, String email, String password) {
 		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		User that = (User) obj;
+		return this.id.equals(that.getId());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.id.hashCode();
+	}
+
 }
