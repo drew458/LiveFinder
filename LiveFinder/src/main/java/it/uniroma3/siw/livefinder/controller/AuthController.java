@@ -32,7 +32,7 @@ public class AuthController {
 	public String showRegisterForm (Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
-		return "registerUser";
+		return "registerForm";
 	}
 
 	@GetMapping("/login") 
@@ -72,6 +72,6 @@ public class AuthController {
 			credentialsService.saveCredentials(credentials);
 			return "registrationSuccessful";
 		}
-		return "registerUser";
+		return "registerForm";
 	}
 }
