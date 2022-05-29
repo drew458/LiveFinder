@@ -1,6 +1,7 @@
-package it.uniroma3.siw.livefinder.model.pojo;
+package it.uniroma3.siw.livefinder.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -40,7 +41,7 @@ public class Concerto {
 
 	@OneToMany
 	@JoinColumn(name = "biglietto_id")
-	private Biglietto biglietto;
+	private List<Biglietto> biglietti;
 
 	public LocalDateTime getData() {
 		return data;
@@ -74,12 +75,12 @@ public class Concerto {
 		this.luogo = luogo;
 	}
 
-	public Biglietto getBiglietto() {
-		return biglietto;
+	public List<Biglietto> getBiglietti() {
+		return biglietti;
 	}
 
-	public void setBiglietto(Biglietto biglietto) {
-		this.biglietto = biglietto;
+	public void setBiglietti(List<Biglietto> biglietti) {
+		this.biglietti = biglietti;
 	}
 
 	@Override
@@ -108,7 +109,8 @@ public class Concerto {
         sb.append(", tour=").append(tour);
         sb.append(", citta=").append(citta);
         sb.append(", luogo=").append(luogo);
-        sb.append(", biglietto=").append(biglietto);
+        for(Biglietto biglietto : biglietti)
+        	sb.append(", biglietto=").append(biglietto);
         sb.append("}\n");
         return sb.toString();
 	}

@@ -1,4 +1,4 @@
-package it.uniroma3.siw.auth.model;
+package it.uniroma3.siw.livefinder.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

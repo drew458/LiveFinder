@@ -1,4 +1,4 @@
-package it.uniroma3.siw.livefinder.model.pojo;
+package it.uniroma3.siw.livefinder.model;
 
 import java.time.Year;
 import java.util.List;
