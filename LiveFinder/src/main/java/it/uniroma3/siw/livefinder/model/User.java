@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "users") // "User" è riservato in Postgres
 public class User {
 
 	@Id
@@ -18,12 +20,6 @@ public class User {
 	
 	@Column(nullable=false)
 	private String cognome;
-
-	@Column(nullable = false)
-	private String email;
-
-	@Column(nullable = false)
-	private String password;
 	
 	public Long getId() {
 		return id;
@@ -31,22 +27,6 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getNome() {
@@ -67,12 +47,10 @@ public class User {
 
 	public User() {	}
 
-	public User(Long id, String nome, String cognome, String email, String password) {
+	public User(Long id, String nome, String cognome) {
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
-		this.email = email;
-		this.password = password;
 	}
 	
 	@Override
