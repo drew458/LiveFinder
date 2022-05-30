@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<!-- Required meta tags -->
@@ -46,19 +46,23 @@
         <form th:action="@{/register}" method="POST">
         	<div class="input-group mb-4">
 			 	<span th:text="#{register.nameSurname}" class="input-group-text">First and last name</span>
-			 	<input type="text" aria-label="First name" th:placeholder="#{register.firstName}" class="form-control" autofocus />
-			 	<input type="text" aria-label="Last name" th:placeholder="#{register.lastName}" class="form-control"/>
+			 	<input th:field="${user.nome}" type="text" aria-label="First name" th:placeholder="#{register.firstName}" 
+			 		class="form-control" autofocus />
+			 	<input th:field="${user.cognome}" type="text" aria-label="Last name" th:placeholder="#{register.lastName}" 
+			 		class="form-control"/>
 			</div>
         
             <!-- Email input -->
             <div class="form-floating mb-4">
-                <input type="email" id="signupEmail" class="form-control" th:placeholder="#{register.email}" required/>
-                <label th:text="#{register.email}" for="signupEmail">Indirizzo Email</label>
-              </div>
+                <input th:field="${credentials.username}" type="email" id="signupEmail" class="form-control" 
+                	th:placeholder="#{register.email}" required/>
+            	<label th:text="#{register.email}" for="signupEmail">Indirizzo Email</label>
+            </div>
             
               <!-- Password input -->
               <div class="form-floating mb-4">
-                <input type="password" id="signupPassword" class="form-control" th:placeholder="#{register.password}" required />
+                <input th:field="${credentials.password}" type="password" id="signupPassword" class="form-control" 
+                	th:placeholder="#{register.password}" required />
                 <label th:text="#{register.password}" for="signupPassword">Password</label>
               </div>
 
