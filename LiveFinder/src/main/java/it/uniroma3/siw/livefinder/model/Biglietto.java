@@ -1,4 +1,4 @@
-package it.uniroma3.siw.livefinder.model.pojo;
+package it.uniroma3.siw.livefinder.model;
 
 import java.math.BigDecimal;
 import java.util.Objects;
