@@ -57,6 +57,10 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 // se il login ha successo, si viene rediretti al path /default
                 .defaultSuccessUrl("/default")
+                
+                // per attivare la funzione "ricordati di me" per una settimana
+                .and()
+                .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(604800)
 
                 // logout paragraph: qui definiamo il logout
                 .and().logout()
