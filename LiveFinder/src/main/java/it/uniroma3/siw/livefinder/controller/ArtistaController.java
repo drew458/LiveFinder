@@ -105,7 +105,7 @@ public class ArtistaController {
 	@GetMapping("/artistaForm")
 	public String artistaForm(Model model) {
 		model.addAttribute("artista", new Artista());
-		return "artistaForm.html";
+		return "admin/artistaForm";
 	}
 	
 	//richiede tutti i tour dell'artista passato nel path

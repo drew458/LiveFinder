@@ -15,7 +15,7 @@
 				<div th:if = "${#fields.hasErrors('genere')}" th:errors = "*{genere}"></div>
 			</div>
 			<div>anno di formazione:<input type="text" th:field ="*{annoFormazione}"/>
-				<div th:if = "${#fields.hasErrors('eta')}" th:errors = "*{annoFormazione}"></div>
+				<div th:if = "${#fields.hasErrors('annoFormazione')}" th:errors = "*{annoFormazione}"></div>
 			</div>
 			<div><button type="submit">Conferma</div>
 		</form>
