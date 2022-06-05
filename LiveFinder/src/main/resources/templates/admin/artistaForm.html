@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>Inserimento artista</title>
+</head>
+<body>
+<form th:action = "@{/artista}" method="post" th:object="${artista}">
+	<div th:if="${#fields.hasGlobalErrors()}">
+    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Errore Globale</p> 
+  </div>	
+	<div>nome:<input type="text" th:field="*{nome}"/>
+	<div th:if = "${#fields.hasErrors('nome')}" th:errors = "*{nome}"></div>
+	</div>
+	<div>genere: <input type="text" th:field ="*{genere}"/>
+		<div th:if = "${#fields.hasErrors('genere')}" th:errors = "*{genere}"></div>
+	</div>
+	<div>anno di formazione:<input type="text" th:field ="*{annoFormazione}"/>
+		<div th:if = "${#fields.hasErrors('eta')}" th:errors = "*{annoFormazione}"></div>
+	</div>
+	<div><button type="submit">Conferma</div>
+</form>
+</body>
+</html>
