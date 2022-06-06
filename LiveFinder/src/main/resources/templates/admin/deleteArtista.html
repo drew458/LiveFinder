@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8" />
-	<title>Conferma Cancellazione dell'artista'</title>
-</head>
-<body>
-	<h4>Artista da cancellare:</h4>
-	<div>
-		<span th:text="${artista.nome}">Maneskin</span>
-		<span th:text="${artista.genere}">Rock</span>
-		<span th:text="${artista.annoFormazione}">2016</span>
-	</div>
-	<div><a href = "artista.html" th:href="@{'/deleteArtista' + '/' +${artista.id}}"
-				th:text = "CONFERMA">CONFERMA</a>
-	</div>
-</body>
+	<head th:replace="base :: head(titolo='Cancella artista - LiveFinder')"></head>
+	<body>
+		<div th:replace="base :: navbar"></div>
+		
+		<h4>Artista da cancellare:</h4>
+		<div>
+			<span th:text="${artista.nome}">Maneskin</span>
+			<span th:text="${artista.genere}">Rock</span>
+			<span th:text="${artista.annoFormazione}">2016</span>
+		</div>
+		<div><a href = "artista.html" th:href="@{'/deleteArtista' + '/' +${artista.id}}"
+					th:text = "CONFERMA">CONFERMA</a>
+		</div>
+	</body>
 </html>

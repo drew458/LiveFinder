@@ -6,19 +6,28 @@
 	<!-- START Navbar -->
 	<nav th:replace="fragments/base.html :: nonLoggedInNavbar"></nav>
 	<!-- END Navbar -->
-	
-	<div class="container text-center mt-4">
-		<h1 th:text="#{index.welcome}">Benvenuto</h1>
-		<div>
-			<a th:href="@{/login}" th:text="#{index.login}">Accedi</a>
+  
+		<div class="container text-center mt-4">
+			<h1 th:text="#{index.welcome}">Benvenuto</h1>
+			<div sec:authorize="isAnonymous()">
+				<a th:href="@{/login}" th:text="#{index.login}">Accedi</a>
+			</div>
+			<div sec:authorize="isAnonymous()">
+				<a th:href="@{/register}" th:text="#{index.register}">Registrati</a>
+			</div>
+			<div sec:authorize="isAuthenticated()">
+				<a th:href="@{/logout}">Logout</a>
+			</div>
+			<div>
+				<a th:href="@{/artisti}">Tutti gli artisti</a>
+			</div>
+			<div>
+				<a th:href="@{/artistaForm}">Aggiungi artista</a>
+			</div>
 		</div>
-		<div>
-			<a th:href="@{/register}" th:text="#{index.register}">Registrati</a>
-		</div>
-	</div>
-     
     
 	<!-- Bootstrap Bundle with Popper -->
 	<script th:replace="fragments/base.html :: bootstrapJS" />
-</body>
+		
+	</body>
 </html>
