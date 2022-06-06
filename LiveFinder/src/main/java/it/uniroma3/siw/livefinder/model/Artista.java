@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Artista {
@@ -31,13 +32,13 @@ public class Artista {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	  @NotBlank
+	@NotBlank
     private String nome;
 
-	  @NotBlank
+	@NotBlank
     private String genere;
 
-    @NotBlank
+    @NotNull
     private Year annoFormazione;
 
     private boolean isGroup;
