@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Dettagli tour - LiveFinder')"></head>
+	<body>
+		<div th:replace="base :: navbar"></div>
+		
+		<div>
+		<h4>Dettagli tour</h4>
+		<span th:text="${tour.nome}">Caparezza</span>
+		<span th:text="${tour.anno}">2022</span>
+		<span th:text="${tour.artista.nome}">Maneskin</span>
+		</div>
+		<footer><a href="/">Home</a></footer>
+	</body>
+</html>

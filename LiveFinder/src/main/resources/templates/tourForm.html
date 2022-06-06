@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Inserimento artista - LiveFinder')"></head>
+	<body>
+		<div th:replace="base :: navbar"></div>
+
+		<div class="container"><h4>Aggiungi un tour</h4></div>
+		<form th:action = "@{/tour}" method="post" th:object="${tour}">
+			<div class="container">
+				<div class="card col-auto">
+					<div class="card-header">
+						Artista
+					</div>
+					<div class="card-body">
+						<div class="row g-3">
+							<div class="form-group col-md-6">
+								<label for="Nome">Nome:</label>
+								<input class="form-control" placeholder="World Tour" type="text" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="Anno">Anno:</label>
+								<input class="form-control" placeholder="2022" type="text" th:field="*{anno}" th:classappend="${#fields.hasErrors('anno') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="artista">Seleziona un artista</label>
+								<select class="form-select" th:field="*{artista}">
+									<option value="true" disabled>Seleziona..</option>
+									<option th:each="artista : ${listaArtisti}" th:value="${artista.id}" th:text="${artista.nome}"></option>
+								</select>
+                                <span th:if="${#fields.hasErrors('artista.id')}" th:errors="*{artista.id}"></span>
+							</div>
+						</div>
+						<br>
+						<div><button class="btn btn-primary" type="submit">Conferma</button></div>
+						<div th:if="${#fields.hasGlobalErrors()}">
+							<br>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<h4 class="alert-heading">Arcipigna!</h4>
+								<div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</body>
+</html>

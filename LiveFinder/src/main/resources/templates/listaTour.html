@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Tour - LiveFinder')"></head>
+    <body>
+        <div th:replace="base :: navbar"></div>
+
+        <div class="container">
+            <h4>Lista tour</h4>
+            <div th:each="tour : ${listaTour}">
+                <div class="card">
+                    <div class="card-header">
+                        <div th:text="${tour.artista.nome}"></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${tour.nome}"></h5>
+                        <p class="card-text" th:text="${tour.anno}"></p>
+                        <a th:href="'/tour/'+ ${tour.id}" class="btn btn-primary">Vedi</a>
+                    </div>
+                </div>
+                <br>
+            </div>
+            
+        </div>
+
+    </body>
+</html>

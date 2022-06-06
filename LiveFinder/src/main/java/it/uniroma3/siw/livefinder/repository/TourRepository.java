@@ -10,5 +10,9 @@ import it.uniroma3.siw.livefinder.model.Tour;
 public interface TourRepository extends CrudRepository<Tour, Long>{
 
 	List<Tour> findAllByArtista(Artista artista);
+
+    boolean existsByNome(String nome);
+
+    Tour findByNome(String nome);
     
 }
