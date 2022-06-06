@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='Login - LiveFinder')"></head>
-	<body>
-		<div th:replace="base :: navbar"></div>
+<head th:replace="fragments/base.html :: headerfiles(title=#{login.title})">
+</head>
+<body>
+	<!-- START Navbar -->
+	<nav th:replace="fragments/base.html :: nonLoggedInNavbar"></nav>
+	<!-- END Navbar -->
 
 		<div class="container text-center mt-4">
 			<div class="mb-4">
@@ -57,6 +60,9 @@
 				</div>
 			</form>
 		</div>
+    
+  <!-- Bootstrap Bundle with Popper -->
+	<script th:replace="fragments/base.html :: bootstrapJS" />
 
 	</body>
 </html>

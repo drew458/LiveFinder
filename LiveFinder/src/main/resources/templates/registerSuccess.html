@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='Registrazione - LiveFinder')"></head>
-	<body>
-		<div th:replace="base :: navbar"></div>
+<head th:replace="fragments/base.html :: headerfiles(title=#{registerSuccess.title})">
+</head>
+<body>
+	<!-- START Navbar -->
+	<nav th:replace="fragments/base.html :: nonLoggedInNavbar"></nav>
+	<!-- END Navbar -->
 
-		<div class="container text-center">
-			<h1 th:text="#{registerSuccess.header}">Registrazione effettuata con successo!</h1>
-			<h3><a th:text="#{registerSuccess.loginLink}" th:href="@{/login}">Click qui per il login</a></h4>
-		</div>
-		
-	</body>
+    <div class="container text-center">
+        <h1 th:text="#{registerSuccess.header}">Registrazione effettuata con successo!</h1>
+        <h3><a th:text="#{registerSuccess.loginLink}" th:href="@{/login}">Click qui per il login</a></h4>
+    </div>
+    
+    
+    <!-- Bootstrap Bundle with Popper -->
+	<script th:replace="fragments/base.html :: bootstrapJS" /> 
+  
+</body>
 </html>

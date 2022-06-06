@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='LiveFinder')"></head>
-	<body>
-		<div th:replace="base :: navbar"></div>
+<head th:replace="fragments/base.html :: headerfiles(title=#{home.title})">
+</head>
+<body>
+	<!-- START Navbar -->
+	<nav th:replace="fragments/base.html :: navbar"></nav>
+	<!-- END Navbar -->
 
-		<div>
-			<!-- TODO -->
-		</div>
-
-
-	</body>
+    <div>
+    	<!-- TODO -->
+    </div>
+    
+	
+	<!-- Bootstrap Bundle with Popper -->
+	<script th:replace="fragments/base.html :: bootstrapJS" />
+</body>
 </html>
