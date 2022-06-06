@@ -31,12 +31,13 @@ public class Artista {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@NotBlank
+	  @NotBlank
     private String nome;
 
-	@NotBlank
+	  @NotBlank
     private String genere;
 
+    @NotBlank
     private Year annoFormazione;
 
     private boolean isGroup;
