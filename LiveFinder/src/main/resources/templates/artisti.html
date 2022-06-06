@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8" />
-	<title>Artisti:</title>
-</head>
-<body>
-	<div>
-		<h4>Elenco artisti:</h4>
-		<ul>
-			<li th:each="artista : ${artisti}">
-			<span th:text="${artista.nome} + ' ' + ${artista.genere} + ' ' + ${artista.annoFormazione}" >Maneskin Rock 2016</span>
-				<a href="artista.html" th:href="@{'/artista' + '/' + ${artista.id}}">Dettagli</a>
-				<a href="deletePersona.html" th:href="@{'/deletePersona' + '/' + ${artista.id}}">Cancella</a></li>
-			</ul>
-	</div>
-	<footer>
-	<a href="/">Home</a>
-	</footer>
-</body>
+	<head th:replace="base :: head(titolo='Artisti - LiveFinder')"></head>
+	<body>
+		<div th:replace="base :: navbar"></div>
+
+		<div>
+			<h4>Elenco artisti:</h4>
+			<ul>
+				<li th:each="artista : ${artisti}">
+				<span th:text="${artista.nome} + ' ' + ${artista.genere} + ' ' + ${artista.annoFormazione}" >Maneskin Rock 2016</span>
+					<a href="artista.html" th:href="@{'/artista' + '/' + ${artista.id}}">Dettagli</a>
+					<a sec:authorize="hasAuthority('ADMIN')" href="deletePersona.html" th:href="@{'/deletePersona' + '/' + ${artista.id}}">Cancella</a></li>
+				</ul>
+		</div>
+		
+
+	</body>
 </html>

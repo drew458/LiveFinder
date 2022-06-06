@@ -31,10 +31,10 @@ public class Artista {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+	  @NotBlank
     private String nome;
-    
-    @NotBlank
+
+	  @NotBlank
     private String genere;
 
     @NotBlank
@@ -80,11 +80,11 @@ public class Artista {
 		this.annoFormazione = annoFormazione;
 	}
 
-	public boolean isGroup() {
+	public boolean getIsGroup() {
 		return isGroup;
 	}
 
-	public void setGroup(boolean isGroup) {
+	public void setIsGroup(boolean isGroup) {
 		this.isGroup = isGroup;
 	}
 
