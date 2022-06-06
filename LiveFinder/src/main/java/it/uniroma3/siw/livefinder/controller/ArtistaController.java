@@ -57,12 +57,12 @@ public class ArtistaController {
 			
 			// Ogni metodo ritorna la stringa col nome della vista successiva
 			// se NON ci sono errori si va alla form di visualizzazione dati inseriti
-			return "artista.html"; 
+			return "artista"; 
 		}
 		else {
-			model.addAttribute("artista", artista);
+			//model.addAttribute("artista", artista);
 			// se ci sono errori si rimanda alla form di inserimento
-			return "artistaForm.html"; 
+			return "admin/artistaForm"; 
 		}
 	}
 	
@@ -73,13 +73,13 @@ public class ArtistaController {
 		public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
 			this.artistaService.deleteById(id);
 			model.addAttribute("artisti", this.artistaService.findAll());
-			return "artisti.html";
+			return "artisti";
 		}
 		
 		@GetMapping("/deleteArtista/{id}")
 		public String deleteArtista(@PathVariable("id") Long id, Model model) {
 			model.addAttribute("artista", this.artistaService.findById(id));
-			return "deleteArtista.html";
+			return "deleteArtista";
 		}
 
 	// Metodi get
@@ -91,7 +91,7 @@ public class ArtistaController {
 		Artista artista = artistaService.findById(id);
 		model.addAttribute("artista", artista);
 		// ritorna la form con i dati dell'entità richiesta
-		return "artista.html";
+		return "artista";
 	}
 	
 	// richiede tutti gli artisti, non c'è id
@@ -99,7 +99,7 @@ public class ArtistaController {
 	public String getArtisti(Model model) {
 		List<Artista> artisti = artistaService.findAll();
 		model.addAttribute("artisti", artisti);
-		return "artisti.html";
+		return "artisti";
 	}
 	
 	@GetMapping("/artistaForm")
@@ -113,6 +113,6 @@ public class ArtistaController {
 	public String getTour(@Valid @PathVariable("id") Long id, Model model) {
 		Artista artista = artistaService.findById(id);
 		model.addAttribute("tour", tourService.findAllByArtista(artista));
-		return "tour.html";
+		return "tour";
 	}
 }

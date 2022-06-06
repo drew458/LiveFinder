@@ -4,20 +4,51 @@
 	<body>
 		<div th:replace="base :: navbar"></div>
 
+		<div class="container"><h4>Aggiungi un artista</h4></div>
 		<form th:action = "@{/artista}" method="post" th:object="${artista}">
-			<div th:if="${#fields.hasGlobalErrors()}">
-		  <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Errore Globale</p> 
-		</div>	
-			<div>nome:<input type="text" th:field="*{nome}"/>
-			<div th:if = "${#fields.hasErrors('nome')}" th:errors = "*{nome}"></div>
+			<div class="container">
+				<div class="card col-auto">
+					<div class="card-header">
+						Artista
+					</div>
+					<div class="card-body">
+						<div class="row g-3">
+							<div class="form-group col-md-6">
+								<label for="Nome">Nome:</label>
+								<input class="form-control" placeholder="Bad Wolfes" type="text" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="Genere">Genere:</label>
+								<input class="form-control" placeholder="Rock" type="text" th:field="*{genere}" th:classappend="${#fields.hasErrors('genere') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('genere')}" th:errors="*{genere}"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="AnnoFormazione">Anno di formazione:</label>
+								<input class="form-control" placeholder="2010" type="text" th:field="*{annoFormazione}" th:classappend="${#fields.hasErrors('annoFormazione') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('annoFormazione')}" th:errors="*{annoFormazione}"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="isGroup">Solista o gruppo?</label>
+								<select class="form-select" th:field="*{isGroup}">
+									<option value="true" disabled>Seleziona..</option>
+									<option th:value="false">Solista</option>
+									<option th:value="true">Gruppo</option>
+								</select>
+							</div>
+						</div>
+						<br>
+						<div><button class="btn btn-primary" type="submit">Conferma</button></div>
+						<div th:if="${#fields.hasGlobalErrors()}">
+							<br>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<h4 class="alert-heading">Arcipigna!</h4>
+								<div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div>genere: <input type="text" th:field ="*{genere}"/>
-				<div th:if = "${#fields.hasErrors('genere')}" th:errors = "*{genere}"></div>
-			</div>
-			<div>anno di formazione:<input type="text" th:field ="*{annoFormazione}"/>
-				<div th:if = "${#fields.hasErrors('annoFormazione')}" th:errors = "*{annoFormazione}"></div>
-			</div>
-			<div><button type="submit">Conferma</div>
 		</form>
 	</body>
 </html>
