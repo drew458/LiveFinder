@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title=#{home.title})">
+<head th:replace="base.html :: head(titolo=#{home.title})">
 </head>
 <body>
 	<!-- START Navbar -->
-	<nav th:replace="fragments/base.html :: navbar"></nav>
+	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
     <div>
@@ -13,6 +13,6 @@
     
 	
 	<!-- Bootstrap Bundle with Popper -->
-	<script th:replace="fragments/base.html :: bootstrapJS" />
+	<script th:replace="base.html :: bootstrapJS" />
 </body>
 </html>
