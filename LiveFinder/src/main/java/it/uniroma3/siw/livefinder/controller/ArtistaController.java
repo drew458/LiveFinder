@@ -52,7 +52,7 @@ public class ArtistaController {
 		
 		if (!bindingResult.hasErrors()) {
 			
-			this.artistaService.save(artista); // salvo un oggetto chef
+			this.artistaService.save(artista); // salvo un oggetto artista
 			model.addAttribute("artista", artista);
 			
 			// Ogni metodo ritorna la stringa col nome della vista successiva
