@@ -7,9 +7,31 @@
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
-    <div>
-    	<!-- TODO -->
-    </div>
+    <div class="container text-center mt-4">
+		
+		<h1 th:text="#{index.welcome}">
+			Benvenuto
+		</h1>	
+		<h3 sec:authentication="name"> </h3>			
+		
+		<div class="mt-4">
+			<div>
+				<a th:href="@{/artisti}">Tutti gli artisti</a>
+			</div>
+			
+			<div>
+				<a th:href="@{/listaTour}">Tutti i tour</a>
+			</div>
+			
+			<div>
+				<a th:href="@{/artistaForm}">Aggiungi artista</a>
+			</div>
+			
+			<div>
+				<a th:href="@{/tourForm}">Aggiungi un tour</a>
+			</div>		
+		</div>		
+	</div>
     
 	
 	<!-- Bootstrap Bundle with Popper -->
