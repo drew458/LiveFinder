@@ -4,7 +4,7 @@
 	<body>
 		<div th:replace="base :: navbar"></div>
 
-		<div>
+		<div class="container mt-4">
 			<h4>Elenco artisti:</h4>
 			<ul>
 				<li th:each="artista : ${artisti}">
@@ -12,12 +12,11 @@
 					<a href="artista.html" th:href="@{'/artista' + '/' + ${artista.id}}">Dettagli</a>
 					<a sec:authorize="hasAuthority('ADMIN')" href="deletePersona.html" th:href="@{'/deletePersona' + '/' + ${artista.id}}">Cancella</a></li>
 				</ul>
-		</div>
-		
+		</div>	
 
 
-	<!-- Bootstrap Bundle with Popper -->
-	<script th:replace="base.html :: bootstrapJS" /> 
+		<!-- Bootstrap Bundle with Popper -->
+		<script th:replace="base.html :: bootstrapJS" /> 
 	
 	</body>
 </html>
