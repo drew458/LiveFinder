@@ -29,11 +29,11 @@
 			</div>
 			
 			<div>
-				<a th:href="@{/artistaForm}">Aggiungi artista</a>
+				<a th:if="${role}=='ADMIN'" th:href="@{/artistaForm}">Aggiungi artista</a>
 			</div>
 			
 			<div>
-				<a th:href="@{/tourForm}">Aggiungi un tour</a>
+				<a th:if="${role}=='ADMIN'" th:href="@{/tourForm}">Aggiungi un tour</a>
 			</div>		
 		</div>
 		
