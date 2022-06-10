@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base.html :: head(titolo=#{register.title})">
 </head>
@@ -7,63 +7,62 @@
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
-  <div class="container text-center mt-4">
-        <div class="mb-4">
-            <h1 th:text="#{register.registration}">Registrazione</h1>
-        </div>
-        <form th:action="@{/register}" method="POST">
-          <div class="input-group mb-4">
-        <span th:text="#{register.nameSurname}" class="input-group-text">First and last name</span>
-        <input th:field="${user.nome}" type="text" aria-label="First name" th:placeholder="#{register.firstName}" 
-          class="form-control" autofocus />
-        <input th:field="${user.cognome}" type="text" aria-label="Last name" th:placeholder="#{register.lastName}" 
-          class="form-control"/>
-      </div>
+	<div class="container text-center mt-4">
+		<div class="mb-4">
+		    <h1 th:text="#{register.registration}">Registrazione</h1>
+		</div>
+		<form th:action="@{/register}" method="POST">
+			<div class="input-group mb-4">
+				<span th:text="#{register.nameSurname}" class="input-group-text">First and last name</span>
+				<input th:field="${user.nome}" type="text" aria-label="First name" th:placeholder="#{register.firstName}" 
+			  		class="form-control" autofocus />
+				<input th:field="${user.cognome}" type="text" aria-label="Last name" th:placeholder="#{register.lastName}" 
+			  		class="form-control"/>
+	      	</div>
+		    
+		    <!-- Email input -->
+		    <div class="form-floating mb-4">
+		    	<input th:field="${credentials.username}" type="email" id="signupEmail" class="form-control" 
+		          th:placeholder="#{register.email}" required/>
+		     	<label th:text="#{register.email}" for="signupEmail">Indirizzo Email</label>
+		    </div>
+		
+		    <!-- Password input -->
+		    <div class="form-floating mb-4">
+		    	<input th:field="${credentials.password}" type="password" id="signupPassword" class="form-control" 
+		          th:placeholder="#{register.password}" required />
+		    	<label th:text="#{register.password}" for="signupPassword">Password</label>
+		    </div>
+		
+		    <!-- Confirm password input -->
+		    <div class="form-floating mb-4">
+		    	<input type="password" id="signupConfirmPassword" class="form-control" th:placeholder="#{register.confirmPassword}" required />
+		   		<label th:text="#{register.confirmPassword}" for="signupConfirmPassword">Conferma password</label>
+		    </div>
+			  
+			<!-- Submit button -->
+		    <button th:text="#{register.register}" type="submit" class="btn btn-primary btn-block mb-4">Registrati</button>
+      	</form>
 
-            <!-- Email input -->
-            <div class="form-floating mb-4">
-                <input th:field="${credentials.username}" type="email" id="signupEmail" class="form-control" 
-                  th:placeholder="#{register.email}" required/>
-              <label th:text="#{register.email}" for="signupEmail">Indirizzo Email</label>
-            </div>
+      	<!-- OAuth2 -->
+      	<div class="text-center">
+        	<p th:text="#{register.enterWith}">Entra con:</p>   
+        	<form class="d-inline" action="/oauth2/authorization/google" method="get">
+     			<button type="submit" class="btn btn-link btn-floating mx-1"> 
+        			<i class="bi bi-google"></i>
+      			</button>
+			</form>
 
-              <!-- Password input -->
-              <div class="form-floating mb-4">
-                <input th:field="${credentials.password}" type="password" id="signupPassword" class="form-control" 
-                  th:placeholder="#{register.password}" required />
-                <label th:text="#{register.password}" for="signupPassword">Password</label>
-              </div>
-
-              <!-- Confirm password input -->
-              <div class="form-floating mb-4">
-                <input type="password" id="signupConfirmPassword" class="form-control" th:placeholder="#{register.confirmPassword}" required />
-                <label th:text="#{register.confirmPassword}" for="signupConfirmPassword">Conferma password</label>
-              </div>
-
-              <!-- OAuth2 -->
-              <div class="text-center">
-                <p th:text="#{register.enterWith}">Entra con:</p>   
-                <form class="d-inline" action="login/oauth2/code/google" method="get">
-		     		<button type="submit" class="btn btn-link btn-floating mx-1"> 
-		        		<i class="bi bi-google"></i>
-		      		</button>
-	     		</form>
-	     	
-		     	<form class="d-inline" action="login/oauth2/code/github" method="get">
-		     		<button type="submit" class="btn btn-link btn-floating mx-1">
-		        		<i class="bi bi-github"></i>
-		      		</button>
-		     	</form>
-              </div>
-
-              <!-- Submit button -->
-              <button th:text="#{register.register}" type="submit" class="btn btn-primary btn-block mb-4">Registrati</button>
-            </div>
-      </form>
-  </div>
+     		<form class="d-inline" action="/oauth2/authorization/github" method="get">
+     			<button type="submit" class="btn btn-link btn-floating mx-1">
+        			<i class="bi bi-github"></i>
+      			</button>
+     		</form>
+      	</div>              
+  	</div>
     
-  <!-- Bootstrap Bundle with Popper -->
-  <script th:replace="base.html :: bootstrapJS" /> 
+  	<!-- Bootstrap Bundle with Popper -->
+  	<script th:replace="base.html :: bootstrapJS" /> 
   
 </body>
 </html>
