@@ -34,13 +34,36 @@
 			
 			<div>
 				<a th:href="@{/tourForm}">Aggiungi un tour</a>
-			</div>		
-		</div>
-		
-		<div sec:authorize="isAuthenticated()">
-			<a th:href="@{/logout}">Logout</a>
-		</div>
-	</div>
+      </div>
+      
+      <div class="container">
+        <h4>Ricerca dei concerti per citta</h4></div>
+
+        <form th:action="@{/search}" method="get">
+          <input type="text" name="parolaChiave" th:value="${parolaChiave}"  placeholder="Inserisci una citta" size="50" >
+          <button type="submit" class="btn btn-info" >Cerca</button>
+        </form>
+
+        <table class="tabellaConcertiPerCitta">
+          <thead>
+            <tr>
+              <th>Artista</th>
+              <th>Citta</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="c : ${concerti}" th:field="${c}">
+              <td th:text="${cStat.index+1}"></td>
+              <td th:text="${c.nome}"></td>
+              <td th:text="${c.citta}"></td>
+              <td th:text="${c.data}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
     
 	<!-- Bootstrap Bundle with Popper -->
 	<script th:replace="base.html :: bootstrapJS" />
