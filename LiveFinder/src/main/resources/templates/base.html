@@ -25,13 +25,13 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/index">Home</a>
+                                <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link acrive" aria-current="page" href="/artisti">Tutti gli artisti</a>
+                                <a class="nav-link acrive" aria-current="page" th:href="@{/artisti}">Tutti gli artisti</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link acrive" aria-current="page" href="/listaTour">Tutti i tour</a>
+                                <a class="nav-link acrive" aria-current="page" th:href="@{/listaTour}">Tutti i tour</a>
                             </li>
                         </ul>
                         <div class="text-end" sec:authorize="isAnonymous()">

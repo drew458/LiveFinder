@@ -52,7 +52,7 @@ public class AuthController {
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			return "admin/home";
 		}
-		return "home";
+		return "index";
 	}
 
 	@PostMapping("/register")
