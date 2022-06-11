@@ -57,6 +57,12 @@ public class AuthController {
 	public String logout(Model model) {
 		return "index";
 	}
+	
+	@GetMapping("/resetPassword")
+	public String showResetPasswordForm (Model model) {
+		model.addAttribute("credentials", new Credentials());
+		return "resetPasswordForm";
+	}
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
@@ -114,11 +120,33 @@ public class AuthController {
 		// se sia User che Credentials sono validi, salvali nel DB
 		if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()) {
 			// imposta User e salva Credentials
-			// viene salvato anche User grazie alla policy Cascade.ALL x
+			// viene salvato anche User grazie alla policy Cascade.ALL
 			credentials.setUser(user);
 			credentialsService.saveCredentials(credentials);
 			return "registerSuccess";
 		}
 		return "registerForm";
+	}
+	
+	@PostMapping("/resetPassword")
+	public String resetPassword(@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult) {
+		// valida Credentials
+		this.credentialsValidator.validate(credentials, credentialsBindingResult);
+
+		// se Credentials sono valide, salvali nel DB
+		if(!credentialsBindingResult.hasErrors()) {
+			// ricava l'utente e salva e nuove credenziali
+			// viene salvato anche User grazie alla policy Cascade.ALL
+			try {
+				credentials.setUser(credentialsService.getCredentials(credentials.getUsername()).getUser());
+				credentialsService.saveCredentials(credentials);
+				return "resetPasswordSuccessful";
+			}
+			// utente non trovato sul DB
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "resetPasswordForm";
 	}
 }
