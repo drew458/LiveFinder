@@ -2,6 +2,7 @@ package it.uniroma3.siw.livefinder.service;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,9 +37,22 @@ public class CredentialsService {
     @Transactional
     public Credentials saveCredentials(Credentials credentials) {
         credentials.setRole(Credentials.DEFAULT_ROLE);
+        
+        if(credentials.getUser().getCognome()==null) {
+        	credentials.getUser().setCognome("OAuthDefault");
+        }
+
+        try {
+        	credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+        }
+        catch(Exception e) {
+        	credentials.setPassword(this.passwordEncoder.encode(RandomStringUtils.randomAlphanumeric(10)));
+        }
+        
         credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
         return this.credentialsRepository.save(credentials);
     }
+    
     @Transactional
     public String getRoleAuthenticated() {
     	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
