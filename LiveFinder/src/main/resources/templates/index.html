@@ -9,7 +9,7 @@
   
 	<div class="container text-center mt-4">
 		<h1 th:text="#{index.welcome}">Benvenuto</h1>
-		<h3 sec:authorize="isAuthenticated()" sec:authentication="name"> </h3>
+		<h3 sec:authorize="isAuthenticated()" th:text="${user.nome}"> </h3>
 		
 		<div sec:authorize="isAnonymous()">
 			<a th:href="@{/login}" th:text="#{index.login}">Accedi</a>
@@ -19,7 +19,7 @@
 			<a th:href="@{/register}" th:text="#{index.register}">Registrati</a>
 		</div>
 		
-		<div sec:authorize="isAuthenticated()">
+		<div class="mt-2" sec:authorize="isAuthenticated()">
 			<div>
 				<a th:href="@{/artisti}">Tutti gli artisti</a>
 			</div>
@@ -29,41 +29,41 @@
 			</div>
 			
 			<div>
-				<a th:href="@{/artistaForm}">Aggiungi artista</a>
+				<a th:if="${role}=='ADMIN'" th:href="@{/artistaForm}">Aggiungi artista</a>
 			</div>
 			
 			<div>
 				<a th:href="@{/tourForm}">Aggiungi un tour</a>
-      </div>
+      		</div>
       
-      <div class="container">
-        <h4>Ricerca dei concerti per citta</h4></div>
-
-        <form th:action="@{/search}" method="get">
-          <input type="text" name="parolaChiave" th:value="${parolaChiave}"  placeholder="Inserisci una citta" size="50" >
-          <button type="submit" class="btn btn-info" >Cerca</button>
-        </form>
-
-        <table class="tabellaConcertiPerCitta">
-          <thead>
-            <tr>
-              <th>Artista</th>
-              <th>Citta</th>
-              <th>Data</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="c : ${concerti}" th:field="${c}">
-              <td th:text="${cStat.index+1}"></td>
-              <td th:text="${c.nome}"></td>
-              <td th:text="${c.citta}"></td>
-              <td th:text="${c.data}"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+	      <div class="container mt-5">
+	        <h4>Ricerca dei concerti per citta</h4>
+	
+	        <form th:action="@{/search}" method="get">
+	          <input type="search" name="parolaChiave" th:value="${parolaChiave}" placeholder="Inserisci una citta" size="50" >
+	          <button type="submit" class="btn btn-info" >Cerca</button>
+	        </form>
+	
+	        <table class="tabellaConcertiPerCitta">
+	          <thead>
+	            <tr>
+	              <th>Artista</th>
+	              <th>Citta</th>
+	              <th>Data</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr th:each="c : ${concerti}" th:field="${c}">
+	              <td th:text="${cStat.index+1}"></td>
+	              <td th:text="${c.nome}"></td>
+	              <td th:text="${c.citta}"></td>
+	              <td th:text="${c.data}"></td>
+	            </tr>
+	          </tbody>
+	        </table>
+	      </div>
+	    </div>
+	</div>
     
 	<!-- Bootstrap Bundle with Popper -->
 	<script th:replace="base.html :: bootstrapJS" />
