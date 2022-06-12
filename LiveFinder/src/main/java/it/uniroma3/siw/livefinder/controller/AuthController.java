@@ -63,6 +63,12 @@ public class AuthController {
 		model.addAttribute("credentials", new Credentials());
 		return "resetPasswordForm";
 	}
+	
+	@GetMapping("/changePassword")
+	public String showChangePasswordForm(Model model) {
+		model.addAttribute("credentials", new Credentials());
+		return "changePasswordForm";
+	}
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
@@ -154,5 +160,28 @@ public class AuthController {
 			}
 		}
 		return "resetPasswordForm";
+	}
+	
+	@PostMapping("/changePassword")
+	public String changePassword(@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult, 
+			Model model) {
+		// validate credentials fields
+		this.credentialsValidator.validateReset(credentials, credentialsBindingResult);
+		
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		// if it hasn't invalid contents, store the Credentials into the DB
+		if(!credentialsBindingResult.hasErrors() && 
+				credentialsService.encodePassword(credentials.getOldPassword()).equals(userDetails.getPassword())) {
+			// get the user and store the credentials;
+			// this also stores the User, thanks to Cascade.ALL policy
+			Credentials oldCredentials = credentialsService.getCredentials(credentials.getUsername());
+			credentials.setUser(oldCredentials.getUser());
+			credentialsService.updatePassword(credentials, oldCredentials.getId());
+			model.addAttribute("messageEN", "Password successfully changed!");
+			model.addAttribute("messageIT", "Password cambiata correttamente!");
+			return "operationSuccessful";
+		}
+		return "changePasswordForm";
 	}
 }

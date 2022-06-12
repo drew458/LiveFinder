@@ -60,6 +60,10 @@ public class CredentialsService {
     	return toUpdateCredentials;
     }
     
+    public String encodePassword(String password) {
+    	return this.passwordEncoder.encode(password);
+    }
+    
     @Transactional
     public String getRoleAuthenticated() {
     	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
