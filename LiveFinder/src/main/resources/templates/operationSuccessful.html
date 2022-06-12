@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title=#{resetPassword.title})">
+<head th:replace="base.html :: head(titolo=#{index.title})">
 </head>
 <body>
 	<!-- START Navbar -->
-	<nav th:replace="fragments/base.html :: navbar"></nav>
+	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
     <div class="container text-center mt-4">
-        <h1 th:text="#{resetPasswordSuccess.header}">Reset password effettuato con successo!</h1>
+        <h1 th:text="__${#locale}__=='en'? ${messageEN} : ${messageIT}">Success!</h1>
         
         <form class="d-inline mt-2" th:action="@{/login}" method="get">
      		<button type="submit" class="btn btn-primary btn-block mb-4" th:text="#{index.login}">
@@ -18,6 +18,6 @@
     </div>    
     
     <!-- Bootstrap Bundle with Popper -->
-    <script th:replace="fragments/base.html :: bootstrapJS" />
+    <script th:replace="base.html :: bootstrapJS" />
 </body>
 </html>

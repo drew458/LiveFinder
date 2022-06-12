@@ -49,7 +49,7 @@ public class AuthController {
 	}
 
 	@GetMapping("/login") 
-	public String showLoginForm (Model model) {
+	public String showLoginForm(Model model) {
 		return "loginForm";
 	}
 
@@ -59,7 +59,7 @@ public class AuthController {
 	}
 	
 	@GetMapping("/resetPassword")
-	public String showResetPasswordForm (Model model) {
+	public String showResetPasswordForm(Model model) {
 		model.addAttribute("credentials", new Credentials());
 		return "resetPasswordForm";
 	}
@@ -123,26 +123,32 @@ public class AuthController {
 			// viene salvato anche User grazie alla policy Cascade.ALL
 			credentials.setUser(user);
 			credentialsService.saveCredentials(credentials);
-			return "registerSuccess";
+			model.addAttribute("messageEN", "Registration successful!");
+			model.addAttribute("messageIT", "Registrazione effettuata con successo!");
+			return "operationSuccessful";
 		}
 		return "registerForm";
 	}
 	
 	@PostMapping("/resetPassword")
-	public String resetPassword(@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult) {
-		// valida Credentials
-		this.credentialsValidator.validate(credentials, credentialsBindingResult);
+	public String resetPassword(@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult,
+			Model model) {
+		// validate credentials fields
+		this.credentialsValidator.validateReset(credentials, credentialsBindingResult);
 
-		// se Credentials sono valide, salvali nel DB
+		// if it hasn't invalid contents, store the Credentials into the DB
 		if(!credentialsBindingResult.hasErrors()) {
-			// ricava l'utente e salva e nuove credenziali
-			// viene salvato anche User grazie alla policy Cascade.ALL
+			// get the user and store the credentials;
+			// this also stores the User, thanks to Cascade.ALL policy
 			try {
-				credentials.setUser(credentialsService.getCredentials(credentials.getUsername()).getUser());
-				credentialsService.saveCredentials(credentials);
-				return "resetPasswordSuccessful";
+				Credentials oldCredentials = credentialsService.getCredentials(credentials.getUsername());
+				credentials.setUser(oldCredentials.getUser());
+				credentialsService.updatePassword(credentials, oldCredentials.getId());
+				model.addAttribute("messageEN", "Password reset successful!");
+				model.addAttribute("messageIT", "Reset della password effettuato correttamente!");
+				return "operationSuccessful";
 			}
-			// utente non trovato sul DB
+			// user not found
 			catch(Exception e) {
 				e.printStackTrace();
 			}
