@@ -42,10 +42,17 @@ public class AuthController {
 	private CredentialsValidator credentialsValidator;
 
 	@GetMapping("/register")
-	public String showRegisterForm (Model model) {
+	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
 		return "registerForm";
+	}
+	
+	@GetMapping("/adminRegister")
+	public String showAdminRegisterForm(Model model) {
+		model.addAttribute("user", new User());
+		model.addAttribute("credentials", new Credentials());
+		return "adminRegisterForm";
 	}
 
 	@GetMapping("/login") 
@@ -107,7 +114,7 @@ public class AuthController {
 			    oauthUser.setNome((String) userAttributes.get("name"));
 			    oauthCredentials.setUser(oauthUser);
 			    oauthCredentials.setUsername((String) userAttributes.get("email"));
-			    credentialsService.saveCredentials(oauthCredentials);
+			    credentialsService.saveCredentials(oauthCredentials, false);
 			    model.addAttribute("user", oauthUser);
 		    }			    
 		}			
@@ -128,12 +135,35 @@ public class AuthController {
 			// imposta User e salva Credentials
 			// viene salvato anche User grazie alla policy Cascade.ALL
 			credentials.setUser(user);
-			credentialsService.saveCredentials(credentials);
+			credentialsService.saveCredentials(credentials, false);
 			model.addAttribute("messageEN", "Registration successful!");
 			model.addAttribute("messageIT", "Registrazione effettuata con successo!");
 			return "operationSuccessful";
 		}
 		return "registerForm";
+	}
+	
+	@PostMapping("/adminRegister")
+	public String registerAdmin(@ModelAttribute("user") User user, BindingResult userBindingResult,
+			@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult, 
+			Model model) {
+
+		// validate user and credentials fields
+		this.userValidator.validate(user, userBindingResult);
+		this.credentialsValidator.validate(credentials, credentialsBindingResult);
+
+		// if neither of them had invalid contents, store the User and the Credentials into the DB
+		if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()
+				&& credentials.getMagicWord().equals(Credentials.MAGIC_WORD)) {
+			// set the user and store the credentials;
+			// this also stores the User, thanks to Cascade.ALL policy
+			credentials.setUser(user);
+			credentialsService.saveCredentials(credentials, true);
+			model.addAttribute("messageEN", "Admin registration successful!");
+			model.addAttribute("messageIT", "Registrazione Admin effettuata con successo!");
+			return "operationSuccessful";
+		}
+		return "adminRegisterForm";
 	}
 	
 	@PostMapping("/resetPassword")

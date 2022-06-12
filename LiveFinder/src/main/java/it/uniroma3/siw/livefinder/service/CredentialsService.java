@@ -35,8 +35,14 @@ public class CredentialsService {
 	}
 		
     @Transactional
-    public Credentials saveCredentials(Credentials credentials) {
-        credentials.setRole(Credentials.DEFAULT_ROLE);
+    public Credentials saveCredentials(Credentials credentials, boolean isAdmin) {
+        if(isAdmin) {
+        	credentials.setRole(Credentials.ADMIN_ROLE);
+        }
+        else {
+        	credentials.setRole(Credentials.DEFAULT_ROLE);
+        }
+    	
         
         if(credentials.getUser().getCognome()==null) {
         	credentials.getUser().setCognome("OAuthDefault");
