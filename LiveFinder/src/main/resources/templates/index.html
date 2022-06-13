@@ -33,7 +33,7 @@
 			</div>
 			
 			<div>
-				<a th:href="@{/tourForm}">Aggiungi un tour</a>
+				<a th:if="${role}=='ADMIN'" th:href="@{/tourForm}">Aggiungi un tour</a>
       		</div>
       
 	      <div class="container mt-5">
