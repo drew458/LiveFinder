@@ -7,12 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Credentials {
 
 	public static final String DEFAULT_ROLE = "DEFAULT";
 	public static final String ADMIN_ROLE = "ADMIN";
+	public static final String MAGIC_WORD = "SIW";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +25,15 @@ public class Credentials {
 
 	@Column(nullable = false)
 	private String password;
+	
+	@Transient
+	private String confirmPassword;
+	
+	@Transient
+	private String oldPassword;
+	
+	@Transient
+	private String magicWord;
 	
 	@Column(nullable = false)
 	private String role;
@@ -52,6 +63,30 @@ public class Credentials {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	public String getMagicWord() {
+		return magicWord;
+	}
+
+	public void setMagicWord(String magicWord) {
+		this.magicWord = magicWord;
 	}
 
 	public String getRole() {

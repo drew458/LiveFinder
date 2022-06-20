@@ -1,8 +1,13 @@
 package it.uniroma3.siw.livefinder.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +26,9 @@ public class AuthController {
 
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@Autowired
+	private OAuth2AuthorizedClientService authorizedClientService;
 
 	@Autowired
 	private UserValidator userValidator;
@@ -29,14 +37,21 @@ public class AuthController {
 	private CredentialsValidator credentialsValidator;
 
 	@GetMapping("/register")
-	public String showRegisterForm (Model model) {
+	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
 		return "registerForm";
 	}
+	
+	@GetMapping("/adminRegister")
+	public String showAdminRegisterForm(Model model) {
+		model.addAttribute("user", new User());
+		model.addAttribute("credentials", new Credentials());
+		return "adminRegisterForm";
+	}
 
 	@GetMapping("/login") 
-	public String showLoginForm (Model model) {
+	public String showLoginForm(Model model) {
 		return "loginForm";
 	}
 
@@ -44,15 +59,70 @@ public class AuthController {
 	public String logout(Model model) {
 		return "index";
 	}
+	
+	@GetMapping("/resetPassword")
+	public String showResetPasswordForm(Model model) {
+		model.addAttribute("credentials", new Credentials());
+		return "resetPasswordForm";
+	}
+	
+	@GetMapping("/changePassword")
+	public String showChangePasswordForm(Model model) {
+		model.addAttribute("credentials", new Credentials());
+		return "changePasswordForm";
+	}
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		model.addAttribute("user", credentials.getUser());
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			return "admin/home";
 		}
-		return "home";
+		return "index";
+	}
+	
+	@GetMapping("/oauthDefault")
+	public String defaultAfterOAuthLogin(Model model, OAuth2AuthenticationToken authentication) {		
+		// ricava il client corrispondente al token
+		
+		OAuth2User oAuth2User = authentication.getPrincipal();		
+		System.out.println(authentication.getPrincipal().getClass());
+		Map<String,Object> attributes = oAuth2User.getAttributes();
+		if(authentication.getAuthorizedClientRegistrationId().equals("google")) {
+			Credentials userCredentials = credentialsService.getCredentials((String) attributes.get("email"));
+		    if(userCredentials != null) {
+		    	model.addAttribute("user", userCredentials.getUser());
+		    }
+		    else {
+		    	Credentials oauthCredentials = new Credentials();
+			    User oauthUser = new User();
+			    oauthUser.setNome((String) attributes.get("name"));
+			    oauthCredentials.setUser(oauthUser);
+			    oauthCredentials.setUsername((String) attributes.get("email"));
+			    credentialsService.saveCredentials(oauthCredentials, false);
+			    model.addAttribute("user", oauthUser);
+		    }
+		}
+		if(authentication.getAuthorizedClientRegistrationId().equals("github")) {
+			Credentials userCredentials = credentialsService.getCredentials((String) attributes.get("login"));
+		    if(userCredentials != null) {
+		    	model.addAttribute("user", userCredentials.getUser());
+		    }
+		    else {
+		    	Credentials oauthCredentials = new Credentials();
+			    User oauthUser = new User();
+			    String userName= (String) attributes.get("login");
+			    oauthUser.setNome(userName);
+			    oauthCredentials.setUser(oauthUser);
+			    oauthCredentials.setUsername(userName);
+			    credentialsService.saveCredentials(oauthCredentials, false);
+			    model.addAttribute("user", oauthUser);
+		    }
+		}
+
+		return "index";
 	}
 
 	@PostMapping("/register")
@@ -60,18 +130,92 @@ public class AuthController {
 			@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult,
 			Model model) {
 
+		// valida User e Credentials
+		this.userValidator.validate(user, userBindingResult);
+		this.credentialsValidator.validate(credentials, credentialsBindingResult);
+
+		// se sia User che Credentials sono validi, salvali nel DB
+		if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()) {
+			// imposta User e salva Credentials
+			// viene salvato anche User grazie alla policy Cascade.ALL
+			credentials.setUser(user);
+			credentialsService.saveCredentials(credentials, false);
+			model.addAttribute("messageEN", "Registration successful!");
+			model.addAttribute("messageIT", "Registrazione effettuata con successo!");
+			return "operationSuccessful";
+		}
+		return "registerForm";
+	}
+	
+	@PostMapping("/adminRegister")
+	public String registerAdmin(@ModelAttribute("user") User user, BindingResult userBindingResult,
+			@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult, 
+			Model model) {
+
 		// validate user and credentials fields
 		this.userValidator.validate(user, userBindingResult);
 		this.credentialsValidator.validate(credentials, credentialsBindingResult);
 
 		// if neither of them had invalid contents, store the User and the Credentials into the DB
-		if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()) {
+		if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()
+				&& credentials.getMagicWord().equals(Credentials.MAGIC_WORD)) {
 			// set the user and store the credentials;
 			// this also stores the User, thanks to Cascade.ALL policy
 			credentials.setUser(user);
-			credentialsService.saveCredentials(credentials);
-			return "registerSuccess";
+			credentialsService.saveCredentials(credentials, true);
+			model.addAttribute("messageEN", "Admin registration successful!");
+			model.addAttribute("messageIT", "Registrazione Admin effettuata con successo!");
+			return "operationSuccessful";
 		}
-		return "registerForm";
+		return "adminRegisterForm";
+	}
+	
+	@PostMapping("/resetPassword")
+	public String resetPassword(@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult,
+			Model model) {
+		// validate credentials fields
+		this.credentialsValidator.validateReset(credentials, credentialsBindingResult);
+
+		// if it hasn't invalid contents, store the Credentials into the DB
+		if(!credentialsBindingResult.hasErrors()) {
+			// get the user and store the credentials;
+			// this also stores the User, thanks to Cascade.ALL policy
+			try {
+				Credentials oldCredentials = credentialsService.getCredentials(credentials.getUsername());
+				credentials.setUser(oldCredentials.getUser());
+				credentialsService.updatePassword(credentials, oldCredentials.getId());
+				model.addAttribute("messageEN", "Password reset successful!");
+				model.addAttribute("messageIT", "Reset della password effettuato correttamente!");
+				return "operationSuccessful";
+			}
+			// user not found
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "resetPasswordForm";
+	}
+	
+	@PostMapping("/changePassword")
+	public String changePassword(@ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult, 
+			Model model) {
+		// validate credentials fields
+		this.credentialsValidator.validateReset(credentials, credentialsBindingResult);
+		
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		// if it hasn't invalid contents, store the Credentials into the DB
+		if(!credentialsBindingResult.hasErrors() && 
+				credentialsService.encodePassword(credentials.getOldPassword()).equals(userDetails.getPassword())) {
+			// get the user and store the credentials;
+			// this also stores the User, thanks to Cascade.ALL policy
+			Credentials oldCredentials = credentialsService.getCredentials(credentials.getUsername());
+			credentials.setUser(oldCredentials.getUser());
+			credentialsService.updatePassword(credentials, oldCredentials.getId());
+			model.addAttribute("messageEN", "Password successfully changed!");
+			model.addAttribute("messageIT", "Password cambiata correttamente!");
+			return "operationSuccessful";
+		}
+		return "changePasswordForm";
 	}
 }

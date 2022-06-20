@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="ISO-8859-1"></meta>
+<head th:replace="base :: head(titolo='Ricerca dei concerti per Citta - LiveFinder')"></head>
+<body>
+<div th:replace="base :: navbar"></div>
+
+		<div class="container">
+		<h4>Ricerca dei concerti per citta</h4></div>
+		
+		<form th:action="@{/search}" method="get">
+  <input type="text" name="parolaChiave" th:value="${parolaChiave}"  placeholder="Trova i concerti di una citta" size="50" >
+  <button type="submit" class="btn btn-info" >Cerca</button>
+  </form>
+  
+  <table class="tabellaConcertiPerCitta">
+    <thead>
+      <tr>
+        <th>Artista</th>
+        <th>Citta</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="c : ${concerti}" th:field="${c}">
+        <td th:text="${cStat.index+1}"></td>
+        <td th:text="${c.nome}"></td>
+        <td th:text="${l.citta}"></td>
+        <td th:text="${l.data}"></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</body>
+</html>
+  
