@@ -5,7 +5,6 @@
 		<div th:replace="base :: navbar"></div>
 		
 		<div class="container text-center mt-4">
-			
 	    	<h1 class="inline-block" th:text="#{index.welcome}">Benvenuto</h1>
 			<h3 class="inline-block" th:text="${user.nome}"> </h3>
 			
@@ -16,11 +15,7 @@
 			<div class="mt-1">
 				<a th:href="@{/tourForm}">Aggiungi un tour</a>
       		</div>
-      		
     	</div>
-	
-	<!-- Bootstrap Bundle with Popper -->
-	<script th:replace="base.html :: bootstrapJS" /> 
 		
 	</body>
 </html>
