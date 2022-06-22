@@ -13,10 +13,9 @@
 					<a sec:authorize="hasAuthority('ADMIN')" href="deletePersona.html" th:href="@{'/deletePersona' + '/' + ${artista.id}}">Cancella</a></li>
 				</ul>
 		</div>	
-
-
+    
 		<!-- Bootstrap Bundle with Popper -->
 		<script th:replace="base.html :: bootstrapJS"></script> 
-	
+    
 	</body>
 </html>
