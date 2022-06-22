@@ -35,7 +35,7 @@ public class ConcertoService {
 
 	public List<Concerto> findByCitta(String nomeCitta){
 		Citta citta = cittaService.findByNome(nomeCitta);
-		return concertoRepository.findByCitta(citta);
+		return concertoRepository.findByLuogoCitta(citta);
 	}
 	
 	/*

@@ -46,9 +46,6 @@ public class Concerto implements Comparable<Concerto>{
 	private Tour tour;
 
 	@ManyToOne
-	private Citta citta;
-
-	@ManyToOne
 	private Luogo luogo;
 
 	@OneToMany
@@ -79,7 +76,6 @@ public class Concerto implements Comparable<Concerto>{
         sb.append("{id=").append(id);
         sb.append(", data=").append(data);
         sb.append(", tour=").append(tour);
-        sb.append(", citta=").append(citta);
         sb.append(", luogo=").append(luogo);
         for(Biglietto biglietto : biglietti)
         	sb.append(", biglietto=").append(biglietto);

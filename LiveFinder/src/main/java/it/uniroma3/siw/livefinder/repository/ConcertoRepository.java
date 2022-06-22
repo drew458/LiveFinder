@@ -14,5 +14,5 @@ public interface ConcertoRepository extends CrudRepository<Concerto, Long>{
 		@Query(value = "select a.nome, ci.nome, co.data from concerto co, citta ci, tour t, artista a where c.citta like $:parolachiave% and co.citta_id=ci.id and t.artista_id=a.id", nativeQuery = true)
 		List<Concerto> findByParolachiave(@Param("parolachiave") String parolachiave);
 
-		public List<Concerto> findByCitta(Citta citta);
+		public List<Concerto> findByLuogoCitta(Citta citta);
 }

@@ -81,7 +81,6 @@ public class ConcertoController {
 	@PostMapping("/admin/concerto")
 	public String newConcerto(@ModelAttribute("concerto") Concerto concerto, BindingResult bindingResult, Model model){
 		logger.info("Ecco il concerto: " + concerto.getData());
-		concerto.setCitta(concerto.getLuogo().getCitta());
 		concertoService.save(concerto);
 
 		model.addAttribute("concerto", concerto);

@@ -22,6 +22,6 @@ public class CittaService {
     }
 
 	public Citta findByNome(String nome){
-        return cittaRepository.findByNome(nome).orElse(null);
+        return cittaRepository.findByNomeContainingIgnoreCase(nome).orElse(null);
     }
 }
