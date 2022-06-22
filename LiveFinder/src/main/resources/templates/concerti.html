@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Concerto - LiveFinder')"></head>
+	<body>
+		<div th:replace="base :: navbar"></div>
+        
+        
+
+        <div class="container" role="search">
+            <form class="m-4" th:action="@{/concerti/cerca}" method="post">
+                <input name="citta" type="search" id="cerca" for="citta" class="form-control" placeholder="Filtra per città">
+            </form>
+
+            <div th:each="concerto : ${concerti}">
+                <div class="row m-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${concerto.tour.nome}"></h5>
+                            <h6 class="card-subtitle mb-2 text-muted" th:text="${concerto.tour.artista.nome}"></h6>
+                            <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+                                                            ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
+                            <p class="card-text text-muted mt-0 pt-0" th:text="${#dates.hour(concerto.data)}+':'+${#dates.minute(concerto.data)}"></p>
+                            <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap Bundle with Popper -->
+		<script th:replace="base.html :: bootstrapJS"></script>
+    </body>
+</html>

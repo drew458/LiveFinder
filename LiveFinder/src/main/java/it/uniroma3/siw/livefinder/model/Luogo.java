@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Luogo {
+public class Luogo implements Comparable<Luogo>{
     
     public Luogo(String nome, String indirizzo, String cap) {
 		super();
@@ -158,5 +158,10 @@ public class Luogo {
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Luogo o) {
+		return this.getNome().compareTo(o.getNome());
 	}
 }

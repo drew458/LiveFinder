@@ -1,25 +1,42 @@
 package it.uniroma3.siw.livefinder.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.uniroma3.siw.livefinder.model.Citta;
 import it.uniroma3.siw.livefinder.model.Concerto;
 import it.uniroma3.siw.livefinder.repository.ConcertoRepository;
 
 @Service
 public class ConcertoService {
+
+	@Autowired
+	private CittaService cittaService;
 	
 	@Autowired
 	private ConcertoRepository concertoRepository;
+
+	public Concerto save(Concerto concerto){
+		return concertoRepository.save(concerto);
+	}
 	
 	/*
 	 * Ottienere la lista dei concerti
 	 */
 	public List<Concerto> getAllConcerti(){
-		List<Concerto> concerti = (List<Concerto>)concertoRepository.findAll();
-		return concerti;
+		return StreamSupport.stream(concertoRepository.findAll().spliterator(), true)
+			.sorted()
+            .collect(Collectors.toList());
+	}
+
+	public List<Concerto> findByCitta(String nomeCitta){
+		Citta citta = cittaService.findByNome(nomeCitta);
+		return concertoRepository.findByCitta(citta);
 	}
 	
 	/*
