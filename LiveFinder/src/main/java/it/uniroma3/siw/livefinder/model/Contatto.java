@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
+@Data
 @Entity 
 public class Contatto {
     
@@ -37,54 +40,6 @@ public class Contatto {
     private String twitterLink;
 
     private String numTelefono;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFacebookLink() {
-		return facebookLink;
-	}
-
-	public void setFacebookLink(String facebookLink) {
-		this.facebookLink = facebookLink;
-	}
-
-	public String getInstragramLink() {
-		return instragramLink;
-	}
-
-	public void setInstragramLink(String instragramLink) {
-		this.instragramLink = instragramLink;
-	}
-
-	public String getYoutubeLink() {
-		return youtubeLink;
-	}
-
-	public void setYoutubeLink(String youtubeLink) {
-		this.youtubeLink = youtubeLink;
-	}
-
-	public String getTwitterLink() {
-		return twitterLink;
-	}
-
-	public void setTwitterLink(String twitterLink) {
-		this.twitterLink = twitterLink;
-	}
-
-	public String getNumTelefono() {
-		return numTelefono;
-	}
-
-	public void setNumTelefono(String numTelefono) {
-		this.numTelefono = numTelefono;
-	}
 
 	@Override
 	public int hashCode() {

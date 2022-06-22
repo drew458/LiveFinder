@@ -9,7 +9,8 @@
   
 	<div class="container text-center mt-4">
 		<h1 th:text="#{index.welcome}">Benvenuto</h1>
-		<h3 sec:authorize="isAuthenticated()" th:text="${user.nome}"> </h3>
+		<h3 sec:authorize="isAuthenticated()" 
+			th:text="${#authentication.getPrincipal().getUsername()}"> </h3>
 		
 		<div sec:authorize="isAnonymous()">
 			<a th:href="@{/login}" th:text="#{index.login}">Accedi</a>
@@ -34,6 +35,10 @@
 			
 			<div>
 				<a th:if="${role}=='ADMIN'" th:href="@{/tourForm}">Aggiungi un tour</a>
+      		</div>
+
+			<div>
+				<a th:if="${role}=='ADMIN'" th:href="@{/nuovoConcerto}">Aggiungi un concerto</a>
       		</div>
       
 	      <div class="container mt-5">

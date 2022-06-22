@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.Data;
+
+@Data
 @Entity
 public class Citta {
 	
@@ -38,54 +41,6 @@ public class Citta {
 
     @OneToMany(mappedBy = "citta")
     private List<Luogo> luoghi;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
-	public String getRegione() {
-		return regione;
-	}
-
-	public void setRegione(String regione) {
-		this.regione = regione;
-	}
-
-	public List<Concerto> getConcerti() {
-		return concerti;
-	}
-
-	public void setConcerti(List<Concerto> concerti) {
-		this.concerti = concerti;
-	}
-
-	public List<Luogo> getLuoghi() {
-		return luoghi;
-	}
-
-	public void setLuoghi(List<Luogo> luoghi) {
-		this.luoghi = luoghi;
-	}
 
 	@Override
 	public int hashCode() {

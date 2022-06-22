@@ -11,8 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.Data;
+
+@Data
 @Entity
-public class Luogo {
+public class Luogo implements Comparable<Luogo>{
     
     public Luogo(String nome, String indirizzo, String cap) {
 		super();
@@ -45,63 +48,6 @@ public class Luogo {
 
     @ManyToOne
     private Citta citta;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getIndirizzo() {
-		return indirizzo;
-	}
-
-	public void setIndirizzo(String indirizzo) {
-		this.indirizzo = indirizzo;
-	}
-
-	public String getCap() {
-		return cap;
-	}
-
-	public void setCap(String cap) {
-		this.cap = cap;
-	}
-
-	public List<Concerto> getConcerti() {
-		return concerti;
-	}
-
-	public void setConcerti(List<Concerto> concerti) {
-		this.concerti = concerti;
-	}
-
-	public Contatto getContatto() {
-		return contatto;
-	}
-
-	public void setContatto(Contatto contatto) {
-		this.contatto = contatto;
-	}
-
-	public Citta getCitta() {
-		return citta;
-	}
-
-	public void setCitta(Citta citta) {
-		this.citta = citta;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(cap, indirizzo, nome);
@@ -158,5 +104,10 @@ public class Luogo {
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Luogo o) {
+		return this.getNome().compareTo(o.getNome());
 	}
 }

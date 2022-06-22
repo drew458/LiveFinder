@@ -1,6 +1,6 @@
 package it.uniroma3.siw.livefinder.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,10 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+
+@Data
 @Entity
-public class Concerto {
+public class Concerto implements Comparable<Concerto>{
 	
-	public Concerto(LocalDateTime data) {
+	public Concerto(Date data) {
 		super();
 		this.data = data;
 	}
@@ -28,7 +33,14 @@ public class Concerto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	private LocalDateTime data;
+	/*
+	 * La data viene inserita nella form con un input type="datetime-local" che permette di visualizzare
+	 * la data secondo il tipo di formato usato nel paese in cui si vede la pagina. Va aggiunta questa 
+	 * annotazione per permettere la conversione della data e va azzeccata la formattazione nascosta 
+	 * usata da datetime-local 
+	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private Date data;
 
 	@ManyToOne
 	private Tour tour;
@@ -42,46 +54,6 @@ public class Concerto {
 	@OneToMany
 	@JoinColumn(name = "biglietto_id")
 	private List<Biglietto> biglietti;
-
-	public LocalDateTime getData() {
-		return data;
-	}
-
-	public void setData(LocalDateTime data) {
-		this.data = data;
-	}
-
-	public Tour getTour() {
-		return tour;
-	}
-
-	public void setTour(Tour tour) {
-		this.tour = tour;
-	}
-
-	public Citta getCitta() {
-		return citta;
-	}
-
-	public void setCitta(Citta citta) {
-		this.citta = citta;
-	}
-
-	public Luogo getLuogo() {
-		return luogo;
-	}
-
-	public void setLuogo(Luogo luogo) {
-		this.luogo = luogo;
-	}
-
-	public List<Biglietto> getBiglietti() {
-		return biglietti;
-	}
-
-	public void setBiglietti(List<Biglietto> biglietti) {
-		this.biglietti = biglietti;
-	}
 
 	@Override
 	public int hashCode() {
@@ -113,5 +85,15 @@ public class Concerto {
         	sb.append(", biglietto=").append(biglietto);
         sb.append("}\n");
         return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Concerto o) {
+		Concerto that = (Concerto)o;
+		int compare = this.getData().compareTo(that.getData());
+		if(compare == 0){
+			compare = this.getTour().getNome().compareTo(that.getTour().getNome());
+		}
+		return compare;
 	}
 }
