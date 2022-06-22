@@ -11,6 +11,9 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 
+import lombok.Data;
+
+@Data
 @Entity
 public class Biglietto {
 	
@@ -39,30 +42,6 @@ public class Biglietto {
     @DecimalMin(value = "0.00", inclusive = true)
     @Digits(integer=3, fraction = 2)
     private BigDecimal prezzo;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTipologia() {
-		return tipologia;
-	}
-
-	public void setTipologia(String tipologia) {
-		this.tipologia = tipologia;
-	}
-
-	public BigDecimal getPrezzo() {
-		return prezzo;
-	}
-
-	public void setPrezzo(BigDecimal prezzo) {
-		this.prezzo = prezzo;
-	}
 
 	@Override
 	public int hashCode() {

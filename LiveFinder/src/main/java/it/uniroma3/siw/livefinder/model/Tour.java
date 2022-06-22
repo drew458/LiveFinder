@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
+import lombok.Data;
+
+@Data
 @Entity
 public class Tour {
 	
@@ -38,49 +41,7 @@ public class Tour {
 	private Artista artista;
 
 	@OneToMany(mappedBy = "tour")
-	private List<Concerto> concerti;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Year getAnno() {
-		return anno;
-	}
-
-	public void setAnno(Year anno) {
-		this.anno = anno;
-	}
-
-	public Artista getArtista() {
-		return artista;
-	}
-
-	public void setArtista(Artista artista) {
-		this.artista = artista;
-	}
-
-	public List<Concerto> getConcerti() {
-		return concerti;
-	}
-
-	public void setConcerti(List<Concerto> concerti) {
-		this.concerti = concerti;
-	}
-
-	@Override
+	private List<Concerto> concerti;@Override
 	public int hashCode() {
 		return Objects.hash(anno, nome);
 	}

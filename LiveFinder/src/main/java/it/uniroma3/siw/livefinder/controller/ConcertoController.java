@@ -1,6 +1,5 @@
 package it.uniroma3.siw.livefinder.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,13 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.uniroma3.siw.livefinder.model.Citta;
 import it.uniroma3.siw.livefinder.model.Concerto;
 import it.uniroma3.siw.livefinder.service.CittaService;
 import it.uniroma3.siw.livefinder.service.ConcertoService;
 import it.uniroma3.siw.livefinder.service.LuogoService;
 import it.uniroma3.siw.livefinder.service.TourService;
-import javafx.beans.binding.Binding;
 
 @Controller
 public class ConcertoController {

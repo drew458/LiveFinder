@@ -14,8 +14,11 @@ import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.Data;
+
+@Data
 @Entity
-public class Concerto implements Comparable{
+public class Concerto implements Comparable<Concerto>{
 	
 	public Concerto(Date data) {
 		super();
@@ -52,46 +55,6 @@ public class Concerto implements Comparable{
 	@JoinColumn(name = "biglietto_id")
 	private List<Biglietto> biglietti;
 
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public Tour getTour() {
-		return tour;
-	}
-
-	public void setTour(Tour tour) {
-		this.tour = tour;
-	}
-
-	public Citta getCitta() {
-		return citta;
-	}
-
-	public void setCitta(Citta citta) {
-		this.citta = citta;
-	}
-
-	public Luogo getLuogo() {
-		return luogo;
-	}
-
-	public void setLuogo(Luogo luogo) {
-		this.luogo = luogo;
-	}
-
-	public List<Biglietto> getBiglietti() {
-		return biglietti;
-	}
-
-	public void setBiglietti(List<Biglietto> biglietti) {
-		this.biglietti = biglietti;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(data);
@@ -125,7 +88,7 @@ public class Concerto implements Comparable{
 	}
 
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Concerto o) {
 		Concerto that = (Concerto)o;
 		int compare = this.getData().compareTo(that.getData());
 		if(compare == 0){
