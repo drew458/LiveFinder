@@ -65,4 +65,76 @@ public class Credentials {
 		Credentials that = (Credentials) obj;
 		return this.id.equals(that.getId());
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	public void setMagicWord(String magicWord) {
+		this.magicWord = magicWord;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public static String getDefaultRole() {
+		return DEFAULT_ROLE;
+	}
+
+	public static String getAdminRole() {
+		return ADMIN_ROLE;
+	}
+
+	public static String getMagicWord() {
+		return MAGIC_WORD;
+	}
 }

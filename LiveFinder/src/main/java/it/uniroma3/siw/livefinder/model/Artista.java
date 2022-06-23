@@ -84,4 +84,60 @@ public class Artista {
         sb.append("}\n");
         return sb.toString();
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getGenere() {
+		return genere;
+	}
+
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
+
+	public Year getAnnoFormazione() {
+		return annoFormazione;
+	}
+
+	public void setAnnoFormazione(Year annoFormazione) {
+		this.annoFormazione = annoFormazione;
+	}
+
+	public boolean isGroup() {
+		return isGroup;
+	}
+
+	public void setGroup(boolean isGroup) {
+		this.isGroup = isGroup;
+	}
+
+	public List<Tour> getListaTour() {
+		return listaTour;
+	}
+
+	public void setListaTour(List<Tour> listaTour) {
+		this.listaTour = listaTour;
+	}
+
+	public Contatto getContatto() {
+		return contatto;
+	}
+
+	public void setContatto(Contatto contatto) {
+		this.contatto = contatto;
+	}
 }

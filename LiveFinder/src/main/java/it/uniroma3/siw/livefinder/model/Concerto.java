@@ -96,4 +96,52 @@ public class Concerto implements Comparable<Concerto>{
 		}
 		return compare;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public Tour getTour() {
+		return tour;
+	}
+
+	public void setTour(Tour tour) {
+		this.tour = tour;
+	}
+
+	public Citta getCitta() {
+		return citta;
+	}
+
+	public void setCitta(Citta citta) {
+		this.citta = citta;
+	}
+
+	public Luogo getLuogo() {
+		return luogo;
+	}
+
+	public void setLuogo(Luogo luogo) {
+		this.luogo = luogo;
+	}
+
+	public List<Biglietto> getBiglietti() {
+		return biglietti;
+	}
+
+	public void setBiglietti(List<Biglietto> biglietti) {
+		this.biglietti = biglietti;
+	}
 }

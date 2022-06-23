@@ -78,4 +78,44 @@ public class Tour {
 		return builder.toString();
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Year getAnno() {
+		return anno;
+	}
+
+	public void setAnno(Year anno) {
+		this.anno = anno;
+	}
+
+	public Artista getArtista() {
+		return artista;
+	}
+
+	public void setArtista(Artista artista) {
+		this.artista = artista;
+	}
+
+	public List<Concerto> getConcerti() {
+		return concerti;
+	}
+
+	public void setConcerti(List<Concerto> concerti) {
+		this.concerti = concerti;
+	}
+
 }
