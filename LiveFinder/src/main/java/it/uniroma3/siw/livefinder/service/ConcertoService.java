@@ -23,6 +23,10 @@ public class ConcertoService {
 	public Concerto save(Concerto concerto){
 		return concertoRepository.save(concerto);
 	}
+
+	public Concerto findById(Long id){
+		return concertoRepository.findById(id).orElse(null);
+	}
 	
 	/*
 	 * Ottienere la lista dei concerti
@@ -34,6 +38,9 @@ public class ConcertoService {
 	}
 
 	public List<Concerto> findByCitta(String nomeCitta){
+		if(!cittaService.existsByNome(nomeCitta)){
+			return null;
+		}
 		Citta citta = cittaService.findByNome(nomeCitta);
 		return concertoRepository.findByLuogoCitta(citta);
 	}

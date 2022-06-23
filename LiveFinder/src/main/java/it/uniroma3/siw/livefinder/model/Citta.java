@@ -65,7 +65,6 @@ public class Citta {
         sb.append(", nome=").append(nome);
         sb.append(", provincia=").append(provincia);
         sb.append(", regione=").append(regione);
-        sb.append(", luoghi=").append(luoghi);
         sb.append("}\n");
         return sb.toString();
 	}

@@ -21,6 +21,10 @@ public class CittaService {
             .collect(Collectors.toList());
     }
 
+    public boolean existsByNome(String nome){
+        return cittaRepository.existsByNomeContainingIgnoreCase(nome);
+    }
+
 	public Citta findByNome(String nome){
         return cittaRepository.findByNomeContainingIgnoreCase(nome).orElse(null);
     }

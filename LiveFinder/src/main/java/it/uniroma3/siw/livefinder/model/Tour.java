@@ -70,10 +70,6 @@ public class Tour {
 		builder.append(nome);
 		builder.append(", anno=");
 		builder.append(anno);
-		builder.append(", artista=");
-		builder.append(artista);
-		builder.append(", concerti=");
-		builder.append(concerti);
 		builder.append("]");
 		return builder.toString();
 	}

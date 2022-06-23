@@ -6,25 +6,65 @@
         
         
 
-        <div class="container" role="search">
-            <form class="m-4" th:action="@{/concerti/cerca}" method="post">
-                <input name="citta" type="search" id="cerca" for="citta" class="form-control" placeholder="Filtra per città">
-            </form>
+        <div class="container pt-0 bg-light shadow" role="search">
+            <div class="row p-4">
+                <form class="p-0" th:action="@{/users/concerti/cerca}" method="post">
+                    <input name="citta" type="search" id="cerca" for="citta" class="form-control" placeholder="Filtra per città"
+                        th:classappend="${#lists.isEmpty(concerti) ? 'is-invalid' : ' '}">
+                </form>
+            </div>
 
-            <div th:each="concerto : ${concerti}">
-                <div class="row m-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${concerto.tour.nome}"></h5>
-                            <h6 class="card-subtitle mb-2 text-muted" th:text="${concerto.tour.artista.nome}"></h6>
-                            <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
-                                                            ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
-                            <p class="card-text text-muted mt-0 pt-0" th:text="${#dates.hour(concerto.data)}+':'+${#dates.minute(concerto.data)}"></p>
-                            <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+            <div th:unless="${#lists.isEmpty(concerti)}">
+                <div th:each="concerto : ${concerti}">
+                    <div class="row p-4">
+                        <div class="card p-0 list-group-item-action"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
+                                onclick="window.location = this.getAttribute('data-url')">
+                            <div class="row g-0">
+                                <div class="col-md-2">
+                                    <a th:href="@{'/users/concerto/'+${concerto.id}}">
+                                        <img src="/images/concerto.jpg" class="img-fluid rounded-start" style="height: 100%; object-fit: cover;">
+                                    </a>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 name="Nome tour" class="card-title" >
+                                            <a class="link-dark" style="text-decoration: none;" th:href="@{'/users/tour/'+${concerto.tour.id}}" 
+                                                th:text="${concerto.tour.nome}"></a>
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            <a class="link-secondary" style="text-decoration: none;" 
+                                                th:href="@{'/users/artista/'+${concerto.tour.artista.id}}"  th:text="${concerto.tour.artista.nome}"></a>
+                                        </h6>
+                                        <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+                                                                        ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
+                                        <p class="card-text text-muted mt-0 pt-0">
+                                            <span th:text="${#dates.hour(concerto.data)}+' :'"></span>
+                                            <!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
+                                            <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
+                                        </p>
+                                        <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-center">
+                                    <a class="btn btn-outline-secondary" th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">Modifica</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div th:if="${#lists.isEmpty(concerti)}">
+                <div class="row p-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Ops..</h5>
+                            <h6 class="lead mb-2 text-muted">La ricerca non ha prodotto risultati</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </body>

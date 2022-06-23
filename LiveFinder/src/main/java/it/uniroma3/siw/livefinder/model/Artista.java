@@ -79,8 +79,6 @@ public class Artista {
         sb.append(", genere=").append(genere);
         sb.append(", annoFormazione=").append(annoFormazione);
         sb.append(", isGroup=").append(isGroup);
-        sb.append(", listaTour=").append(listaTour);
-        sb.append(", contatto=").append(contatto);
         sb.append("}\n");
         return sb.toString();
 	}

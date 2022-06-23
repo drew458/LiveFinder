@@ -14,7 +14,7 @@
     </head>
     <body>
         <div th:fragment="navbar">
-            <nav class="navbar navbar-expand-lg bg-light">
+            <nav class="navbar navbar-expand-lg bg-light shadow-sm">
                 <div class="container-fluid">
                     <a class="navbar-brand" th:href="@{/default}">LiveFinder</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
@@ -33,7 +33,7 @@
                                 <a class="nav-link acrive" aria-current="page" th:href="@{/listaTour}">Tour</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link acrive" aria-current="page" th:href="@{/concerti}">Concerti</a>
+                                <a class="nav-link acrive" aria-current="page" th:href="@{/users/concerti}">Concerti</a>
                             </li>
                         </ul>
                         <div class="text-end" sec:authorize="isAnonymous()">
@@ -74,7 +74,7 @@
                                 </li>
                                 <li>
 	                        		<a class="dropdown-item" th:text="#{navbar.changePassword}" 
-	                        			th:href"@{/changePassword}">Cambia password</a>
+	                        			th:href="@{/changePassword}">Cambia password</a>
 	                    		</li>
                                 <li>
                                     <hr class="dropdwown-divider">

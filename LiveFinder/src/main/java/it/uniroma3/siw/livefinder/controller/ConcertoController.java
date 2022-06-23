@@ -30,17 +30,28 @@ public class ConcertoController {
 	private TourService tourService;
 
 	@Autowired
-	private CittaService cittaService;
-
-	@Autowired
 	private LuogoService luogoService;
 	
 	@Autowired
 	private ConcertoService concertoService;
 
-	@GetMapping("/admin/nuovoConcerto")
-	public String getConcertoForm(Model model){
-		Concerto concerto = new Concerto();
+	@GetMapping("/users/concerto/{id}")
+	private String getConcerto(@PathVariable("id") Long id, Model model){
+		model.addAttribute("concerto", concertoService.findById(id));
+		return "concerto";
+	}
+
+	@RequestMapping(value = {"/admin/concertoForm", "/admin/concertoForm/{id}"})
+	public String getConcertoForm(@PathVariable(name = "id", required = false)Long id, Model model){
+		Concerto concerto;
+
+		if(id!=null){
+			concerto = concertoService.findById(id);
+		}else{
+			concerto = new Concerto();
+		}
+
+
 		//concerto.setData(new Date());
 		model.addAttribute("concerto", concerto);
 		model.addAttribute("listaTour", tourService.findAll());
@@ -48,7 +59,7 @@ public class ConcertoController {
 		return "concertoForm";
 	}
 
-	@PostMapping("/concerti/cerca")
+	@PostMapping("/users/concerti/cerca")
 	public String findByCitta(@RequestParam("citta") String cerca, Model model){
 		logger.info("Sto cercando: "+cerca);
 		model.addAttribute("concerti", concertoService.findByCitta(cerca.toUpperCase()));
@@ -68,13 +79,9 @@ public class ConcertoController {
 		return "index";
 	}
 
-	@RequestMapping(value = {"/concerti","/concerti/{citta}"})
-	public String getAll(@PathVariable(required = false) String citta, Model model){
-		if(citta != null){
-			model.addAttribute("concerti", concertoService.findByCitta(citta));
-		}else{
-			model.addAttribute("concerti", concertoService.getAllConcerti());
-		}
+	@GetMapping("/users/concerti")
+	public String getAll(Model model){
+		model.addAttribute("concerti", concertoService.getAllConcerti());
 		return "concerti";
 	}
 

@@ -4,7 +4,26 @@
 	<body>
 		<div th:replace="base :: navbar"></div>
 
-		
+		<div class="container bg-light shadow-sm">
+			<div class="p-4 p-md5 mb-4 rounded">
+				<div class="col-md-6 px-0">
+					<h4 class="display-5" th:text="${concerto.tour.nome}"></h4>
+					<p class="lead" th:text="${concerto.tour.artista.nome}"></p>
+					<p class="lead">
+						<span th:text="${concerto.luogo.nome}"></span>
+						<span> - </span>
+						<strong th:text="${concerto.luogo.citta.nome}"></strong>
+					</p> 
+					<p class="lead" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+                                                                        ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
+					<p class="lead">
+						<span th:text="${#dates.hour(concerto.data)}+' :'"></span>
+						<!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
+						<span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
+					</p>
+				</div>
+			</div>
+		</div>
 
     </body>
 </html>

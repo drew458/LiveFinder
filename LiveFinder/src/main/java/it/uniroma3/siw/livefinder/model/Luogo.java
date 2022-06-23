@@ -93,15 +93,6 @@ public class Luogo implements Comparable<Luogo>{
 			builder.append(cap);
 			builder.append(", ");
 		}
-		if (contatto != null) {
-			builder.append("contatto=");
-			builder.append(contatto);
-			builder.append(", ");
-		}
-		if (citta != null) {
-			builder.append("citta=");
-			builder.append(citta);
-		}
 		builder.append("]");
 		return builder.toString();
 	}
