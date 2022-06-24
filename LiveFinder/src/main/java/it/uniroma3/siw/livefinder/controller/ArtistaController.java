@@ -85,7 +85,7 @@ public class ArtistaController {
 	// Metodi get
 
 	// richiede un singolo artista tramite id
-	@GetMapping("/artista/{id}")
+	@GetMapping("/users/artista/{id}")
 	public String getArtista(@PathVariable("id")Long id, Model model) {
 		// id è una variabile associata al path
 		Artista artista = artistaService.findById(id);

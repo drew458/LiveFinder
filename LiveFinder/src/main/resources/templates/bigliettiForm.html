@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Concerto - LiveFinder')"></head>
+	<body>
+		<div th:replace="base :: navbar"></div>
+
+        <div class="container bg-light shadow-sm">
+            <form class="p-5" th:action="@{/admin/addBiglietti}" method="post" th:object="${concerto}">
+                <!--Field nascoscosti per non perdere l'oggetto concerto-->
+				<input hidden th:field="*{id}"/>
+                <input hidden th:field="*{luogo}"/>
+                <input hidden th:field="*{data}"/>
+                <input hidden th:field="*{tour}"/>
+
+                <div class="row mt-3" th:each="biglietto, itemStat : *{biglietti}">
+                    <div class="form-group col-md-4">
+                        <label>Categoria biglietto</label>
+                        <input type="text" class="form-control" th:field="*{biglietti[__${itemStat.index}__].tipologia}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Prezzo biglietto</label>
+                        <input type="number" class="form-control" th:field="*{biglietti[__${itemStat.index}__].prezzo}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Numero posti disponibili per categoria</label>
+                        <input type="number" class="form-control" th:field="*{biglietti[__${itemStat.index}__].numPosti}">
+                    </div>
+
+                    <!--Field nascosto così tengo traccia dell'id-->
+                    <input hidden th:field="*{biglietti[__${itemStat.index}__].id}"/>
+                </div>
+
+                <div class="row justify-content-end mt-3">
+                    <div class="col-md-4 text-end" >
+                        <button class="btn btn-outline-dark" type="reset">Reset</button>
+                        <button class="btn btn-dark" type="submit">Salva</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>

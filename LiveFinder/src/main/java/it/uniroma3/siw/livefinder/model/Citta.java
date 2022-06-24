@@ -37,9 +37,6 @@ public class Citta {
     private String regione;
 
     @OneToMany(mappedBy = "citta")
-    private List<Concerto> concerti;
-
-    @OneToMany(mappedBy = "citta")
     private List<Luogo> luoghi;
 
 	@Override
@@ -68,8 +65,6 @@ public class Citta {
         sb.append(", nome=").append(nome);
         sb.append(", provincia=").append(provincia);
         sb.append(", regione=").append(regione);
-        sb.append(", concerti=").append(concerti);
-        sb.append(", luoghi=").append(luoghi);
         sb.append("}\n");
         return sb.toString();
 	}
