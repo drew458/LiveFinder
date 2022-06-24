@@ -1,9 +1,11 @@
 package it.uniroma3.siw.livefinder.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,9 +50,16 @@ public class Concerto implements Comparable<Concerto>{
 	@ManyToOne
 	private Luogo luogo;
 
-	@OneToMany
-	@JoinColumn(name = "biglietto_id")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "concerto_id")
 	private List<Biglietto> biglietti;
+
+	public void addBiglietto(Biglietto biglietto){
+		if(this.getBiglietti()==null){
+			this.setBiglietti(new ArrayList<>());
+		}
+		this.getBiglietti().add(biglietto);
+	}
 
 	@Override
 	public int hashCode() {

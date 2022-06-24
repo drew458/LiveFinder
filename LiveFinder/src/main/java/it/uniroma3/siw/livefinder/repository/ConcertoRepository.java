@@ -1,5 +1,6 @@
 package it.uniroma3.siw.livefinder.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,8 @@ public interface ConcertoRepository extends CrudRepository<Concerto, Long>{
 		List<Concerto> findByParolachiave(@Param("parolachiave") String parolachiave);
 
 		public List<Concerto> findByLuogoCitta(Citta citta);
+
+		public boolean existsByTourNomeAndData(String nomeTour, Date data);
+
+		public Concerto findByTourNomeAndData(String nomeTour, Date date);
 }

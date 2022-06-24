@@ -43,6 +43,8 @@ public class Biglietto {
     @Digits(integer=3, fraction = 2)
     private BigDecimal prezzo;
 
+	private Integer numPosti;
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(prezzo, tipologia);

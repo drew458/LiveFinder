@@ -4,9 +4,9 @@
 	<body>
 		<div th:replace="base :: navbar"></div>
 
-        <div class="container">
-            <h2>Inserisci nuovo concerto</h2>
-            <form th:action="@{/admin/concerto}" method="post" th:object="${concerto}">
+        <div class="container bg-light shadow-sm">
+            <form class="p-5" th:action="@{/admin/concerto}" method="post" th:object="${concerto}">
+                <h2>Inserisci nuovo concerto</h2>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="tour">Inserisci un tour..</label>
@@ -31,26 +31,37 @@
                     
                 </div>
                 <br>
-                <div class="form-group col-md-4">
-                    <label for="luogo">Seleziona un luogo...</label>
-                    <div class="list-group mx-0 w-auto overflow-auto has-validation">
-                        <div class="list-group mx-0 w-auto overflow-auto has-validation" style="max-height: 400px;">
-                            <label class="list-group-item d-flex gap-2" th:each="luogo : ${luoghi}">
-                                <input class="form-check-input flex-shrink-0" type="radio" th:value="${luogo.id}" th:field="*{luogo}" 
-                                    th:classappend="${#fields.hasErrors('luogo') ? 'is-invalid' : ''}">
-                            <span>
-                                <div th:text="${luogo.nome}"></div>
-                                <small class="d-block text-muted" th:text="${luogo.citta.nome}"></small>
-                            </span>
-                            </label>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="luogo">Seleziona un luogo...</label>
+                        <div class="list-group mx-0 w-auto overflow-auto has-validation">
+                            <div class="list-group mx-0 w-auto overflow-auto has-validation" style="max-height: 400px;">
+                                <label class="list-group-item d-flex gap-2" th:each="luogo : ${luoghi}">
+                                    <input class="form-check-input flex-shrink-0" type="radio" th:value="${luogo.id}" th:field="*{luogo}" 
+                                        th:classappend="${#fields.hasErrors('luogo') ? 'is-invalid' : ''}">
+                                <span>
+                                    <div th:text="${luogo.nome}"></div>
+                                    <small class="d-block text-muted" th:text="${luogo.citta.nome}"></small>
+                                </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('luogo')}" th:errors="*{luogo}"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="numBiglietti">Aggiungi il numero di nuove tipologie biglietto da vendere..</label>
+                        <div class="input-group">
+                            <input class="form-control" type="number" name="numBiglietti" value="0"/>
                         </div>
                     </div>
-                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('luogo')}" th:errors="*{luogo}"></div>
                 </div>
                 
 
                 <!--Field nascosco così durante l'aggiornamento non perdo l'id-->
 				<input hidden type="text" th:field="*{id}"/>
+
+                <!--Fiel nascosto così durante l'aggiornamento non perdo la lista di biglietti-->
+                <input hidden th:field="*{biglietti}"/>
                 <div class="text-center"><button class="btn btn-primary" type = "submit">Conferma</button></div>
             </form>            
         </div>
