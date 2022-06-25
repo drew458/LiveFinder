@@ -10,7 +10,24 @@
 	<div class="container text-center mt-4">
 		<h1 sec:authorize="isAnonymous()" th:text="#{index.anonymousWelcome}">Benvenuto</h1>
 		<h1 sec:authorize="isAuthenticated()" th:text="#{index.welcome}">Benvenuto</h1>
-		<h3 sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"> </h3>
+		
+		<!-- Login via Google OAuth2 -->
+        <h3 th:if="${#authentication.getPrincipal().getClass() == 
+				T(org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser)}"
+				th:text="${#authentication.getPrincipal().getAttributes().given_name}">
+    	</h3>
+
+    	<!-- Login via Github OAuth2 -->
+    	<h3 th:if="${#authentication.getPrincipal().getClass() == 
+    			T(org.springframework.security.oauth2.core.user.DefaultOAuth2User)}"
+    		th:text="${#authentication.getPrincipal().getAttributes().login}">
+    	</h3>			
+		
+		<!-- Login via email and password -->
+    	<h3 th:if="${#authentication.getPrincipal().getClass() == 
+    			T(org.springframework.security.core.userdetails.User)}"
+			th:text="${#authentication.getPrincipal().getUsername()}">
+    	</h3>
 		
 		<div sec:authorize="isAnonymous()">
 			<a th:href="@{/login}" th:text="#{index.login}">Accedi</a>
