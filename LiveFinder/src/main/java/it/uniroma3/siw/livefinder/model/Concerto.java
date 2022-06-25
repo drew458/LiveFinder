@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -41,12 +42,15 @@ public class Concerto implements Comparable<Concerto>{
 	 * annotazione per permettere la conversione della data e va azzeccata la formattazione nascosta 
 	 * usata da datetime-local 
 	 */
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date data;
 
+	@NotNull
 	@ManyToOne
 	private Tour tour;
 
+	@NotNull
 	@ManyToOne
 	private Luogo luogo;
 

@@ -1,7 +1,5 @@
 package it.uniroma3.siw.livefinder.controller;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -23,7 +21,6 @@ import it.uniroma3.siw.livefinder.controller.validator.ConcertoValidator;
 import it.uniroma3.siw.livefinder.model.Biglietto;
 import it.uniroma3.siw.livefinder.model.Concerto;
 import it.uniroma3.siw.livefinder.service.BigliettoService;
-import it.uniroma3.siw.livefinder.service.CittaService;
 import it.uniroma3.siw.livefinder.service.ConcertoService;
 import it.uniroma3.siw.livefinder.service.LuogoService;
 import it.uniroma3.siw.livefinder.service.TourService;
@@ -99,9 +96,10 @@ public class ConcertoController {
 	}
 
 	@PostMapping("/admin/concerto")
-	public String newConcerto(@Valid @ModelAttribute("concerto") Concerto concerto,@RequestParam(name="numBiglietti",required = false) int numBiglietti, BindingResult bindingResult, Model model){
+	public String newConcerto(@Valid @ModelAttribute("concerto") Concerto concerto,
+								BindingResult bindingResult, Model model,
+								@RequestParam(name="numBiglietti",required = false) int numBiglietti){
 		concertoValidator.validate(concerto, bindingResult);
-		logger.info("Ecco il concerto: " + concerto.getData());
 		
 		if(!bindingResult.hasErrors()){
 			//concertoService.save(concerto);

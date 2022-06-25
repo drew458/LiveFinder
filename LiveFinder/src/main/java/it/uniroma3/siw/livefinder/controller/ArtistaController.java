@@ -69,18 +69,18 @@ public class ArtistaController {
 	
 	// Metodi per delete
 	
-		@GetMapping("/confermaDeleteArtista/{id}")
-		public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
-			this.artistaService.deleteById(id);
-			model.addAttribute("artisti", this.artistaService.findAll());
-			return "artisti";
-		}
-		
-		@GetMapping("/deleteArtista/{id}")
-		public String deleteArtista(@PathVariable("id") Long id, Model model) {
-			model.addAttribute("artista", this.artistaService.findById(id));
-			return "deleteArtista";
-		}
+	@GetMapping("/confermaDeleteArtista/{id}")
+	public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
+		this.artistaService.deleteById(id);
+		model.addAttribute("artisti", this.artistaService.findAll());
+		return "artisti";
+	}
+	
+	@GetMapping("/deleteArtista/{id}")
+	public String deleteArtista(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("artista", this.artistaService.findById(id));
+		return "deleteArtista";
+	}
 
 	// Metodi get
 
@@ -102,7 +102,7 @@ public class ArtistaController {
 		return "artisti";
 	}
 	
-	@GetMapping("/artistaForm")
+	@GetMapping("/admin/artistaForm")
 	public String artistaForm(Model model) {
 		model.addAttribute("artista", new Artista());
 		return "admin/artistaForm";

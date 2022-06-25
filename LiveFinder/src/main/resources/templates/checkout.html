@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base.html :: head(titolo=#{checkout.title})"></head>
+    <body>
+        <!-- START Navbar -->
+        <nav th:replace="base.html :: navbar"></nav>
+        <!-- END Navbar -->
+
+        <div class="container bg-light shadow-sm" style="width: 60%;">
+            <div class="py-5 text-center">
+                <h2>Conferma acquisto</h2>
+                <p class="lead">Compila questi campi per procedere all'acquisto</p>
+            </div>
+            <div class="row g-5 px-5 pb-4">
+                <div class="col-md-5 col-lg-4 order-md-last">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-dark">Il tuo carrello</span>
+                        <span class="badge bg-dark rounded-pill" th:text="${numBiglietti}"></span>
+                    </h4>
+                    <div class="list-group mb-3">
+                        <div class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0" th:text="${biglietto.tipologia}"></h6>
+                                <small class="text-muted" th:text="${biglietto.prezzo}+'€ (x'+${numBiglietti}+')'"></small>
+                            </div>
+                            <span class="text-muted" th:text="${biglietto.prezzo * numBiglietti}+'€'"></span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0">Prevendita</h6>
+                                <small class="text-muted" th:text="'2€ (x'+${numBiglietti}+')'"></small>
+                            </div>
+                            <span class="text-muted" th:text="${2 * numBiglietti}+'€'"></span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0">Totale</h6>
+                            </div>
+                            <span class="text-muted" th:text="${(biglietto.prezzo + 2) * numBiglietti}+'€'"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    <h4 class="mb-3">Indirizzo di fatturazione:</h4>
+                    <p class="lead" th:text="${user.nome}+' '+${user.cognome}"></p>
+                    <div th:unless="${user.indirizzo == null}" id="show-indirizzo" >
+                        <p th:text="${user.indirizzo.via}+' '+${user.indirizzo.numCivico}+' '+${user.indirizzo.cap}+' '+${user.indirizzo.citta}"></p>
+                        <a class="btn btn-outline-dark me-2" role="button" onclick="makeFormAppear()">Cambia indirizzo</a>
+                    </div>
+                    <form method="post" th:action="@{/logged/compra}" th:object="${indirizzo}">
+                        <div id="form-indirizzo" th:attr="style=${user.indirizzo == null} ? 'display: block;' : 'display: none;'">
+                            <label for="nome" class="form-label">Via</label>
+                            <input type="text" class="form-control" th:field="*{via}" th:classappend="${#fields.hasErrors('via') ? 'is-invalid' : ''}"/>
+                            <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('via')}" th:errors="*{via}"></div>
+                            <div class="row g-3 my-1">
+                                <div class="col">
+                                    <label for="numCivico" class="form-label">Numero civico</label>
+                                    <input type="text" class="form-control" th:field="*{numCivico}" th:classappend="${#fields.hasErrors('numCivico') ? 'is-invalid' : ''}"/>
+                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('numCivico')}" th:errors="*{numCivico}"></div>
+                                </div>
+                                <div class="col">
+                                    <label for="cap" class="form-label">Cap</label>
+                                    <input type="text" class="form-control" th:field="*{cap}" th:classappend="${#fields.hasErrors('cap') ? 'is-invalid' : ''}"/>
+                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}"></div>
+                                </div>
+                                <div class="col">
+                                    <label for="citta" class="form-label">Citta</label>
+                                    <input type="text" class="form-control" th:field="*{citta}" th:classappend="${#fields.hasErrors('citta') ? 'is-invalid' : ''}"/>
+                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></div>
+                                </div>
+                            </div>
+                            <hr class="mt-4">
+                            <div class="form-check">
+                                <label class="form-check-label">Salva indirizzo per la prossima volta</label>
+                                <input type="checkbox" class="form-check-input" name="salvaIndirizzo">
+                            </div>
+                            <div th:unless="${user.indirizzo == null}" class="text-stard pt-3">
+                                <button class="btn btn-outline-dark" onclick="makeFormDisappear()" type="button">Annulla cambia indirizzo</button>
+                            </div>
+                        </div>
+
+                        <!--Field nascosti per passare i biglietti al controller-->
+                        <input hidden name="numBiglietti" th:value="${numBiglietti}">
+                        <input hidden name="idBiglietto" th:value="${biglietto.id}">
+                        <div class="text-stard pt-3"><button class="btn btn-dark" type = "submit">Conferma</button></div>
+                    </form>
+                </div>
+            </div>                   
+        </div>
+
+        <script>
+            function makeFormAppear() {
+                document.getElementById("form-indirizzo").style.display="block";
+                document.getElementById("show-indirizzo").style.display="none";
+            }
+
+            function makeFormDisappear(){
+                document.getElementById("form-indirizzo").style.display="none";
+                document.getElementById("show-indirizzo").style.display="block";
+            }
+        </script>
+    </body>
+</html>
