@@ -5,7 +5,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -27,9 +26,6 @@ public class AuthController {
 	@Autowired
 	private CredentialsService credentialsService;
 	
-	@Autowired
-	private OAuth2AuthorizedClientService authorizedClientService;
-
 	@Autowired
 	private UserValidator userValidator;
 

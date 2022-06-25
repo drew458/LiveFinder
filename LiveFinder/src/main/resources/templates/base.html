@@ -36,41 +36,52 @@
                                 <a class="nav-link acrive" aria-current="page" th:href="@{/users/concerti}">Concerti</a>
                             </li>
                         </ul>
+                        
+                        <!-- Se l'utente non è loggato, mostra i pulsanti di login e registrazione -->
                         <div class="text-end" sec:authorize="isAnonymous()">
                             <button type="button" class="btn btn-outline-dark me-2" onclick='window.location.href="/login"'
                             	th:text="#{index.login}">Login</button>
                             <button type="button" class="btn btn-warning" onclick='window.location.href="/register"'
                             	th:text="#{index.register}">Sign up</button>
                         </div>
+                        
+                        <!-- Se l'utente è loggato, mostra la dropdown -->
                         <div class="dropdown text-end" sec:authorize="isAuthenticated()">
-                        	<!-- Login via Google OAuth2 -->
-                            <a th:if="${#authentication.getPrincipal().getClass() == 
-                					T(org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser)}" 
-            					class="d-block text-decoration-none dropdown-toggle" 
-            					id="dropdownUser"  aria-expanded="true" data-bs-toggle="dropdown">
-                					<span th:text="${#authentication.getPrincipal().getAttributes().given_name}"></span>
-		                	</a>
-		
-		                	<!-- Login via Github OAuth2 -->
-		                	<a th:if="${#authentication.getPrincipal().getClass() == 
-		                			T(org.springframework.security.oauth2.core.user.DefaultOAuth2User)}" 
-		            			class="d-block text-decoration-none dropdown-toggle" 
+                        		            	
+			            	<a class="d-block text-decoration-none dropdown-toggle" 
 		            			id="dropdownUser"  aria-expanded="true" data-bs-toggle="dropdown">
-		                		<span th:text="${#authentication.getPrincipal().getAttributes().login}"></span>
-		                	</a>			
-                			
-                			<!-- Login via email and password -->
-			            	<a th:if="${#authentication.getPrincipal().getClass() == 
-			            			T(org.springframework.security.core.userdetails.User)}" 
-			        			class="d-block text-decoration-none dropdown-toggle" 
-			            		id="dropdownUser"  aria-expanded="true" data-bs-toggle="dropdown">
-			            			<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
-			            	</a>
+		            			<i class="bi bi-person"></i>	
+		            		</a>
                                                         
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
                                 data-popper-placement="bottom-end">
                                 <li>
-                                    <a class="dropdown-item">Profilo</a>
+                                	<!-- Login via Google OAuth2 -->
+		                            <a th:if="${#authentication.getPrincipal().getClass() == 
+		                					T(org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser)}" 
+		            					class="dropdown-item" 
+		            					id="dropdownUsername" aria-expanded="true" data-bs-toggle="dropdown">
+		                					<span th:text="${#authentication.getPrincipal().getAttributes().given_name}"></span>
+				                	</a>
+				
+				                	<!-- Login via Github OAuth2 -->
+				                	<a th:if="${#authentication.getPrincipal().getClass() == 
+				                			T(org.springframework.security.oauth2.core.user.DefaultOAuth2User)}" 
+				            			class="dropdown-item" 
+				            			id="dropdownUsername" aria-expanded="true" data-bs-toggle="dropdown">
+				                		<span th:text="${#authentication.getPrincipal().getAttributes().login}"></span>
+				                	</a>			
+		                			
+		                			<!-- Login via email and password -->
+					            	<a th:if="${#authentication.getPrincipal().getClass() == 
+					            			T(org.springframework.security.core.userdetails.User)}" 
+					        			class="dropdown-item" 
+					            		id="dropdownUsername" aria-expanded="true" data-bs-toggle="dropdown">
+					            			<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+					            	</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdwown-divider">
                                 </li>
                                 <li>
 	                        		<a class="dropdown-item" th:text="#{navbar.changePassword}" 
