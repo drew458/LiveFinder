@@ -59,24 +59,21 @@
                                 	<!-- Login via Google OAuth2 -->
 		                            <a th:if="${#authentication.getPrincipal().getClass() == 
 		                					T(org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser)}" 
-		            					class="dropdown-item" 
-		            					id="dropdownUsername" aria-expanded="true" data-bs-toggle="dropdown">
+		            					class="dropdown-item" th:href="@{/profile}" id="dropdownUsername" aria-expanded="true">
 		                					<span th:text="${#authentication.getPrincipal().getAttributes().given_name}"></span>
 				                	</a>
 				
 				                	<!-- Login via Github OAuth2 -->
 				                	<a th:if="${#authentication.getPrincipal().getClass() == 
 				                			T(org.springframework.security.oauth2.core.user.DefaultOAuth2User)}" 
-				            			class="dropdown-item" 
-				            			id="dropdownUsername" aria-expanded="true" data-bs-toggle="dropdown">
+				            			class="dropdown-item" th:href="@{/profile}"	id="dropdownUsername" aria-expanded="true">
 				                		<span th:text="${#authentication.getPrincipal().getAttributes().login}"></span>
 				                	</a>			
 		                			
 		                			<!-- Login via email and password -->
 					            	<a th:if="${#authentication.getPrincipal().getClass() == 
 					            			T(org.springframework.security.core.userdetails.User)}" 
-					        			class="dropdown-item" 
-					            		id="dropdownUsername" aria-expanded="true" data-bs-toggle="dropdown">
+					        			class="dropdown-item" th:href="@{/profile}"	id="dropdownUsername" aria-expanded="true">
 					            			<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
 					            	</a>
                                 </li>
@@ -88,22 +85,11 @@
 	                        			th:href="@{/changePassword}">Cambia password</a>
 	                    		</li>
                                 <li>
-                                    <hr class="dropdwown-divider">
-                                </li>
-                                <li>
                                     <a class="dropdown-item" href="/logout">Logout</a>
                                 </li>
                             
                             </ul>
                         </div>
-                        <!--
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" th:placeholder="#{navbar.search}" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </form>
-                        -->
                     </div>
                 </div>
             </nav>
