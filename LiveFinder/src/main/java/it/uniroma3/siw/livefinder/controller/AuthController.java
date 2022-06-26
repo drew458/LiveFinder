@@ -110,7 +110,12 @@ public class AuthController {
 		
 		Indirizzo indirizzo = credentialsService.getCredentials(username).getUser().getIndirizzo();
 		
-		model.addAttribute("indirizzo", indirizzo);
+		if(indirizzo != null) {
+			model.addAttribute("indirizzo", indirizzo);
+		}
+		else {
+			model.addAttribute("indirizzo", new Indirizzo());
+		}		
 		
 		return "addAddressForm";
 	}
@@ -361,7 +366,8 @@ public class AuthController {
 			this.userService.updateIndirizzo(indirizzo, dbUser.getId());
 			
 			model.addAttribute("messageEN", "Address updated successfully!");
-			model.addAttribute("messageIT", "Indizzo aggiornato correttamente!");
+			model.addAttribute("messageIT", "Indirizzo aggiornato correttamente!");
+			model.addAttribute("hideLoginButton", true);
 			return "operationSuccessful";
 		}
 		

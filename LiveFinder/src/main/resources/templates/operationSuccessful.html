@@ -10,7 +10,8 @@
     <div class="container text-center mt-4">
         <h1 th:text="__${#locale}__=='en'? ${messageEN} : ${messageIT}">Success!</h1>
     
-     	<a class="btn btn-primary btn-block mb-4 mt-3" th:href="@{/login}" th:text="#{index.login}">Login</a>
+     	<a th:if="${!hideLoginButton}" class="btn btn-primary btn-block mb-4 mt-3" th:href="@{/login}" 
+     		th:text="#{index.login}">Login</a>
     </div>    
 </body>
 </html>

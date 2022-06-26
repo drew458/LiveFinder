@@ -24,21 +24,21 @@
 	        
 	        <!-- cap input -->
 	        <div class="form-floating mb-4">
-	        	<input th:field="*{via}" type="text" id="cap" class="form-control" 
+	        	<input th:field="*{cap}" type="text" id="cap" class="form-control" 
 	        		th:placeholder="#{addAddress.cap}" required />
 	        	<label th:text="#{addAddress.cap}" for="cap">CAP</label>
 	        </div>
 	        
 	        <!-- Numero civico input -->
 	        <div class="form-floating mb-4">
-	        	<input th:field="*{via}" type="text" id="number" class="form-control" 
-	        		th:placeholder="#{addAddress.number}" required />
+	        	<input th:field="*{numCivico}" type="text" id="number" class="form-control" 
+	        		th:placeholder="#{addAddress.number}" />
 	        	<label th:text="#{addAddress.number}" for="number">Numero civico</label>
 	        </div>
 	        
 	        <!-- Città input -->
 	        <div class="form-floating mb-4">
-	        	<input th:field="*{via}" type="text" id="city" class="form-control" 
+	        	<input th:field="*{citta}" type="text" id="city" class="form-control" 
 	        		th:placeholder="#{addAddress.city}" required />
 	        	<label th:text="#{addAddress.city}" for="city">Citta</label>
 	        </div>
