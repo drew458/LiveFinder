@@ -37,13 +37,20 @@ public class CredentialsService {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = null;
         
-        if(principal.getClass().equals(DefaultOAuth2User.class)){ //se loggato con GitHub
+		//se loggato con Google
+        if(principal.getClass().equals(DefaultOidcUser.class)){ 
+            DefaultOidcUser user = (DefaultOidcUser) principal;
+            credentials = this.findByUsername(user.getAttribute("given_name"));
+        }
+		
+		//se loggato con GitHub
+        else if(principal.getClass().equals(DefaultOAuth2User.class)){ 
             DefaultOAuth2User user = (DefaultOAuth2User) principal;
             credentials = this.findByUsername(user.getAttribute("login"));
-        }else if(principal.getClass().equals(DefaultOidcUser.class)){ //se loggato con Google
-            DefaultOidcUser user = (DefaultOidcUser) principal;
-            credentials = this.findByUsername(user.getAttribute("given_nam"));
-        }else if(principal.getClass().equals(User.class)){ //se loggato con email e pwd
+        }
+        
+        //se loggato con email e pwd
+        else if(principal.getClass().equals(User.class)){ //se loggato con email e pwd
             User user = (User) principal;
             credentials = this.findByUsername(user.getUsername());
         }

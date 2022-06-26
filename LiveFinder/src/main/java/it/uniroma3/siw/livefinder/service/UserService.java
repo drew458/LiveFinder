@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.uniroma3.siw.livefinder.model.Indirizzo;
 import it.uniroma3.siw.livefinder.model.User;
 import it.uniroma3.siw.livefinder.repository.UserRepository;
 
@@ -52,5 +53,13 @@ public class UserService {
         for(User user : iterable)
             result.add(user);
         return result;
+    }
+    
+    @Transactional
+    public Indirizzo updateIndirizzo(Indirizzo indirizzo, Long id) {
+    	User toUpdateUser = getUser(id);
+    	toUpdateUser.setIndirizzo(indirizzo);
+    	userRepository.save(toUpdateUser);
+    	return toUpdateUser.getIndirizzo();
     }
 }

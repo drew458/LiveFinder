@@ -19,14 +19,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.livefinder.controller.validator.CredentialsValidator;
 import it.uniroma3.siw.livefinder.controller.validator.UserValidator;
 import it.uniroma3.siw.livefinder.model.Credentials;
+import it.uniroma3.siw.livefinder.model.Indirizzo;
 import it.uniroma3.siw.livefinder.model.User;
 import it.uniroma3.siw.livefinder.service.CredentialsService;
+import it.uniroma3.siw.livefinder.service.UserService;
 
 @Controller
 public class AuthController {
 
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private UserValidator userValidator;
@@ -73,12 +78,46 @@ public class AuthController {
 	}
 	
 	@GetMapping("/changeUsername")
-	public String changeUsername(Model model) {		
+	public String showChangeUsernameForm(Model model) {		
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("oldUsername", userDetails.getUsername());
-		model.addAttribute("newUsername", new String());
+		model.addAttribute("credentials", credentialsService.getCredentials(userDetails.getUsername()));
 		
 		return "changeUsernameForm";
+	}
+	
+	@GetMapping("/addAddress")
+	public String showAddAddressForm(Model model) {
+		String username;
+		Object authClass = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//login via Google OAuth2
+		if(authClass instanceof DefaultOidcUser) {
+			DefaultOidcUser user = (DefaultOidcUser) authClass;
+			username = (String) user.getAttribute("email");
+		}
+		
+		//login via Github OAuth2
+		else if(authClass instanceof DefaultOAuth2User) {
+			DefaultOAuth2User user = (DefaultOAuth2User) authClass;
+			username = (String) user.getAttribute("login");
+		}
+		
+		//login via email
+		else {
+			UserDetails userDetails = (UserDetails) authClass;
+			username = userDetails.getUsername();
+		}
+		
+		Indirizzo indirizzo = credentialsService.getCredentials(username).getUser().getIndirizzo();
+		
+		if(indirizzo != null) {
+			model.addAttribute("indirizzo", indirizzo);
+		}
+		else {
+			model.addAttribute("indirizzo", new Indirizzo());
+		}		
+		
+		return "addAddressForm";
 	}
 
 	@GetMapping("/default")
@@ -145,20 +184,25 @@ public class AuthController {
 		//login via Google OAuth2
 		if(authClass instanceof DefaultOidcUser) {
 			DefaultOidcUser user = (DefaultOidcUser) authClass;
+			String username = (String) user.getAttribute("email");
+			User dbUser = credentialsService.getCredentials(username).getUser();
 			
 			model.addAttribute("name", (String) user.getAttribute("given_name"));
-			model.addAttribute("username", (String) user.getAttribute("email"));
+			model.addAttribute("username", username);
 			model.addAttribute("canChange", false);
+			model.addAttribute("indirizzo", dbUser.getIndirizzo());
 		}
 		
 		//login via Github OAuth2
 		else if(authClass instanceof DefaultOAuth2User) {
 			DefaultOAuth2User user = (DefaultOAuth2User) authClass;
 			String username = (String) user.getAttribute("login");
+			User dbUser = credentialsService.getCredentials(username).getUser();
 			
 			model.addAttribute("name", username);
 			model.addAttribute("username", username);
 			model.addAttribute("canChange", false);
+			model.addAttribute("indirizzo", dbUser.getIndirizzo());
 		}
 		
 		//login via email
@@ -170,6 +214,7 @@ public class AuthController {
 			model.addAttribute("name", user.getNome().concat(" ").concat(user.getCognome()));
 			model.addAttribute("username", username);
 			model.addAttribute("canChange", true);
+			model.addAttribute("indirizzo", user.getIndirizzo());
 		}
 		
 		return "userProfile";
@@ -270,19 +315,63 @@ public class AuthController {
 	}
 	
 	@PostMapping("/changeUsername")
-	public String changeUsername(@ModelAttribute("newUsername") String newUsername, BindingResult usernameBindingResult, Model model) {
-		this.credentialsValidator.validateUsername(credentialsValidator, usernameBindingResult);
+	public String changeUsername(@ModelAttribute("credentials") Credentials credentials, BindingResult usernameBindingResult, 
+			Model model) {
+		String newUsername = credentials.getUsername();
+		Long id = credentials.getId();
 		
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		this.credentialsValidator.validateUsername(newUsername, usernameBindingResult);
 		
 		if(!usernameBindingResult.hasErrors()) {
-			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			credentialsService.updateUsername(newUsername, credentials.getId());
+			credentialsService.updateUsername(credentials.getUsername() , id);
+			
 			model.addAttribute("messageEN", "Username successfully changed!");
-			model.addAttribute("messageIT", "Username cambiata correttamente!");
-			return "operationSuccessful";
+			model.addAttribute("messageIT", "Username cambiato correttamente!");
+			return "redirect:/logout";
 		}
 		
 		return "changeUsernameForm";
 	}
+	
+	@PostMapping("/addAddress")
+	public String addAddress(@ModelAttribute("indirizzo") Indirizzo indirizzo, BindingResult indirizzoBindingResult, 
+			Model model) {
+		
+		String username;
+		User dbUser;
+		Object authClass = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		this.userValidator.validateIndirizzo(indirizzo, indirizzoBindingResult);
+		
+		if(!indirizzoBindingResult.hasErrors()) {
+			//login via Google OAuth2
+			if(authClass instanceof DefaultOidcUser) {
+				DefaultOidcUser user = (DefaultOidcUser) authClass;
+				username = (String) user.getAttribute("email");
+			}
+			
+			//login via Github OAuth2
+			else if(authClass instanceof DefaultOAuth2User) {
+				DefaultOAuth2User user = (DefaultOAuth2User) authClass;
+				username = (String) user.getAttribute("login");
+			}
+			
+			//login via email
+			else {
+				UserDetails userDetails = (UserDetails) authClass;
+				username = userDetails.getUsername();
+			}
+			
+			dbUser = credentialsService.getCredentials(username).getUser();
+			this.userService.updateIndirizzo(indirizzo, dbUser.getId());
+			
+			model.addAttribute("messageEN", "Address updated successfully!");
+			model.addAttribute("messageIT", "Indirizzo aggiornato correttamente!");
+			model.addAttribute("hideLoginButton", true);
+			return "operationSuccessful";
+		}
+		
+		return "addAddressForm";		
+	}
+	
 }

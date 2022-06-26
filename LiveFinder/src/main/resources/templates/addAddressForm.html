@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base.html :: head(titolo=#{addAddress.title})">
+</head>
+<body>
+	<!-- START Navbar -->
+	<nav th:replace="base.html :: navbar"></nav>
+	<!-- END Navbar -->
+
+	<div class="container text-center mt-4">
+        <div class="mb-4">	
+            <h1 th:text="#{userProfile.addAddress}">Aggiungi indirizzo</h1>
+        </div>
+        
+        <form th:action="@{/addAddress}" method="POST" th:object="${indirizzo}">            
+	        <input th:field="*{id}" type="hidden" />
+	        
+	        <!-- Via input -->
+	        <div class="form-floating mb-4">
+	        	<input th:field="*{via}" type="text" id="street" class="form-control" 
+	        		th:placeholder="#{addAddress.street}" required />
+	        	<label th:text="#{addAddress.street}" for="street">Via</label>
+	        </div>
+	        
+	        <!-- cap input -->
+	        <div class="form-floating mb-4">
+	        	<input th:field="*{cap}" type="text" id="cap" class="form-control" 
+	        		th:placeholder="#{addAddress.cap}" required />
+	        	<label th:text="#{addAddress.cap}" for="cap">CAP</label>
+	        </div>
+	        
+	        <!-- Numero civico input -->
+	        <div class="form-floating mb-4">
+	        	<input th:field="*{numCivico}" type="text" id="number" class="form-control" 
+	        		th:placeholder="#{addAddress.number}" />
+	        	<label th:text="#{addAddress.number}" for="number">Numero civico</label>
+	        </div>
+	        
+	        <!-- Città input -->
+	        <div class="form-floating mb-4">
+	        	<input th:field="*{citta}" type="text" id="city" class="form-control" 
+	        		th:placeholder="#{addAddress.city}" required />
+	        	<label th:text="#{addAddress.city}" for="city">Citta</label>
+	        </div>
+            
+            <!-- Submit button -->
+            <button th:text="#{userProfile.addAddress}" type="submit" class="btn btn-primary btn-block mb-4">Cambia username</button>
+        </form>                     
+    </div>
+</body>
+</html>
