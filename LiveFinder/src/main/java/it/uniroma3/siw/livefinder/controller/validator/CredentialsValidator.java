@@ -72,4 +72,13 @@ public class CredentialsValidator implements Validator {
         	errors.rejectValue("password", "required");
         }
     }
+    
+    public void validateUsername(Object o, Errors errors) {
+    	String username = (String) o;
+    	
+    	if (username.isEmpty())
+            errors.rejectValue("username", "required");
+        else if (username.length() < MIN_USERNAME_LENGTH || username.length() > MAX_USERNAME_LENGTH)
+            errors.rejectValue("username", "size");
+    }
 }

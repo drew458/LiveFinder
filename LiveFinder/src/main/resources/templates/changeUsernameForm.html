@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base.html :: head(titolo=#{changePassword.title})">
+</head>
+<body>
+	<!-- START Navbar -->
+	<nav th:replace="base.html :: navbar"></nav>
+	<!-- END Navbar -->
+
+	<div class="container text-center mt-4">
+        <div class="mb-4">
+            <h1 th:text="#{changeUsername.header}">Cambia il tuo username</h1>
+        </div>
+        <form th:action="@{/changeUsername}" method="POST">
+            <!-- Old username input -->
+            <div class="form-floating mb-4">
+                <input class="form-control" type="text" th:placeholder="${oldUsername}" readonly />
+            </div>
+            
+	        <!-- Username input -->
+	        <div class="form-floating mb-4">
+	        	<input th:field="${newUsername}" type="text" id="newUsername" class="form-control" 
+	        		th:placeholder="#{changeUsername.newUsername}" required />
+	        	<label th:text="#{changeUsername.newUsername}" for="newUsername">Nuovo username</label>
+	        </div>
+            
+            <!-- Submit button -->
+            <button th:text="#{changeUsername.change}" type="submit" class="btn btn-primary btn-block mb-4">Cambia username</button>
+        </form>                     
+    </div>
+</body>
+</html>
