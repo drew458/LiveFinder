@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Inserimento luogo - LiveFinder')"></head>
+	<body>
+		<div th:replace="base :: navbar"></div>
+
+		<div class="container"><h4>Aggiungi un luogo</h4></div>
+		<form th:action = "@{/luogo}" method="post" th:object="${luogo}">
+			<div class="container">
+				<div class="card col-auto">
+					<div class="card-header">
+						Luogo
+					</div>
+					<div class="card-body">
+						<div class="row g-3">
+							<div class="form-group col-md-6">
+								<label for="Nome">Nome:</label>
+								<input class="form-control" placeholder="Ippodromo delle capannelle" type="text" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="Indirizzo">Indirizzo:</label>
+								<input class="form-control" placeholder="Via Appia Nuova" type="text" th:field="*{indirizzo}" th:classappend="${#fields.hasErrors('indirizzo') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('indirizzo')}" th:errors="*{indirizzo}"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="cap">CAP:</label>
+								<input class="form-control" placeholder="00178" type="text" th:field="*{cap}" th:classappend="${#fields.hasErrors('cap') ? 'is-invalid' : ' '}"/>
+								<span class="invalid-feedback" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}"></span>
+							</div>
+							
+						</div>
+						<br>
+						<div><button class="btn btn-primary" type="submit">Conferma</button></div>
+						<div th:if="${#fields.hasGlobalErrors()}">
+							<br>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<h4 class="alert-heading">Arcipigna!</h4>
+								<div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>		
+		
+	</body>
+</html>
