@@ -30,27 +30,27 @@ public class TourController {
     @Autowired
     private ArtistaService artistaService;
 
-    @GetMapping("/tour/{id}")
+    @GetMapping("/users/tour/{id}")
     public String getTourById(@PathVariable("id") Long id, Model model){
         model.addAttribute("tour", tourService.findById(id));
         return "tour";
     }
 
-    @GetMapping("/listaTour")
+    @GetMapping("/users/listaTour")
     public String getAllTours(Model model){
         List<Tour> listaTour = tourService.findAll();
         model.addAttribute("listaTour", listaTour);
         return "listaTour";
     }
     
-    @GetMapping("/tourForm")
+    @GetMapping("/admin/tourForm")
     public String getTourForm(Model model){
         model.addAttribute("tour", new Tour());
         model.addAttribute("listaArtisti", artistaService.findAll());
         return "tourForm";
     }
 
-    @PostMapping("/tour")
+    @PostMapping("/admin/tour")
     public String newTour(@Valid @ModelAttribute("tour") Tour tour, BindingResult bindingResult, Model model){
         tourValidator.validate(tour, bindingResult);
 

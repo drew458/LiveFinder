@@ -122,8 +122,7 @@ public class AuthController {
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		Credentials credentials = credentialsService.getCredentials();
 		model.addAttribute("user", credentials.getUser());
 		
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {

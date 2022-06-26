@@ -17,7 +17,7 @@
             <div th:unless="${#lists.isEmpty(concerti)}">
                 <div th:each="concerto : ${concerti}">
                     <div class="row p-4">
-                        <div class="card p-0 list-group-item-action"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
+                        <div class="card p-0 list-group-item-action list-group-item-light"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
                                 onclick="window.location = this.getAttribute('data-url')">
                             <div class="row g-0">
                                 <div class="col-md-2">
@@ -46,8 +46,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 d-flex align-items-center">
-                                    <a class="btn btn-outline-secondary me-2" th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">Modifica</a>
-                                    <a class="btn btn-outline-danger" role="button">Cancella</a>
+                                    <a class="btn btn-outline-primary" th:href="@{'/users/concerto/'+${concerto.id}}" role="button">Vedi</a>
+                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-secondary me-2" th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">Modifica</a>
+                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-danger" role="button">Cancella</a>
                                 </div>
                             </div>
                         </div>
