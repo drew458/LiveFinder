@@ -66,20 +66,19 @@ public class ArtistaController {
 		}
 	}
 	
-	
 	// Metodi per delete
 	
 		@GetMapping("/confermaDeleteArtista/{id}")
 		public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
-			this.artistaService.deleteById(id);
-			model.addAttribute("artisti", this.artistaService.findAll());
-			return "artisti";
+			model.addAttribute("artista", artistaService.findById(id));
+			return "confermaDeleteArtista";
 		}
 		
 		@GetMapping("/deleteArtista/{id}")
 		public String deleteArtista(@PathVariable("id") Long id, Model model) {
-			model.addAttribute("artista", this.artistaService.findById(id));
-			return "deleteArtista";
+			artistaService.deleteById(id);
+			model.addAttribute("artisti", artistaService.findAll());
+			return "artisti";
 		}
 
 	// Metodi get
