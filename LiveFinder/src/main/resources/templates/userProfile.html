@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="base.html :: head(titolo=#{index.title})">
+<head th:replace="base.html :: head(titolo=#{userProfile.title})">
 </head>
 <body>
 	<!-- START Navbar -->
@@ -30,7 +30,7 @@
 					<div th:if="${indirizzo}" class="mt-2">
 						<div>
 							<span class="h4" th:text="#{userProfile.address}">Address</span>
-							<span th:if="${canChange == true}" class="ms-1">
+							<span class="ms-1">
 								<a th:href="@{/addAddress}">
 									<i class="bi bi-pencil"></i>
 								</a>
@@ -39,12 +39,12 @@
 						
 						<div class="ms-2 mt-1">
 							<div>
-								<span class="h5" th:text"#{userProfile.address.street}">Street: </span>	
+								<span class="h5" th:text"#{userProfile.address.street}">Via: </span>	
 								<span class="h5 fw-normal" th:text="${indirizzo.via}">Via del corso</span>	
 							</div>
 							
 							<div>
-								<span class="h5" th:text"#{userProfile.address.number}">Number: </span>	
+								<span class="h5" th:text"#{userProfile.address.number}">Numero civico: </span>	
 								<span class="h5 fw-normal" th:text="${indirizzo.numCivico}">181</span>
 							</div>
 							
@@ -54,7 +54,7 @@
 							</div>							
 							
 							<div>
-								<span class="h5" th:text"#{userProfile.address.city}">City: </span>	
+								<span class="h5" th:text"#{userProfile.address.city}">Città: </span>	
 								<span class="h5 fw-normal" th:text="${indirizzo.citta}">Roma</span>
 							</div>							
 							
