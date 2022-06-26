@@ -5,8 +5,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +29,6 @@ public class AuthController {
 	private CredentialsService credentialsService;
 	
 	@Autowired
-	private OAuth2AuthorizedClientService authorizedClientService;
-
-	@Autowired
 	private UserValidator userValidator;
 
 	@Autowired
@@ -40,6 +38,7 @@ public class AuthController {
 	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
+		
 		return "registerForm";
 	}
 	
@@ -47,6 +46,7 @@ public class AuthController {
 	public String showAdminRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
+		
 		return "adminRegisterForm";
 	}
 
@@ -71,28 +71,40 @@ public class AuthController {
 		model.addAttribute("credentials", new Credentials());
 		return "changePasswordForm";
 	}
+	
+	@GetMapping("/changeUsername")
+	public String changeUsername(Model model) {		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("oldUsername", userDetails.getUsername());
+		model.addAttribute("newUsername", new String());
+		
+		return "changeUsernameForm";
+	}
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		model.addAttribute("user", credentials.getUser());
+		
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			return "admin/home";
 		}
+		
 		return "index";
 	}
 	
 	@GetMapping("/oauthDefault")
 	public String defaultAfterOAuthLogin(Model model, OAuth2AuthenticationToken authentication) {		
 		// ricava il client corrispondente al token
-		
-		OAuth2User oAuth2User = authentication.getPrincipal();		
-		System.out.println(authentication.getPrincipal().getClass());
+		OAuth2User oAuth2User = authentication.getPrincipal();
 		Map<String,Object> attributes = oAuth2User.getAttributes();
+		
 		if(authentication.getAuthorizedClientRegistrationId().equals("google")) {
-			Credentials userCredentials = credentialsService.getCredentials((String) attributes.get("email"));
-		    if(userCredentials != null) {
+			String email = (String) attributes.get("email");
+			Credentials userCredentials = credentialsService.getCredentials(email);
+		    
+			if(userCredentials != null) {
 		    	model.addAttribute("user", userCredentials.getUser());
 		    }
 		    else {
@@ -100,29 +112,67 @@ public class AuthController {
 			    User oauthUser = new User();
 			    oauthUser.setNome((String) attributes.get("name"));
 			    oauthCredentials.setUser(oauthUser);
-			    oauthCredentials.setUsername((String) attributes.get("email"));
+			    oauthCredentials.setUsername(email);
 			    credentialsService.saveCredentials(oauthCredentials, false);
 			    model.addAttribute("user", oauthUser);
 		    }
 		}
 		if(authentication.getAuthorizedClientRegistrationId().equals("github")) {
-			Credentials userCredentials = credentialsService.getCredentials((String) attributes.get("login"));
-		    if(userCredentials != null) {
+			String username= (String) attributes.get("login");
+			Credentials userCredentials = credentialsService.getCredentials(username);
+		    
+			if(userCredentials != null) {
 		    	model.addAttribute("user", userCredentials.getUser());
 		    }
 		    else {
 		    	Credentials oauthCredentials = new Credentials();
 			    User oauthUser = new User();
-			    String userName= (String) attributes.get("login");
-			    oauthUser.setNome(userName);
+			    oauthUser.setNome(username);
 			    oauthCredentials.setUser(oauthUser);
-			    oauthCredentials.setUsername(userName);
+			    oauthCredentials.setUsername(username);
 			    credentialsService.saveCredentials(oauthCredentials, false);
 			    model.addAttribute("user", oauthUser);
 		    }
 		}
 
 		return "index";
+	}
+	
+	@GetMapping("/profile")
+	public String userProfile(Model model) {
+		Object authClass = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//login via Google OAuth2
+		if(authClass instanceof DefaultOidcUser) {
+			DefaultOidcUser user = (DefaultOidcUser) authClass;
+			
+			model.addAttribute("name", (String) user.getAttribute("given_name"));
+			model.addAttribute("username", (String) user.getAttribute("email"));
+			model.addAttribute("canChange", false);
+		}
+		
+		//login via Github OAuth2
+		else if(authClass instanceof DefaultOAuth2User) {
+			DefaultOAuth2User user = (DefaultOAuth2User) authClass;
+			String username = (String) user.getAttribute("login");
+			
+			model.addAttribute("name", username);
+			model.addAttribute("username", username);
+			model.addAttribute("canChange", false);
+		}
+		
+		//login via email
+		else {
+			UserDetails userDetails = (UserDetails) authClass;
+			String username = userDetails.getUsername();
+			User user = credentialsService.getCredentials(username).getUser();
+			
+			model.addAttribute("name", user.getNome().concat(" ").concat(user.getCognome()));
+			model.addAttribute("username", username);
+			model.addAttribute("canChange", true);
+		}
+		
+		return "userProfile";
 	}
 
 	@PostMapping("/register")
@@ -217,5 +267,22 @@ public class AuthController {
 			return "operationSuccessful";
 		}
 		return "changePasswordForm";
+	}
+	
+	@PostMapping("/changeUsername")
+	public String changeUsername(@ModelAttribute("newUsername") String newUsername, BindingResult usernameBindingResult, Model model) {
+		this.credentialsValidator.validateUsername(credentialsValidator, usernameBindingResult);
+		
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if(!usernameBindingResult.hasErrors()) {
+			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+			credentialsService.updateUsername(newUsername, credentials.getId());
+			model.addAttribute("messageEN", "Username successfully changed!");
+			model.addAttribute("messageIT", "Username cambiata correttamente!");
+			return "operationSuccessful";
+		}
+		
+		return "changeUsernameForm";
 	}
 }

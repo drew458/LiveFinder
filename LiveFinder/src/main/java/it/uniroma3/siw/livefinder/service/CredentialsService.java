@@ -88,6 +88,14 @@ public class CredentialsService {
     }
     
     @Transactional
+    public Credentials updateUsername(String username, Long id) {
+    	Credentials toUpdateCredentials = credentialsRepository.findById(id).get();
+    	toUpdateCredentials.setUsername(username);
+    	credentialsRepository.save(toUpdateCredentials);
+    	return toUpdateCredentials;
+    }
+    
+    @Transactional
     public Credentials updatePassword(Credentials credentials, Long id) {
 		Credentials toUpdateCredentials = credentialsRepository.findById(id).get();
     	toUpdateCredentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));

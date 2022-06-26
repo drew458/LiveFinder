@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base.html :: head(titolo=#{index.title})">
+</head>
+<body>
+	<!-- START Navbar -->
+	<nav th:replace="base.html :: navbar"></nav>
+	<!-- END Navbar -->
+
+    <div class="container text-center mt-4">
+        <h1 th:text="#{userProfile.header}">Your profile</h1>
+		
+		<div class="card mt-4 mb-4">
+			<div class="card-body">
+				<h2 class="text-center mt-2" th:text="${name}">Name and Surname</h2>
+			
+				<div class="text-start mt-4">
+					<span class="h4">Username: </span>
+					<span class="h5 fw-normal" th:text="${username}"></span>
+					<span th:if="${canChange == true}" class="ms-1">
+						<a th:href="@{/changeUsername}">
+							<i class="bi bi-pencil"></i>
+						</a>
+					</span>
+				</div>
+				<div class="text-start mt-4">
+					<button class="btn btn-primary" onclick='window.location.href="/changePassword"'
+                    	th:text="#{changePassword.change}">Change password</button>
+				</div>		
+			</div>						
+		</div>    	     	
+    </div>    
+</body>
+</html>
