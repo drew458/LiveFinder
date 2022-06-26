@@ -33,6 +33,9 @@ public class CredentialsService {
 		return credentialsRepository.findByUsername(username).orElse(null);
 	}
 
+	/**
+	 * Questo metodo ritorna un oggetto credentials associato all'utente loggato al momento
+	 */
 	public Credentials getCredentials(){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = null;
