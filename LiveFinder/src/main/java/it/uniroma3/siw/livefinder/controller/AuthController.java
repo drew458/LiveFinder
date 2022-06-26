@@ -73,10 +73,9 @@ public class AuthController {
 	}
 	
 	@GetMapping("/changeUsername")
-	public String changeUsername(Model model) {		
+	public String showChangeUsernameForm(Model model) {		
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("oldUsername", userDetails.getUsername());
-		model.addAttribute("newUsername", new String());
+		model.addAttribute("credentials", credentialsService.getCredentials(userDetails.getUsername()));
 		
 		return "changeUsernameForm";
 	}
@@ -270,17 +269,19 @@ public class AuthController {
 	}
 	
 	@PostMapping("/changeUsername")
-	public String changeUsername(@ModelAttribute("newUsername") String newUsername, BindingResult usernameBindingResult, Model model) {
-		this.credentialsValidator.validateUsername(credentialsValidator, usernameBindingResult);
+	public String changeUsername(@ModelAttribute("credentials") Credentials credentials, BindingResult usernameBindingResult, 
+			Model model) {
+		String newUsername = credentials.getUsername();
+		Long id = credentials.getId();
 		
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		this.credentialsValidator.validateUsername(newUsername, usernameBindingResult);
 		
 		if(!usernameBindingResult.hasErrors()) {
-			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			credentialsService.updateUsername(newUsername, credentials.getId());
+			credentialsService.updateUsername(credentials.getUsername() , id);
+			
 			model.addAttribute("messageEN", "Username successfully changed!");
-			model.addAttribute("messageIT", "Username cambiata correttamente!");
-			return "operationSuccessful";
+			model.addAttribute("messageIT", "Username cambiato correttamente!");
+			return "redirect:/logout";
 		}
 		
 		return "changeUsernameForm";
