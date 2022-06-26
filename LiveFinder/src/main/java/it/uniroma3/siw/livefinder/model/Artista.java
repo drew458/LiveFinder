@@ -52,6 +52,10 @@ public class Artista {
     @OneToOne
     private Contatto contatto;
 
+	public boolean getIsGroup(){
+		return this.isGroup;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(annoFormazione, genere, nome);

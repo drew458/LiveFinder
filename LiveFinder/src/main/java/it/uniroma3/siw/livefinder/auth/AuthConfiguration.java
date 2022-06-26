@@ -1,6 +1,7 @@
 package it.uniroma3.siw.livefinder.auth;
 
 import static it.uniroma3.siw.livefinder.model.Credentials.ADMIN_ROLE;
+import static it.uniroma3.siw.livefinder.model.Credentials.DEFAULT_ROLE;
 
 import javax.sql.DataSource;
 
@@ -43,6 +44,8 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/adminRegister", "/resetPassword", "/images/**", "/users/**").permitAll()
                 // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login, register e reset password
                 .antMatchers(HttpMethod.POST, "/login", "/register","/adminRegister", "/resetPassword", "/users/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/logged/**").hasAnyAuthority(ADMIN_ROLE, DEFAULT_ROLE)
+                .antMatchers(HttpMethod.GET, "/logged/**").hasAnyAuthority(ADMIN_ROLE, DEFAULT_ROLE)
                 // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
                 .antMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 .antMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
