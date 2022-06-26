@@ -364,10 +364,7 @@ public class AuthController {
 			dbUser = credentialsService.getCredentials(username).getUser();
 			this.userService.updateIndirizzo(indirizzo, dbUser.getId());
 			
-			model.addAttribute("messageEN", "Address updated successfully!");
-			model.addAttribute("messageIT", "Indirizzo aggiornato correttamente!");
-			model.addAttribute("hideLoginButton", true);
-			return "operationSuccessful";
+			return "redirect:/profile";
 		}
 		
 		return "addAddressForm";		
