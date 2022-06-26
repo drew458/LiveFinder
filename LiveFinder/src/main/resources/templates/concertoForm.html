@@ -10,8 +10,8 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="tour">Inserisci un tour..</label>
-                        <div class="list-group mx-0 w-auto overflow-auto has-validation" style="max-height: 200px;">
-                            <label class="list-group-item d-flex gap-2" th:each="tour : ${listaTour}">
+                        <div class="list-group mx-0 w-auto overflow-auto" style="max-height: 200px;">
+                            <label class="list-group-item d-flex gap-2" th:each="tour : ${listaTour}" th:attr="style=${#fields.hasErrors('tour') ? 'border-color: #dc3545;' : ' '}">
                                 <input class="form-check-input flex-shrink-0" type="radio" th:value="${tour.id}" th:field="*{tour}" 
                                     th:classappend="${#fields.hasErrors('tour') ? 'is-invalid' : ''}">
                                 <span>
@@ -25,8 +25,10 @@
                     <div class="form-group col-md-4">
                         <label for="concerto-date">Inserisci la data</label>
                         <div class="input-group date">
-                            <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" class="form-control" th:field="${concerto.data}" id="concerto-data"/>         
+                            <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" class="form-control" th:field="${concerto.data}" id="concerto-data"
+                            th:classappend="${#fields.hasErrors('data') ? 'is-invalid' : ' '}"/>         
                         </div>
+                        <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></div>
                     </div>
                     
                 </div>
@@ -34,9 +36,9 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="luogo">Seleziona un luogo...</label>
-                        <div class="list-group mx-0 w-auto overflow-auto has-validation">
-                            <div class="list-group mx-0 w-auto overflow-auto has-validation" style="max-height: 400px;">
-                                <label class="list-group-item d-flex gap-2" th:each="luogo : ${luoghi}">
+                        <div class="list-group mx-0 w-auto overflow-auto">
+                            <div class="list-group mx-0 w-auto overflow-auto" style="max-height: 400px;">
+                                <label class="list-group-item d-flex gap-2" th:each="luogo : ${luoghi}" th:attr="style=${#fields.hasErrors('luogo') ? 'border-color: #dc3545;' : ' '}">
                                     <input class="form-check-input flex-shrink-0" type="radio" th:value="${luogo.id}" th:field="*{luogo}" 
                                         th:classappend="${#fields.hasErrors('luogo') ? 'is-invalid' : ''}">
                                 <span>
