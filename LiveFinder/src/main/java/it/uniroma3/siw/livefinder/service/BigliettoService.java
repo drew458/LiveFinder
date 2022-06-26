@@ -16,4 +16,8 @@ public class BigliettoService {
         bigliettoRepository.delete(biglietto);
     }
 
+    public Biglietto findById(Long id){
+        return bigliettoRepository.findById(id).orElse(null);
+    }
+
 }

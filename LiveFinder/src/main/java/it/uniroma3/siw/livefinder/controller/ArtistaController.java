@@ -68,6 +68,7 @@ public class ArtistaController {
 	
 	// Metodi per delete
 	
+
 		@GetMapping("/confermaDeleteArtista/{id}")
 		public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
 			model.addAttribute("artista", artistaService.findById(id));
@@ -101,7 +102,7 @@ public class ArtistaController {
 		return "artisti";
 	}
 	
-	@GetMapping("/artistaForm")
+	@GetMapping("/admin/artistaForm")
 	public String artistaForm(Model model) {
 		model.addAttribute("artista", new Artista());
 		return "admin/artistaForm";

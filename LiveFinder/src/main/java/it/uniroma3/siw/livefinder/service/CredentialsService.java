@@ -5,8 +5,11 @@ import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,32 @@ public class CredentialsService {
 
 	@Autowired
 	protected CredentialsRepository credentialsRepository;
+
+	public Credentials updateCredentials(Credentials credentials){
+		return credentialsRepository.save(credentials); //crud repository usa save anche per l'update
+	}
+
+	public Credentials findByUsername(String username){
+		return credentialsRepository.findByUsername(username).orElse(null);
+	}
+
+	public Credentials getCredentials(){
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Credentials credentials = null;
+        
+        if(principal.getClass().equals(DefaultOAuth2User.class)){ //se loggato con GitHub
+            DefaultOAuth2User user = (DefaultOAuth2User) principal;
+            credentials = this.findByUsername(user.getAttribute("login"));
+        }else if(principal.getClass().equals(DefaultOidcUser.class)){ //se loggato con Google
+            DefaultOidcUser user = (DefaultOidcUser) principal;
+            credentials = this.findByUsername(user.getAttribute("given_nam"));
+        }else if(principal.getClass().equals(User.class)){ //se loggato con email e pwd
+            User user = (User) principal;
+            credentials = this.findByUsername(user.getUsername());
+        }
+
+		return credentials;
+	}
 	
 	@Transactional
 	public Credentials getCredentials(Long id) {
@@ -56,6 +85,14 @@ public class CredentialsService {
         }
         
         return this.credentialsRepository.save(credentials);
+    }
+    
+    @Transactional
+    public Credentials updateUsername(String username, Long id) {
+    	Credentials toUpdateCredentials = credentialsRepository.findById(id).get();
+    	toUpdateCredentials.setUsername(username);
+    	credentialsRepository.save(toUpdateCredentials);
+    	return toUpdateCredentials;
     }
     
     @Transactional

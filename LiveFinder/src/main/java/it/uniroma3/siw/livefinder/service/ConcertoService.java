@@ -30,7 +30,7 @@ public class ConcertoService {
 
 	public boolean alreadyExists(Concerto concerto){
 		if(concerto.getId() == null){	//se l'id non c'è vuol dire che devo controllare che non stia creando un duplicato
-			return concertoRepository.existsByTourNomeAndData(concerto.getTour().getNome(), concerto.getData());
+			return concerto.getTour()!=null && concertoRepository.existsByTourNomeAndData(concerto.getTour().getNome(), concerto.getData());
 		}else if(concertoRepository.existsByTourNomeAndData(concerto.getTour().getNome(), concerto.getData())){ //se l'id c'è controllo comunque che non creo un duplicato
 			Concerto esistente = concertoRepository.findByTourNomeAndData(concerto.getTour().getNome(), concerto.getData());
 			return !(concerto.getId().equals(esistente.getId())); //se l'id non è lo stesso vuol dire che ho creato un duplicato
