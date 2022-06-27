@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="base.html :: head(titolo=#{index.title})">
+<head th:replace="base.html :: head(titolo=#{userProfile.title})">
 </head>
 <body class="bg-color">
 	<!-- START Navbar -->
@@ -10,6 +10,7 @@
     <div class="container container-color text-center">
         <h1 th:text="#{userProfile.header}">Your profile</h1>
 		
+
 		<div class="p-4 p-md5 mb-4">
 			<div class="card">
 				<div class="card-body">
@@ -24,10 +25,7 @@
 							</a>
 						</span>
 					</div>
-					<div class="text-start mt-4">
-						<button class="btn btn-dark" onclick='window.location.href="/changePassword"'
-							th:text="#{changePassword.change}">Change password</button>
-					</div>
+
 					<div th:unless="${user.indirizzo == null}" id="show-indirizzo" class="text-start mt-4">
 						<span class="h4">Indirizzo: </span>
 						<span class="h5 fw-normal" th:text="'Via '+${user.indirizzo.via}+' '+${user.indirizzo.numCivico}+', '+${user.indirizzo.cap}+', '+${user.indirizzo.citta}"></span>
@@ -37,9 +35,11 @@
 							</a>
 						</span>
 					</div>
+          <!--BOTTONE AGGIUNGI INDIRIZZO-->
 					<div th:if="${user.indirizzo == null}" class="text-start mt-4">
 						<a class="btn btn-sm btn-dark ms-3" role="button" onclick="makeFormAppear()">Aggiungi indirizzo</a>
 					</div>
+          <!--FORM AGGIUNGI/MODIFICA INDIRIZZO-->
 					<form method="post" th:action="@{/logged/indirizzo}" th:object="${indirizzo}">
                         <div class="text-start mt-3 col-lg-6" id="form-indirizzo" th:attr="style=${user.indirizzo == null} ? 'display: block;' : 'display: none;'">
 							<p class="h4">Nuovo Indirizzo: </p>
@@ -70,6 +70,11 @@
                         </div>
 
                     </form>
+          <!-- BOTTONE CAMBIA PASSWORD -->
+					<div class="text-start mt-4">
+						<button class="btn btn-dark" onclick='window.location.href="/changePassword"'
+							th:text="#{changePassword.change}">Change password</button>
+					</div>
 				</div>						
 			</div>
 		</div>
@@ -85,6 +90,6 @@
 			document.getElementById("form-indirizzo").style.display="none";
 			document.getElementById("show-indirizzo").style.display="block";
 		}
-	</script>  
+	</script>     
 </body>
 </html>
