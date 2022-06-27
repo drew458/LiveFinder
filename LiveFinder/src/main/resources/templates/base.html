@@ -63,15 +63,47 @@
                             	th:text="#{index.register}">Sign up</button>
                         </div>
                         
-                        <!-- Se l'utente è loggato, mostra la dropdown -->
-                        <div class="dropdown text-end" sec:authorize="isAuthenticated()">
-                        		            	
+                        <!-- Dropdown operazioni ADMIN -->
+                        <div class="text-end me-4" sec:authorize="hasAuthority('ADMIN')">
+                        	<a class="d-block text-decoration-none dropdown-toggle text-white" 
+		            			id="dropdownAdmin"  aria-expanded="true" data-bs-toggle="dropdown">
+		            			<i class="bi bi-plus" style="font-size:22px;"></i>	
+		            		</a>
+		            		
+		            		<ul class="dropdown-menu text-small" aria-labelledby="dropdownUser" 
+		            			style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
+                                data-popper-placement="bottom-end">
+                                <li>
+                                	<a th:href="@{/admin/artistaForm}" class="dropdown-item"
+                                		aria-expanded="true">Aggiungi artista</a>
+								</li>
+								
+								<li>	
+									<a th:href="@{/admin/tourForm}" class="dropdown-item"
+										aria-expanded="true">Aggiungi un tour</a>
+						      	</li>
+						      	
+						      	<li>	
+						      		<a th:href="@{/admin/concertoForm}" class="dropdown-item"
+						      			aria-expanded="true">Aggiungi un concerto</a>
+						      	</li>
+						      	
+						      	<li>	
+						      		<a th:href="@{/admin/luogoForm}" class="dropdown-item"
+						      			aria-expanded="true">Aggiungi un luogo</a>									
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Dropdown profilo utente -->
+                        <div class="dropdown text-end" sec:authorize="isAuthenticated()">        	
 			            	<a class="d-block text-decoration-none dropdown-toggle text-white" 
 		            			id="dropdownUser"  aria-expanded="true" data-bs-toggle="dropdown">
 		            			<i class="bi bi-person"></i>	
 		            		</a>
                                                         
-                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser" 
+                            	style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
                                 data-popper-placement="bottom-end">
                                 <li>
                                 	<!-- Login via Google OAuth2 -->
@@ -105,7 +137,6 @@
                                 <li>
                                     <a class="dropdown-item" href="/logout">Logout</a>
                                 </li>
-                            
                             </ul>
                         </div>
                     </div>

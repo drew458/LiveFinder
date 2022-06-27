@@ -122,15 +122,6 @@ public class AuthController {
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
-		Credentials credentials = credentialsService.getCredentials();
-
-		if(credentials != null){
-			model.addAttribute("user", credentials.getUser());
-			if(credentials.getRole().equals(Credentials.ADMIN_ROLE)){
-				return "admin/home";
-			}
-		}
-		
 		return "index";
 	}
 	
@@ -195,15 +186,16 @@ public class AuthController {
 	
 	@GetMapping("/profile")
 	public String userProfile(Model model) {
-
+		
 		Credentials credentials = credentialsService.getCredentials();
 		User user = credentials.getUser();
+		Indirizzo indirizzo = user.getIndirizzo()!=null ? user.getIndirizzo() : new Indirizzo();
+		
 		model.addAttribute("credentials", credentials);
 		model.addAttribute("user", user);
 		model.addAttribute("canChange", credentialsService.isLoggedWithEmail());
-
-		Indirizzo indirizzo = user.getIndirizzo()!=null ? user.getIndirizzo() : new Indirizzo();
 		model.addAttribute("indirizzo", indirizzo);
+		model.addAttribute("biglietti", user.getBiglietti());
 		
 		return "userProfile";
 	}
