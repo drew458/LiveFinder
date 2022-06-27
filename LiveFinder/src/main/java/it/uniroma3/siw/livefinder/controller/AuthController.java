@@ -123,10 +123,12 @@ public class AuthController {
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
 		Credentials credentials = credentialsService.getCredentials();
-		model.addAttribute("user", credentials.getUser());
-		
-		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-			return "admin/home";
+
+		if(credentials != null){
+			model.addAttribute("user", credentials.getUser());
+			if(credentials.getRole().equals(Credentials.ADMIN_ROLE)){
+				return "admin/home";
+			}
 		}
 		
 		return "index";
@@ -138,6 +140,9 @@ public class AuthController {
 		OAuth2User oAuth2User = authentication.getPrincipal();
 		Map<String,Object> attributes = oAuth2User.getAttributes();
 		
+		String[] nomeCompleto;
+		String nome = ((String) attributes.get("name"));
+		
 		if(authentication.getAuthorizedClientRegistrationId().equals("google")) {
 			String email = (String) attributes.get("email");
 			Credentials userCredentials = credentialsService.getCredentials(email);
@@ -148,7 +153,13 @@ public class AuthController {
 		    else {
 		    	Credentials oauthCredentials = new Credentials();
 			    User oauthUser = new User();
-			    oauthUser.setNome((String) attributes.get("name"));
+
+				if(nome!=null){
+					nomeCompleto = nome.split(" ");
+					oauthUser.setNome(nomeCompleto[0]);
+					oauthUser.setCognome(nomeCompleto[1]);
+				}
+
 			    oauthCredentials.setUser(oauthUser);
 			    oauthCredentials.setUsername(email);
 			    credentialsService.saveCredentials(oauthCredentials, false);
@@ -165,7 +176,13 @@ public class AuthController {
 		    else {
 		    	Credentials oauthCredentials = new Credentials();
 			    User oauthUser = new User();
-			    oauthUser.setNome(username);
+
+				if(nome!=null){
+					nomeCompleto = nome.split(" ");
+					oauthUser.setNome(nomeCompleto[0]);
+					oauthUser.setCognome(nomeCompleto[1]);
+				}
+
 			    oauthCredentials.setUser(oauthUser);
 			    oauthCredentials.setUsername(username);
 			    credentialsService.saveCredentials(oauthCredentials, false);
@@ -178,43 +195,15 @@ public class AuthController {
 	
 	@GetMapping("/profile")
 	public String userProfile(Model model) {
-		Object authClass = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		//login via Google OAuth2
-		if(authClass instanceof DefaultOidcUser) {
-			DefaultOidcUser user = (DefaultOidcUser) authClass;
-			String username = (String) user.getAttribute("email");
-			User dbUser = credentialsService.getCredentials(username).getUser();
-			
-			model.addAttribute("name", (String) user.getAttribute("given_name"));
-			model.addAttribute("username", username);
-			model.addAttribute("canChange", false);
-			model.addAttribute("indirizzo", dbUser.getIndirizzo());
-		}
-		
-		//login via Github OAuth2
-		else if(authClass instanceof DefaultOAuth2User) {
-			DefaultOAuth2User user = (DefaultOAuth2User) authClass;
-			String username = (String) user.getAttribute("login");
-			User dbUser = credentialsService.getCredentials(username).getUser();
-			
-			model.addAttribute("name", username);
-			model.addAttribute("username", username);
-			model.addAttribute("canChange", false);
-			model.addAttribute("indirizzo", dbUser.getIndirizzo());
-		}
-		
-		//login via email
-		else {
-			UserDetails userDetails = (UserDetails) authClass;
-			String username = userDetails.getUsername();
-			User user = credentialsService.getCredentials(username).getUser();
-			
-			model.addAttribute("name", user.getNome().concat(" ").concat(user.getCognome()));
-			model.addAttribute("username", username);
-			model.addAttribute("canChange", true);
-			model.addAttribute("indirizzo", user.getIndirizzo());
-		}
+
+		Credentials credentials = credentialsService.getCredentials();
+		User user = credentials.getUser();
+		model.addAttribute("credentials", credentials);
+		model.addAttribute("user", user);
+		model.addAttribute("canChange", credentialsService.isLoggedWithEmail());
+
+		Indirizzo indirizzo = user.getIndirizzo()!=null ? user.getIndirizzo() : new Indirizzo();
+		model.addAttribute("indirizzo", indirizzo);
 		
 		return "userProfile";
 	}

@@ -37,7 +37,7 @@ public class ArtistaController {
 	
 	// Metodo post per inserire un artista
 
-	@PostMapping("/artista")
+	@PostMapping("/admin/artista")
 	public String addArtista(@Valid @ModelAttribute(value="artista") Artista artista, 
 			BindingResult bindingResult, Model model) {
 
@@ -67,20 +67,19 @@ public class ArtistaController {
 	}
 	
 	// Metodi per delete
-	
 
-		@GetMapping("/confermaDeleteArtista/{id}")
-		public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
-			model.addAttribute("artista", artistaService.findById(id));
-			return "confermaDeleteArtista";
-		}
-		
-		@GetMapping("/deleteArtista/{id}")
-		public String deleteArtista(@PathVariable("id") Long id, Model model) {
-			artistaService.deleteById(id);
-			model.addAttribute("artisti", artistaService.findAll());
-			return "artisti";
-		}
+  @GetMapping("/confermaDeleteArtista/{id}")
+  public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
+    model.addAttribute("artista", artistaService.findById(id));
+    return "confermaDeleteArtista";
+  }
+
+  @GetMapping("/deleteArtista/{id}")
+  public String deleteArtista(@PathVariable("id") Long id, Model model) {
+    artistaService.deleteById(id);
+    model.addAttribute("artisti", artistaService.findAll());
+    return "artisti";
+  }
 
 	// Metodi get
 
@@ -95,7 +94,7 @@ public class ArtistaController {
 	}
 	
 	// richiede tutti gli artisti, non c'è id
-	@GetMapping("/artisti")
+	@GetMapping("/users/artisti")
 	public String getArtisti(Model model) {
 		List<Artista> artisti = artistaService.findAll();
 		model.addAttribute("artisti", artisti);
@@ -109,7 +108,7 @@ public class ArtistaController {
 	}
 	
 	//richiede tutti i tour dell'artista passato nel path
-	@GetMapping("/artista/{id}/tour")
+	@GetMapping("/users/artista/{id}/tour")
 	public String getTour(@Valid @PathVariable("id") Long id, Model model) {
 		Artista artista = artistaService.findById(id);
 		model.addAttribute("tour", tourService.findAllByArtista(artista));

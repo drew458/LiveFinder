@@ -8,7 +8,9 @@
 	<!-- END Navbar -->
   
 	<div class="container text-center mt-4">
-		<h1 sec:authorize="isAnonymous()" th:text="#{index.anonymousWelcome}">Benvenuto</h1>
+		<p class="h1" sec:authorize="isAnonymous()" th:text="#{index.anonymousWelcome}">Benvenuto in</p>
+		<p class="logo-big-style" th:text="'LiveFinder '+#{index.anonymousWelcomeLogo}">LiveFinder</p>
+		
 		<h1 sec:authorize="isAuthenticated()" th:text="#{index.welcome}">Benvenuto</h1>
 		
 		<!-- Login via Google OAuth2 -->

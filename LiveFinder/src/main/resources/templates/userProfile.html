@@ -2,77 +2,94 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base.html :: head(titolo=#{userProfile.title})">
 </head>
-<body>
+<body class="bg-color">
 	<!-- START Navbar -->
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
-    <div class="container text-center mt-4">
+    <div class="container container-color text-center">
         <h1 th:text="#{userProfile.header}">Your profile</h1>
 		
-		<div class="card mt-4 mb-4">
-			<div class="card-body">
-				<h2 class="text-center mt-2" th:text="${name}">Name and Surname</h2>
-		
-				<div class="text-start mt-4">
-					<!-- USERNAME -->
-					<div>
+
+		<div class="p-4 p-md5 mb-4">
+			<div class="card">
+				<div class="card-body">
+					<h2 class="text-center mt-2" th:text="${user.nome}+' '+${user.cognome}">Name and Surname</h2>
+				
+					<div class="text-start mt-4">
 						<span class="h4">Username: </span>
-						<span class="h5 fw-normal" th:text="${username}"></span>
+						<span class="h5 fw-normal" th:text="${credentials.username}"></span>
 						<span th:if="${canChange == true}" class="ms-1">
-							<a th:href="@{/changeUsername}">
+							<a th:href="@{/changeUsername}" style="color: black;">
 								<i class="bi bi-pencil"></i>
 							</a>
 						</span>
 					</div>
-					
-					<!-- INDIRIZZO -->
-					<div th:if="${indirizzo}" class="mt-2">
-						<div>
-							<span class="h4" th:text="#{userProfile.address}">Address</span>
-							<span class="ms-1">
-								<a th:href="@{/addAddress}">
-									<i class="bi bi-pencil"></i>
-								</a>
-							</span>	
-						</div>
-						
-						<div class="ms-2 mt-1">
-							<div>
-								<span class="h5" th:text"#{userProfile.address.street}">Via: </span>	
-								<span class="h5 fw-normal" th:text="${indirizzo.via}">Via del corso</span>	
-							</div>
-							
-							<div>
-								<span class="h5" th:text"#{userProfile.address.number}">Numero civico: </span>	
-								<span class="h5 fw-normal" th:text="${indirizzo.numCivico}">181</span>
-							</div>
-							
-							<div>
-								<span class="h5" th:text"#{userProfile.address.cap}">CAP: </span>	
-								<span class="h5 fw-normal" th:text="${indirizzo.cap}">00131</span>
-							</div>							
-							
-							<div>
-								<span class="h5" th:text"#{userProfile.address.city}">Città: </span>	
-								<span class="h5 fw-normal" th:text="${indirizzo.citta}">Roma</span>
-							</div>							
-							
-						</div>				
+
+					<div th:unless="${user.indirizzo == null}" id="show-indirizzo" class="text-start mt-4">
+						<span class="h4">Indirizzo: </span>
+						<span class="h5 fw-normal" th:text="'Via '+${user.indirizzo.via}+' '+${user.indirizzo.numCivico}+', '+${user.indirizzo.cap}+', '+${user.indirizzo.citta}"></span>
+						<span class="ms-1">
+							<a style="color: black;" onclick="makeFormAppear()" type="button">
+								<i class="bi bi-pencil"></i>
+							</a>
+						</span>
 					</div>
-					
-					<!-- BOTTONE AGGIUNGI INDIRIZZO -->
-					<div th:unless="${indirizzo}" class="mt-4">
-						<button class="btn btn-primary" onclick='window.location.href="/addAddress"'
-	                		th:text="#{userProfile.addAddress}">Add address</button>
+          <!--BOTTONE AGGIUNGI INDIRIZZO-->
+					<div th:if="${user.indirizzo == null}" class="text-start mt-4">
+						<a class="btn btn-sm btn-dark ms-3" role="button" onclick="makeFormAppear()">Aggiungi indirizzo</a>
 					</div>
-					
-					<!-- BOTTONE CAMBIA PASSWORD -->
-					<button class="btn btn-primary mt-4" onclick='window.location.href="/changePassword"'
-                    	th:text="#{changePassword.change}">Change password</button>
-				</div>		
-			</div>						
-		</div>    	     	
-    </div>    
+          <!--FORM AGGIUNGI/MODIFICA INDIRIZZO-->
+					<form method="post" th:action="@{/logged/indirizzo}" th:object="${indirizzo}">
+                        <div class="text-start mt-3 col-lg-6" id="form-indirizzo" th:attr="style=${user.indirizzo == null} ? 'display: block;' : 'display: none;'">
+							<p class="h4">Nuovo Indirizzo: </p>
+                            <label for="nome" class="form-label">Via:</label>
+                            <input type="text" class="form-control" th:field="*{via}" th:classappend="${#fields.hasErrors('via') ? 'is-invalid' : ''}"/>
+                            <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('via')}" th:errors="*{via}"></div>
+                            <div class="row g-3 my-1">
+                                <div class="col">
+                                    <label for="numCivico" class="form-label">Numero civico:</label>
+                                    <input type="text" class="form-control" th:field="*{numCivico}" th:classappend="${#fields.hasErrors('numCivico') ? 'is-invalid' : ''}"/>
+                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('numCivico')}" th:errors="*{numCivico}"></div>
+                                </div>
+                                <div class="col">
+                                    <label for="cap" class="form-label">Cap:</label>
+                                    <input type="text" class="form-control" th:field="*{cap}" th:classappend="${#fields.hasErrors('cap') ? 'is-invalid' : ''}"/>
+                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}"></div>
+                                </div>
+                                <div class="col">
+                                    <label for="citta" class="form-label">Citta:</label>
+                                    <input type="text" class="form-control" th:field="*{citta}" th:classappend="${#fields.hasErrors('citta') ? 'is-invalid' : ''}"/>
+                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></div>
+                                </div>
+                            </div>
+                            <div th:unless="${user.indirizzo == null}" class="text-stard pt-3">
+                                <button class="btn btn-sm btn-outline-dark" onclick="makeFormDisappear()" type="button">Annulla</button>
+								<button class="btn btn-sm btn-dark" type = "submit">Conferma</button>
+                            </div>
+                        </div>
+
+                    </form>
+          <!-- BOTTONE CAMBIA PASSWORD -->
+					<div class="text-start mt-4">
+						<button class="btn btn-dark" onclick='window.location.href="/changePassword"'
+							th:text="#{changePassword.change}">Change password</button>
+					</div>
+				</div>						
+			</div>
+		</div>
+		    	     	
+    </div>
+	<script>
+		function makeFormAppear() {
+			document.getElementById("form-indirizzo").style.display="block";
+			document.getElementById("show-indirizzo").style.display="none";
+		}
+
+		function makeFormDisappear(){
+			document.getElementById("form-indirizzo").style.display="none";
+			document.getElementById("show-indirizzo").style.display="block";
+		}
+	</script>     
 </body>
 </html>

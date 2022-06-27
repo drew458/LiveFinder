@@ -59,6 +59,7 @@ public class TourController {
             model.addAttribute("tour", tour);
             return "tour";
         }else{
+            model.addAttribute("listaArtisti", artistaService.findAll());
             return "tourForm";
         }
     }
