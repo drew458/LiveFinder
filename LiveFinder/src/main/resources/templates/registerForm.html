@@ -42,7 +42,7 @@
 		    </div>
 			  
 			<!-- Submit button -->
-		    <button th:text="#{register.register}" type="submit" class="btn btn-primary btn-block mb-4">Registrati</button>
+		    <button th:text="#{register.register}" type="submit" class="btn btn-dark btn-block mb-4">Registrati</button>
       	</form>
       	
       	<!-- 2 column grid layout for inline styling -->
@@ -53,20 +53,20 @@
 		        	<p th:text="#{register.enterWith}">Entra con:</p>   
 		        	<form class="d-inline" action="/oauth2/authorization/google" method="get">
 		     			<button type="submit" class="btn btn-link btn-floating mx-1"> 
-		        			<i class="bi bi-google"></i>
+		        			<i class="bi bi-google" style="color: black;"></i>
 		      			</button>
 					</form>
 		
 		     		<form class="d-inline" action="/oauth2/authorization/github" method="get">
 		     			<button type="submit" class="btn btn-link btn-floating mx-1">
-		        			<i class="bi bi-github"></i>
+		        			<i class="bi bi-github" style="color: black;"></i>
 		      			</button>
 		     		</form>
 		      	</div>
 			</div>
 	
 			<div class="col">
-				<a th:href="@{/adminRegister}" th:text="#{register.admin}">Sono un admin</a>
+				<a th:href="@{/adminRegister}" th:text="#{register.admin}" style="color: black;">Sono un admin</a>
 			</div>
 		</div>      	              
   	</div>
