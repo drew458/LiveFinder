@@ -7,9 +7,8 @@
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
-    <div class="container container-color text-center">
-        <h1 th:text="#{userProfile.header}">Your profile</h1>
-		
+    <div class="container container-color text-center mt-3 rounded-3">
+        <h1 class="p-3" th:text="#{userProfile.header}">Your profile</h1>
 
 		<div class="p-4 p-md5 mb-4">
 			<div class="card">
@@ -26,51 +25,102 @@
 						</span>
 					</div>
 
+					<!-- MOSTRA INDIRIZZO -->
 					<div th:unless="${user.indirizzo == null}" id="show-indirizzo" class="text-start mt-4">
 						<span class="h4">Indirizzo: </span>
-						<span class="h5 fw-normal" th:text="'Via '+${user.indirizzo.via}+' '+${user.indirizzo.numCivico}+', '+${user.indirizzo.cap}+', '+${user.indirizzo.citta}"></span>
+						<span class="h5 fw-normal" th:text="''+${user.indirizzo.via}+' '+${user.indirizzo.numCivico}+', '+${user.indirizzo.cap}+', '+${user.indirizzo.citta}"></span>
 						<span class="ms-1">
-							<a style="color: black;" onclick="makeFormAppear()" type="button">
+							<button style="color: black;" onclick="makeFormAppear()">
 								<i class="bi bi-pencil"></i>
-							</a>
+							</button>
 						</span>
 					</div>
-          <!--BOTTONE AGGIUNGI INDIRIZZO-->
+          			
+          			<!-- BOTTONE AGGIUNGI INDIRIZZO -->
 					<div th:if="${user.indirizzo == null}" class="text-start mt-4">
-						<a class="btn btn-sm btn-dark ms-3" role="button" onclick="makeFormAppear()">Aggiungi indirizzo</a>
+						<button class="btn btn-dark" onclick="makeFormAppear()">Aggiungi indirizzo</button>
 					</div>
-          <!--FORM AGGIUNGI/MODIFICA INDIRIZZO-->
-					<form method="post" th:action="@{/logged/indirizzo}" th:object="${indirizzo}">
-                        <div class="text-start mt-3 col-lg-6" id="form-indirizzo" th:attr="style=${user.indirizzo == null} ? 'display: block;' : 'display: none;'">
-							<p class="h4">Nuovo Indirizzo: </p>
-                            <label for="nome" class="form-label">Via:</label>
-                            <input type="text" class="form-control" th:field="*{via}" th:classappend="${#fields.hasErrors('via') ? 'is-invalid' : ''}"/>
-                            <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('via')}" th:errors="*{via}"></div>
-                            <div class="row g-3 my-1">
-                                <div class="col">
-                                    <label for="numCivico" class="form-label">Numero civico:</label>
-                                    <input type="text" class="form-control" th:field="*{numCivico}" th:classappend="${#fields.hasErrors('numCivico') ? 'is-invalid' : ''}"/>
-                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('numCivico')}" th:errors="*{numCivico}"></div>
-                                </div>
-                                <div class="col">
-                                    <label for="cap" class="form-label">Cap:</label>
-                                    <input type="text" class="form-control" th:field="*{cap}" th:classappend="${#fields.hasErrors('cap') ? 'is-invalid' : ''}"/>
-                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}"></div>
-                                </div>
-                                <div class="col">
-                                    <label for="citta" class="form-label">Citta:</label>
-                                    <input type="text" class="form-control" th:field="*{citta}" th:classappend="${#fields.hasErrors('citta') ? 'is-invalid' : ''}"/>
-                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></div>
-                                </div>
-                            </div>
-                            <div th:unless="${user.indirizzo == null}" class="text-stard pt-3">
-                                <button class="btn btn-sm btn-outline-dark" onclick="makeFormDisappear()" type="button">Annulla</button>
-								<button class="btn btn-sm btn-dark" type = "submit">Conferma</button>
-                            </div>
-                        </div>
-
-                    </form>
-          <!-- BOTTONE CAMBIA PASSWORD -->
+          			
+          			<!--FORM AGGIUNGI/MODIFICA INDIRIZZO-->
+          			<!-- <div id="form-indirizzo" th:attr="style=${user.indirizzo == null} ? 'display: block;' : 'display: none;'"> -->
+          			<div id="form-indirizzo" th:attr="style='display: none;'">
+          				<form method="post" th:action="@{/logged/indirizzo}" th:object="${indirizzo}">
+	                        <div class="text-start mt-3 col-lg-6">
+								<p class="h4">Nuovo Indirizzo: </p>
+	                            <label for="nome" class="form-label">Via:</label>
+	                            <input type="text" class="form-control" th:field="*{via}" th:classappend="${#fields.hasErrors('via') ? 'is-invalid' : ''}"/>
+	                            <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('via')}" th:errors="*{via}"></div>
+	                            <div class="row g-3 my-1">
+	                                <div class="col">
+	                                    <label for="numCivico" class="form-label">Numero civico:</label>
+	                                    <input type="text" class="form-control" th:field="*{numCivico}" th:classappend="${#fields.hasErrors('numCivico') ? 'is-invalid' : ''}"/>
+	                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('numCivico')}" th:errors="*{numCivico}"></div>
+	                                </div>
+	                                <div class="col">
+	                                    <label for="cap" class="form-label">Cap:</label>
+	                                    <input type="text" class="form-control" th:field="*{cap}" th:classappend="${#fields.hasErrors('cap') ? 'is-invalid' : ''}"/>
+	                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}"></div>
+	                                </div>
+	                                <div class="col">
+	                                    <label for="citta" class="form-label">Citta:</label>
+	                                    <input type="text" class="form-control" th:field="*{citta}" th:classappend="${#fields.hasErrors('citta') ? 'is-invalid' : ''}"/>
+	                                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></div>
+	                                </div>
+	                            </div>
+	                            <div class="text-end pt-3">
+	                                <button class="btn btn-sm btn-outline-dark" onclick="makeFormDisappear()" type="button">Annulla</button>
+									<button class="btn btn-sm btn-dark" type = "submit">Conferma</button>
+	                            </div>
+	                        </div>
+	                    </form>
+          			</div>
+                    
+                    <!-- BIGLIETTI ACQUISTATI -->
+                    <div th:if="${biglietti}" class="container mt-4">
+                    	<div th:if="${!biglietti.isEmpty()}">
+                    		<div class="h4" th:text="#{userProfile.purchasedTickets}">Biglietti acquistati: </div>
+                    	
+	                    	<div class="row">
+		                    	<div th:each="biglietto : ${biglietti}" class="col-lg-4 col-md-6 mb-4">
+						        	<div class="card">
+						          		<!-- <div th:if="${!buffet.imageUrl.isEmpty()}" 
+						          			class="card-img-top">
+						          			<img th:src="${buffet.imageUrl}" class="img-fluid" />
+						          		</div> -->
+							          	<div class="card-body">
+							            	<h5 th:text="${biglietto.tipologia}" class="card-title">Tipologia biglietto</h5>
+							            	<div class="text-center mt-1">
+							            		<span th:text="${biglietto.prezzo}" class="card-text">Prezzo</span>
+							            	</div>
+							            	<div class="text-center mt-1">
+							            		<span th:text="${biglietto.numPosti}" class="card-text">Numero posti</span>
+							            	</div>
+							            	
+							            	<!-- <div sec:authorize="hasAuthority('ADMIN')" class="container text-center">
+						            			<div class="row mt-4">
+						            				<div class="col-lg-6 col-md-6 mb-4">
+						            					<a th:text="#{chefList.seeMore}" 
+						            						th:href="@{'/buffet' + '/' + ${buffet.id}}" class="btn btn-primary">See more</a>
+						            				</div>
+						            				<div class="col-lg-6 col-md-6 mb-4">
+								            			<a th:text="#{adminHome.delete}" 
+									            			th:href="@{'/deleteBuffet' + '/' + ${buffet.id}}" class="btn btn-danger">Delete</a>
+								            		</div>				            				
+						            			</div>
+							            	</div> -->
+							            	
+							          		<!-- <div sec:authorize="hasAuthority('DEFAULT')" class="text-center mt-2">
+							          			<a th:text="#{chefList.seeMore}" 
+							            			th:href="@{'/buffet' + '/' + ${buffet.id}}" class="btn btn-primary">See more</a>				          		
+							          		</div> -->        	
+							          	</div>
+					        		</div>
+		                    	</div>
+	                    	</div>
+                    	</div>
+                    </div>
+      				
+      				<!-- BOTTONE CAMBIA PASSWORD -->
 					<div class="text-start mt-4">
 						<button class="btn btn-dark" onclick='window.location.href="/changePassword"'
 							th:text="#{changePassword.change}">Change password</button>
