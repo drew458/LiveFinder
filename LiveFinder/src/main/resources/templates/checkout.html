@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base.html :: head(titolo=#{checkout.title})"></head>
-    <body>
+    <body class="bg-color">
         <!-- START Navbar -->
         <nav th:replace="base.html :: navbar"></nav>
         <!-- END Navbar -->
 
-        <div class="container bg-light shadow-sm" style="width: 60%;">
+        <div class="container container-color shadow-sm" style="width: 60%;">
             <div class="py-5 text-center">
                 <h2>Conferma acquisto</h2>
                 <p class="lead">Compila questi campi per procedere all'acquisto</p>
@@ -44,8 +44,8 @@
                     <h4 class="mb-3">Indirizzo di fatturazione:</h4>
                     <p class="lead" th:text="${user.nome}+' '+${user.cognome}"></p>
                     <div th:unless="${user.indirizzo == null}" id="show-indirizzo" >
-                        <p th:text="${user.indirizzo.via}+' '+${user.indirizzo.numCivico}+' '+${user.indirizzo.cap}+' '+${user.indirizzo.citta}"></p>
-                        <a class="btn btn-outline-dark me-2" role="button" onclick="makeFormAppear()">Cambia indirizzo</a>
+                        <span class="lead" th:text="${user.indirizzo.via}+', '+${user.indirizzo.numCivico}+', '+${user.indirizzo.cap}+', '+${user.indirizzo.citta}"></span>
+                        <a class="btn btn-sm btn-outline-dark ms-3" role="button" onclick="makeFormAppear()">Cambia indirizzo</a>
                     </div>
                     <form method="post" th:action="@{/logged/compra}" th:object="${indirizzo}">
                         <div id="form-indirizzo" th:attr="style=${user.indirizzo == null} ? 'display: block;' : 'display: none;'">
@@ -75,7 +75,7 @@
                                 <input type="checkbox" class="form-check-input" name="salvaIndirizzo">
                             </div>
                             <div th:unless="${user.indirizzo == null}" class="text-stard pt-3">
-                                <button class="btn btn-outline-dark" onclick="makeFormDisappear()" type="button">Annulla cambia indirizzo</button>
+                                <button class="btn btn-sm btn-outline-dark" onclick="makeFormDisappear()" type="button">Annulla cambia indirizzo</button>
                             </div>
                         </div>
 

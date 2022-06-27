@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Concerto - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 
-        <div class="container bg-light shadow-sm">
+        <div class="container container-color">
             <form class="p-5" th:action="@{/admin/concerto}" method="post" th:object="${concerto}">
-                <h2>Inserisci nuovo concerto</h2>
+                <h2 class="mb-4">NUOVO CONCERTO</h2>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="tour">Inserisci un tour..</label>
@@ -64,7 +64,7 @@
 
                 <!--Fiel nascosto così durante l'aggiornamento non perdo la lista di biglietti-->
                 <input hidden th:field="*{biglietti}"/>
-                <div class="text-center"><button class="btn btn-primary" type = "submit">Conferma</button></div>
+                <div class="text-center"><button class="btn btn-dark" type = "submit">Conferma</button></div>
             </form>            
         </div>
 

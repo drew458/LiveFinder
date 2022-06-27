@@ -33,6 +33,11 @@ public class CredentialsService {
 		return credentialsRepository.findByUsername(username).orElse(null);
 	}
 
+	public boolean isLoggedWithEmail(){
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return principal.getClass().equals(User.class);
+	}
+
 	/**
 	 * Questo metodo ritorna un oggetto credentials associato all'utente loggato al momento
 	 */
@@ -45,7 +50,7 @@ public class CredentialsService {
             credentials = this.findByUsername(user.getAttribute("login"));
         }else if(principal.getClass().equals(DefaultOidcUser.class)){ //se loggato con Google
             DefaultOidcUser user = (DefaultOidcUser) principal;
-            credentials = this.findByUsername(user.getAttribute("given_nam"));
+            credentials = this.findByUsername(user.getAttribute("email"));
         }else if(principal.getClass().equals(User.class)){ //se loggato con email e pwd
             User user = (User) principal;
             credentials = this.findByUsername(user.getUsername());

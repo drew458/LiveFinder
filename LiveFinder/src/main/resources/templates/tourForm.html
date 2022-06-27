@@ -5,7 +5,7 @@
 		<div th:replace="base :: navbar"></div>
 
 		<div class="container"><h4>Aggiungi un tour</h4></div>
-		<form th:action = "@{/tour}" method="post" th:object="${tour}">
+		<form th:action = "@{/admin/tour}" method="post" th:object="${tour}">
 			<div class="container">
 				<div class="card col-auto">
 					<div class="card-header">
@@ -26,7 +26,6 @@
 							<div class="form-group col-md-6">
 								<label for="artista">Seleziona un artista</label>
 								<select class="form-select" th:field="*{artista}">
-									<option value="true" disabled>Seleziona..</option>
 									<option th:each="artista : ${listaArtisti}" th:value="${artista.id}" th:text="${artista.nome}"></option>
 								</select>
                                 <span th:if="${#fields.hasErrors('artista.id')}" th:errors="*{artista.id}"></span>

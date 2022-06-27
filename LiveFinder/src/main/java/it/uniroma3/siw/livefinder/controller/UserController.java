@@ -66,4 +66,24 @@ public class UserController {
             return "checkout";
         }
     }
+
+    @PostMapping("/logged/indirizzo")
+    public String addIndirizzo(@Valid @ModelAttribute("indirizzo") Indirizzo indirizzo, BindingResult bindingResult, Model model){
+        Credentials credentials = credentialsService.getCredentials();
+        User user = credentials.getUser();
+
+        if(!bindingResult.hasErrors()){
+            Indirizzo vecchioIndirizzo = user.getIndirizzo();
+            user.setIndirizzo(indirizzo);
+
+            credentialsService.updateCredentials(credentials);
+        }
+
+        model.addAttribute("credentials", credentials);
+		model.addAttribute("user", user);
+		model.addAttribute("canChange", credentialsService.isLoggedWithEmail());
+
+		model.addAttribute("indirizzo", user.getIndirizzo());
+        return "userProfile";
+    }
 }

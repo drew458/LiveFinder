@@ -5,7 +5,7 @@
 		<div th:replace="base :: navbar"></div>
 
 		<div class="container"><h4>Aggiungi un artista</h4></div>
-		<form th:action = "@{/artista}" method="post" th:object="${artista}">
+		<form th:action = "@{/admin/artista}" method="post" th:object="${artista}">
 			<div class="container">
 				<div class="card col-auto">
 					<div class="card-header">
