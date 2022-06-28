@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Tour {
+public class Tour implements Comparable<Tour>{
 	
 	public Tour(@NotBlank String nome, Year anno) {
 		super();
@@ -72,6 +72,15 @@ public class Tour {
 		builder.append(anno);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Tour that) {
+		int compare = this.getAnno().compareTo(that.getAnno());
+		if(compare == 0){
+			compare = this.getNome().compareTo(that.getNome());
+		}
+		return compare;
 	}
 
 }

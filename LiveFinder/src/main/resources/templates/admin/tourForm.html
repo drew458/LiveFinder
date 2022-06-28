@@ -31,8 +31,9 @@
                                 <span th:if="${#fields.hasErrors('artista.id')}" th:errors="*{artista.id}"></span>
 							</div>
 						</div>
-						<br>
-						<div><button class="btn btn-dark" type="submit">Conferma</button></div>
+						<!--Field nascosco così durante l'aggiornamento non perdo l'id-->
+						<input hidden type="text" th:field="*{id}"/>
+						<div><button class="btn btn-dark mt-2" type="submit">Conferma</button></div>
 						<div th:if="${#fields.hasGlobalErrors()}">
 							<br>
 							<div class="alert alert-danger alert-dismissible fade show" role="alert">

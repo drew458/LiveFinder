@@ -43,9 +43,10 @@ public class TourController {
         return "listaTour";
     }
     
-    @GetMapping("/admin/tourForm")
-    public String getTourForm(Model model){
-        model.addAttribute("tour", new Tour());
+    @GetMapping({"/admin/tourForm", "/admin/tourForm/{id}"})
+    public String getTourForm(@PathVariable(name="id", required=false) Long id, Model model){
+        Tour tour = id!=null ? tourService.findById(id) : new Tour();
+        model.addAttribute("tour", tour);
         model.addAttribute("listaArtisti", artistaService.findAll());
         return "admin/tourForm";
     }

@@ -15,6 +15,8 @@
                         <h5 class="card-title" th:text="${tour.nome}"></h5>
                         <p class="card-text" th:text="${tour.anno}"></p>
                         <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-dark">Vedi</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-secondary" th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
+					    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-danger" h:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Cancella</a>
                     </div>
                 </div>
                 <br>
