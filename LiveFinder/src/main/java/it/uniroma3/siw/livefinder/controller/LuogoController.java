@@ -78,10 +78,12 @@ public class LuogoController {
 		return "luoghi";
 	}
 	
-	@GetMapping("/admin/luogoForm")
-	public String luogoForm(Model model) {
-		model.addAttribute("luogo", new Luogo());
-		model.addAttribute("indirizzo", new Indirizzo());
+	@GetMapping({"/admin/luogoForm", "/admin/luogoForm/{id}"})
+	public String luogoForm(@PathVariable(name="id", required=false) Long id, Model model) {
+		Luogo luogo = id!=null ? luogoService.findById(id) : new Luogo();
+		Indirizzo indirizzo = luogo.getIndirizzo()!=null ? luogo.getIndirizzo() : new Indirizzo();
+		model.addAttribute("luogo", luogo);
+		model.addAttribute("indirizzo", indirizzo);
 		model.addAttribute("listaCitta", cittaService.findAll());
 		return "admin/luogoForm";
 	}

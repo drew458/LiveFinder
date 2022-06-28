@@ -44,6 +44,10 @@
 						</div>
 						<div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('luogo.citta')}" th:errors="${luogo.citta}"></div>
 					</div>
+
+					<!--Field nascosco così durante l'aggiornamento non perdo l'id-->
+					<input hidden type="text" th:field="${luogo.id}"/>
+					<input hidden type="text" th:field="${indirizzo.id}"/>
 					<div><button class="btn btn-dark" type="submit">Conferma</button></div>
 				</div>
 				<!--
