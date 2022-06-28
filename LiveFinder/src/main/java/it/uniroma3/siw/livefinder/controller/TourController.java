@@ -47,7 +47,7 @@ public class TourController {
     public String getTourForm(Model model){
         model.addAttribute("tour", new Tour());
         model.addAttribute("listaArtisti", artistaService.findAll());
-        return "tourForm";
+        return "admin/tourForm";
     }
 
     @PostMapping("/admin/tour")
@@ -60,7 +60,7 @@ public class TourController {
             return "tour";
         }else{
             model.addAttribute("listaArtisti", artistaService.findAll());
-            return "tourForm";
+            return "admin/tourForm";
         }
     }
 }
