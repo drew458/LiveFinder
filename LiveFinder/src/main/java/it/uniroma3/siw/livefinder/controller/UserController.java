@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +20,7 @@ import it.uniroma3.siw.livefinder.model.Indirizzo;
 import it.uniroma3.siw.livefinder.model.User;
 import it.uniroma3.siw.livefinder.service.BigliettoService;
 import it.uniroma3.siw.livefinder.service.CredentialsService;
+import it.uniroma3.siw.livefinder.service.IndirizzoService;
 
 @Controller
 public class UserController {
@@ -27,6 +30,9 @@ public class UserController {
 
     @Autowired
     private CredentialsService credentialsService;
+    
+    @Autowired
+    private IndirizzoService indirizzoService;
 
     @PostMapping("/logged/checkout")
     public String prenota(@RequestParam(name="numBiglietti") Integer numBiglietti, 
@@ -49,7 +55,7 @@ public class UserController {
         Credentials credentials = credentialsService.getCredentials();
         User user = credentials.getUser();
         
-        if(user.getIndirizzo()!=null || !bindingResult.hasErrors()){
+        if(user.getIndirizzo()!=null || !bindingResult.hasErrors()) {
     
             Biglietto biglietto = bigliettoService.findById(idBiglietto);
             user.addBiglietti(Collections.nCopies(numBiglietti, biglietto)); //in questo modo suppongo che lo stesso utente possa comprare biglietti di tipologia diversa
@@ -59,7 +65,8 @@ public class UserController {
             }
             credentialsService.updateCredentials(credentials);
             return "confermaAcquisto";
-        }else{
+        }
+        else {
             model.addAttribute("user", user);
             model.addAttribute("numBiglietti", numBiglietti);
             model.addAttribute("biglietto", bigliettoService.findById(idBiglietto));
@@ -81,8 +88,28 @@ public class UserController {
         model.addAttribute("credentials", credentials);
 		model.addAttribute("user", user);
 		model.addAttribute("canChange", credentialsService.isLoggedWithEmail());
-
 		model.addAttribute("indirizzo", user.getIndirizzo());
+		model.addAttribute("biglietti", user.getBiglietti());
+		
         return "userProfile";
     }
+    
+    @GetMapping("/deleteIndirizzo/{id}")
+	public String deleteBuffet(@PathVariable("id") Long id, Model model){
+    	Credentials credentials = credentialsService.getCredentials();
+    	User user = credentials.getUser();
+    	
+        user.setIndirizzo(null);
+        this.credentialsService.updateCredentials(credentials);
+    	
+		this.indirizzoService.deleteById(id);        
+		
+		model.addAttribute("credentials", credentials);
+		model.addAttribute("user", user);
+		model.addAttribute("canChange", credentialsService.isLoggedWithEmail());
+		model.addAttribute("indirizzo", new Indirizzo());
+		model.addAttribute("biglietti", user.getBiglietti());
+		
+		return "userProfile";
+	}
 }
