@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='Inserimento artista - LiveFinder')"></head>
-	<body>
-		<div th:replace="base :: navbar"></div>
+<head th:replace="base :: head(titolo='Inserimento artista - LiveFinder')"></head>
+<body class="bg-color">
+	<div th:replace="base :: navbar"></div>
 
+
+	<div class="container text-center container-color pb-5 shadow mt-3 rounded-3">
+		<h1 class="p-4">Aggiungi un artista</h1>
 		<form th:action = "@{/admin/artista}" method="post" th:object="${artista}">
 			<div class="container">
 				<h2 class="mb-4" th:text="${artista.id==null} ? 'NUOVO ARTISTA' : 'MODIFICA ARTISTA'">NUOVO ARTISTA</h2>
@@ -52,6 +55,7 @@
 					</div>
 				</div>
 			</div>
-		</form>		
-	</body>
+		</form>
+	</div>		
+</body>
 </html>

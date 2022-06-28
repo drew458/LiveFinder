@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Luoghi - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
-		<div class="container mt-4">
-			<h4>Elenco luoghi:</h4>
+		<div class="container container-color pb-5 shadow mt-3 rounded-3">
+			<h2 class="p-4">Luoghi</h2>
 			<ul>
 				<li th:each="luogo : ${luoghi}">
 				<span th:text="${luogo.nome} + ' ' + ${luogo.indirizzo} " >Ippodromo delle capannelle Via Appia Nuova 00178</span>

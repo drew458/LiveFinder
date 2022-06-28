@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Concerto - LiveFinder')"></head>
 	<body class="bg-color">
-		<div th:replace="base :: navbar"></div>
-        
-        
+		<div th:replace="base :: navbar"></div>       
 
-        <div class="container container-color pt-0 shadow mt-3 rounded-3" role="search">
-            <div class="row p-4">
+        <div class="container container-color pb-5 shadow mt-3 rounded-3">
+        	<h2 class="p-4">Concerti</h2>
+        	
+            <div class="container row mt-2" role="search">
                 <form class="p-0" th:action="@{/users/concerti/cerca}" method="post">
                     <input name="citta" type="search" id="cerca" for="citta" class="form-control" placeholder="Filtra per città"
                         th:classappend="${#lists.isEmpty(concerti) ? 'is-invalid' : ' '}">

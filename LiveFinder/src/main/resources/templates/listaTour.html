@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Tour - LiveFinder')"></head>
-    <body>
+    <body class="bg-color">
         <div th:replace="base :: navbar"></div>
 
-        <div class="container  text-center mt-4">
-            <h2>Lista tour</h2>
+        <div class="container container-color pb-5 shadow mt-3 rounded-3">
+            <h2 class="p-4">Tour</h2>
             <div th:each="tour : ${listaTour}" class="p-3">
                 <div class="card">
                     <div class="card-header">

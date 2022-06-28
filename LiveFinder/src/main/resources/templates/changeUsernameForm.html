@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base.html :: head(titolo=#{changePassword.title})">
 </head>
-<body>
+<body class="bg-color">
 	<!-- START Navbar -->
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
-	<div class="container text-center mt-4">
-        <div class="mb-4">	
+	<div class="container text-center container-color pb-3 shadow mt-3 rounded-3">
+        <div class="mb-4 p-3">	
             <h1 th:text="#{changeUsername.header}">Cambia il tuo username</h1>
         </div>
         
@@ -28,7 +28,7 @@
 	        </div>
             
             <!-- Submit button -->
-            <button th:text="#{changeUsername.change}" type="submit" class="btn btn-primary btn-block mb-4">Cambia username</button>
+            <button th:text="#{changeUsername.change}" type="submit" class="btn btn-dark btn-block mb-4">Cambia username</button>
         </form>                     
     </div>
 </body>
