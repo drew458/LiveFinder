@@ -10,6 +10,7 @@
 				<li th:each="artista : ${artisti}">
 				<span th:text="${artista.nome} + ' ' + ${artista.genere} + ' ' + ${artista.annoFormazione}" >Maneskin Rock 2016</span>
 					<a href="artista.html" th:href="@{'/users/artista' + '/' + ${artista.id}}">Dettagli</a>
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/admin/artistaForm/' + ${artista.id}}">Modifica</a>
 					<a sec:authorize="hasAuthority('ADMIN')" href="confermaDeleteArtista.html" th:href="@{'/confermaDeleteArtista' + '/' + ${artista.id}}">Cancella</a></li>
 				</ul>
 		</div>	

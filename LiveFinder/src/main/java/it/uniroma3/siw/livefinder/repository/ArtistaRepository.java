@@ -9,4 +9,6 @@ import it.uniroma3.siw.livefinder.model.Artista;
 public interface ArtistaRepository extends CrudRepository<Artista, Long>{
     
 	boolean existsByNomeAndGenereAndAnnoFormazione(String nome, String genere, Year annoDiFormazione);
+
+	public Artista findByNomeAndGenereAndAnnoFormazione(String nome, String genere, Year annoDiFormazione);
 }

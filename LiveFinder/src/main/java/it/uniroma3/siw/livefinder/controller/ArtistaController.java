@@ -101,9 +101,10 @@ public class ArtistaController {
 		return "artisti";
 	}
 	
-	@GetMapping("/admin/artistaForm")
-	public String artistaForm(Model model) {
-		model.addAttribute("artista", new Artista());
+	@GetMapping({"/admin/artistaForm", "/admin/artistaForm/{id}"})
+	public String artistaForm(@PathVariable(name="id", required=false) Long id, Model model) {
+		Artista artista = id!=null ? artistaService.findById(id) : new Artista();
+		model.addAttribute("artista", artista);
 		return "admin/artistaForm";
 	}
 	

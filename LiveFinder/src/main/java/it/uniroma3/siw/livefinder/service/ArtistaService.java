@@ -45,7 +45,14 @@ public class ArtistaService {
 	}
 
 	public boolean alreadyExists(Artista artista) {
-		return artistaRepository.existsByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione());
+		if(artista.getId()==null){
+			return artistaRepository.existsByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione());
+		}else if(artistaRepository.existsByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione())){
+			Artista esistente = artistaRepository.findByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione());
+			return !(artista.getId().equals(esistente.getId()));
+		}else{
+			return false;
+		}
 	}
 
 }
