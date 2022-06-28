@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Artisti - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 
-		<div class="container mt-4">
-			<h2>ELENCO ARTISTI</h2>
+		<div class="container rounded-2 container-color">
+			<h2 class="pt-4">TUTTI GLI ARTISTI</h2>
 			<div th:each="letteraEArtisti : ${letteraArtisti}">
 				<div th:unless="${#lists.isEmpty(letteraEArtisti.value)}">
 					<span>
@@ -18,6 +18,11 @@
 								<a class="link-dark" th:href="'/users/artista/'+${artista.id}">
 									<!--<img class="rounded-2" width="70" height="70" s>-->
 									<p th:text="${artista.nome}"></p>
+								</a>
+							</div>
+							<div class="mt-2 pt-0">
+								<a class="link-dark" th:href="'/users/artisti/'+${letteraEArtisti.key}">
+									<p>VEDI TUTTI..</p>
 								</a>
 							</div>
 						</div>

@@ -12,7 +12,9 @@ public interface ArtistaRepository extends CrudRepository<Artista, Long>{
     
 	boolean existsByNomeAndGenereAndAnnoFormazione(String nome, String genere, Year annoDiFormazione);
 
-	public List<Artista> findByNomeStartsWithIgnoreCase(@Param("nome") String primaLettera);
+	public List<Artista> findTop5ByNomeStartsWithIgnoreCaseOrderByNome(@Param("nome") String primaLettera);
+
+	public List<Artista> findByNomeStartsWithIgnoreCaseOrderByNome(@Param("nome") String primaLettera);
 
 	public Artista findByNomeAndGenereAndAnnoFormazione(String nome, String genere, Year annoDiFormazione);
 }

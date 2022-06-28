@@ -46,6 +46,10 @@ public class Artista implements Comparable<Artista>{
 
     private boolean isGroup;
 
+	/**
+	 * default fetchtype = LAZY
+	 * Lo lascio così perché non mi interessa sempre sapere la lista dei tour 
+	 */
     @OneToMany(mappedBy = "artista")
     private List<Tour> listaTour;
 

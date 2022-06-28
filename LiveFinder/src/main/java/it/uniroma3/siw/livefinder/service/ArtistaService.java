@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
 
@@ -50,10 +52,15 @@ public class ArtistaService {
 		Map<Character, List<Artista>> letteraArtisti = new HashMap<>();
 		for(char alphabet = 'a'; alphabet<='z'; alphabet++){
 			String alphabetString = String.valueOf(alphabet);
-			List<Artista> artisti = artistaRepository.findByNomeStartsWithIgnoreCase(alphabetString);
+			List<Artista> artisti = artistaRepository.findTop5ByNomeStartsWithIgnoreCaseOrderByNome(alphabetString);
 			letteraArtisti.put(alphabet, artisti);
 		}
 		return letteraArtisti;
+	}
+
+	public List<Artista> findByLetter(String primaLettera){
+		return StreamSupport.stream(artistaRepository.findByNomeStartsWithIgnoreCaseOrderByNome(primaLettera).spliterator(), true)
+            .collect(Collectors.toList());
 	}
 
 	public boolean alreadyExists(Artista artista) {

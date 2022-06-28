@@ -1,6 +1,5 @@
 package it.uniroma3.siw.livefinder.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -101,6 +100,13 @@ public class ArtistaController {
 		Map<Character,List<Artista>> letteraArtisti = artistaService.findAllByLetter();
 		model.addAttribute("letteraArtisti", letteraArtisti);
 		return "artisti";
+	}
+
+	@GetMapping("/users/artisti/{primaLettera}")
+	public String getArtistiByLetter(@PathVariable("primaLettera") String primaLettera, Model model){
+		model.addAttribute("artisti", artistaService.findByLetter(primaLettera));
+		model.addAttribute("lettera", primaLettera);
+		return "artistiByLetter";
 	}
 	
 	@GetMapping({"/admin/artistaForm", "/admin/artistaForm/{id}"})
