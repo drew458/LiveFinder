@@ -92,8 +92,7 @@ public class Concerto implements Comparable<Concerto>{
 	}
 
 	@Override
-	public int compareTo(Concerto o) {
-		Concerto that = (Concerto)o;
+	public int compareTo(Concerto that) {
 		int compare = this.getData().compareTo(that.getData());
 		if(compare == 0){
 			compare = this.getTour().getNome().compareTo(that.getTour().getNome());

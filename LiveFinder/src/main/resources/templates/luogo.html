@@ -7,8 +7,10 @@
 		<div>
 		<h4>Dettagli luogo</h4>
 		<span th:text="${luogo.nome}">Ippodromo delle capannelle</span>
-		<span th:text="${luogo.indirizzo}">Via Appia Nuova</span>
-		<span th:text="${luogo.cap}">00178</span>
+		<span th:text="'Via/Viale '+${luogo.indirizzo.via}">Via Appia Nuova</span>
+		<span th:text="${luogo.indirizzo.numCivico}">191</span>
+		<span th:text="', '+${luogo.indirizzo.cap}">00145</span>
+		<span th:text="', '+${luogo.indirizzo.citta}">Roma</span>
 		</div>
 		<footer><a href="/">Home</a></footer>
 		

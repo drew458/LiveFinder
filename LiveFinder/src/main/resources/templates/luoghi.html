@@ -7,7 +7,7 @@
 			<h4>Elenco luoghi:</h4>
 			<ul>
 				<li th:each="luogo : ${luoghi}">
-				<span th:text="${luogo.nome} + ' ' + ${luogo.indirizzo} + ' ' + ${luogo.cap}" >Ippodromo delle capannelle Via Appia Nuova 00178</span>
+				<span th:text="${luogo.nome} + ' ' + ${luogo.indirizzo} " >Ippodromo delle capannelle Via Appia Nuova 00178</span>
 					<a href="luogo.html" th:href="@{'/users/luogo' + '/' + ${luogo.id}}">Dettagli</a>
 					<a sec:authorize="hasAuthority('ADMIN')" href="confermaDeleteLuogo.html" th:href="@{'/admin/confermaDeleteLuogo' + '/' + ${luogo.id}}">Cancella</a></li>
 				</ul>
