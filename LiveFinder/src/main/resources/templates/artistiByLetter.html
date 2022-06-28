@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Artisti - LiveFinder')"></head>
+	<body class="bg-color">
+		<div th:replace="base :: navbar"></div>
+
+        <div class="container container-color">
+            <h2 class="pt-4" th:text="'TUTTI GLI ARTISTI CHE INIZIANO PER '+${#strings.toUpperCase(lettera)}">TUTTI GLI ARTISTI</h2>
+            <div th:each="artista : ${artisti}">
+                <a class="link-dark" th:href="'/users/artista/'+${artista.id}">
+                    <p th:text="${artista.nome}"></p>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

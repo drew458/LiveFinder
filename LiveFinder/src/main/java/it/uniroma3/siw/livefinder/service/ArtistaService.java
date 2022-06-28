@@ -1,7 +1,11 @@
 package it.uniroma3.siw.livefinder.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
 
@@ -44,8 +48,30 @@ public class ArtistaService {
 		return artisti;
 	}
 
+	public Map<Character, List<Artista>> findAllByLetter(){
+		Map<Character, List<Artista>> letteraArtisti = new HashMap<>();
+		for(char alphabet = 'a'; alphabet<='z'; alphabet++){
+			String alphabetString = String.valueOf(alphabet);
+			List<Artista> artisti = artistaRepository.findTop5ByNomeStartsWithIgnoreCaseOrderByNome(alphabetString);
+			letteraArtisti.put(alphabet, artisti);
+		}
+		return letteraArtisti;
+	}
+
+	public List<Artista> findByLetter(String primaLettera){
+		return StreamSupport.stream(artistaRepository.findByNomeStartsWithIgnoreCaseOrderByNome(primaLettera).spliterator(), true)
+            .collect(Collectors.toList());
+	}
+
 	public boolean alreadyExists(Artista artista) {
-		return artistaRepository.existsByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione());
+		if(artista.getId()==null){
+			return artistaRepository.existsByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione());
+		}else if(artistaRepository.existsByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione())){
+			Artista esistente = artistaRepository.findByNomeAndGenereAndAnnoFormazione(artista.getNome(), artista.getGenere(), artista.getAnnoFormazione());
+			return !(artista.getId().equals(esistente.getId()));
+		}else{
+			return false;
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 package it.uniroma3.siw.livefinder.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -96,14 +97,22 @@ public class ArtistaController {
 	// richiede tutti gli artisti, non c'è id
 	@GetMapping("/users/artisti")
 	public String getArtisti(Model model) {
-		List<Artista> artisti = artistaService.findAll();
-		model.addAttribute("artisti", artisti);
+		Map<Character,List<Artista>> letteraArtisti = artistaService.findAllByLetter();
+		model.addAttribute("letteraArtisti", letteraArtisti);
 		return "artisti";
 	}
+
+	@GetMapping("/users/artisti/{primaLettera}")
+	public String getArtistiByLetter(@PathVariable("primaLettera") String primaLettera, Model model){
+		model.addAttribute("artisti", artistaService.findByLetter(primaLettera));
+		model.addAttribute("lettera", primaLettera);
+		return "artistiByLetter";
+	}
 	
-	@GetMapping("/admin/artistaForm")
-	public String artistaForm(Model model) {
-		model.addAttribute("artista", new Artista());
+	@GetMapping({"/admin/artistaForm", "/admin/artistaForm/{id}"})
+	public String artistaForm(@PathVariable(name="id", required=false) Long id, Model model) {
+		Artista artista = id!=null ? artistaService.findById(id) : new Artista();
+		model.addAttribute("artista", artista);
 		return "admin/artistaForm";
 	}
 	

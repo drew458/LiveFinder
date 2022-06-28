@@ -15,6 +15,9 @@
             </div>
 
             <div th:unless="${#lists.isEmpty(concerti)}">
+                <div class="row p-4">
+                    <h2  th:text="${titoloConcerti}"></h2>
+                </div>
                 <div th:each="concerto : ${concerti}">
                     <div class="row p-4">
                         <div class="card border-secondary p-0 list-group-item-action list-group-item-light"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
@@ -42,7 +45,7 @@
                                             <!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
                                             <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
                                         </p>
-                                        <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.nome}"></h6>
+                                        <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
                                     </div>
                                 </div>
                                 <div class="col-md-4 d-flex align-items-center">

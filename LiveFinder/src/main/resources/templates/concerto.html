@@ -32,8 +32,8 @@
 						<div class="form-group col-md-8">
 							<div class="list-group">
 								<label>Seleziona la tipologia di biglietto desiderata:</label>
-								<label class="list-group-item d-flex gap-2" th:each="biglietto : ${concerto.biglietti}">
-									<input class="form-check-input flex-shrink-0" type="radio" name="idBiglietto" th:value="${biglietto.id}">
+								<label class="list-group-item d-flex gap-2" th:each="biglietto, itemStat : ${concerto.biglietti}">
+									<input th:attr="checked=${itemStat.first} ? 'true' : 'false'" class="form-check-input flex-shrink-0" type="radio" name="idBiglietto" th:value="${biglietto.id}">
 									<span>
 										<div th:text="${biglietto.tipologia}"></div>
 										<small class="text-muted" th:text="${biglietto.prezzo}+'€'"></small>

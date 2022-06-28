@@ -4,10 +4,12 @@
 <body class="bg-color">
 	<div th:replace="base :: navbar"></div>
 
+
 	<div class="container text-center container-color pb-5 shadow mt-3 rounded-3">
 		<h1 class="p-4">Aggiungi un artista</h1>
 		<form th:action = "@{/admin/artista}" method="post" th:object="${artista}">
 			<div class="container">
+				<h2 class="mb-4" th:text="${artista.id==null} ? 'NUOVO ARTISTA' : 'MODIFICA ARTISTA'">NUOVO ARTISTA</h2>
 				<div class="card col-auto">
 					<div class="card-header">
 						Artista
@@ -39,6 +41,9 @@
 							</div>
 						</div>
 						<br>
+						<!--Field nascosco così durante l'aggiornamento non perdo l'id-->
+						<input hidden type="text" th:field="*{id}"/>
+
 						<div><button class="btn btn-dark" type="submit">Conferma</button></div>
 						<div th:if="${#fields.hasGlobalErrors()}">
 							<br>

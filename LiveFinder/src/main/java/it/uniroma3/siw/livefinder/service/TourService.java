@@ -1,6 +1,5 @@
 package it.uniroma3.siw.livefinder.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -44,11 +43,9 @@ public class TourService {
 	}
 	
 	public List<Tour> findAllByArtista(Artista artista) {
-		List<Tour> tour = new ArrayList<Tour>();
-		for(Tour t : tourRepository.findAllByArtista(artista)) {
-			tour.add(t);
-		}
-		return tour;
+		return StreamSupport.stream(tourRepository.findAllByArtista(artista).spliterator(),true)
+		.sorted()
+		.collect(Collectors.toList());
 	}
 
 	/**
@@ -62,7 +59,7 @@ public class TourService {
 			return tourRepository.existsByNome(tour.getNome());
 		}else if(tourRepository.existsByNome(tour.getNome())){
 			Tour tourEsistente = tourRepository.findByNome(tour.getNome());
-			return !(tour.getId() == tourEsistente.getId());
+			return !(tour.getId().equals(tourEsistente.getId()));
 		}else{
 			return false;
 		}
@@ -70,7 +67,8 @@ public class TourService {
 
 	public List<Tour> findAll(){
 		return StreamSupport.stream(tourRepository.findAll().spliterator(),true)
-			.collect(Collectors.toList());
+		.sorted()
+		.collect(Collectors.toList());
 	}
 
 	public void deleteTourById(Long id){
