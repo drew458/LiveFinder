@@ -1,6 +1,8 @@
 package it.uniroma3.siw.livefinder.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -96,8 +98,8 @@ public class ArtistaController {
 	// richiede tutti gli artisti, non c'è id
 	@GetMapping("/users/artisti")
 	public String getArtisti(Model model) {
-		List<Artista> artisti = artistaService.findAll();
-		model.addAttribute("artisti", artisti);
+		Map<Character,List<Artista>> letteraArtisti = artistaService.findAllByLetter();
+		model.addAttribute("letteraArtisti", letteraArtisti);
 		return "artisti";
 	}
 	

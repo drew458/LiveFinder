@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Artista {
+public class Artista implements Comparable<Artista>{
 	
 	public Artista(String nome, String genere, Year annoFormazione, boolean isGroup) {
 		super();
@@ -85,5 +85,10 @@ public class Artista {
         sb.append(", isGroup=").append(isGroup);
         sb.append("}\n");
         return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Artista that) {
+		return this.getNome().compareTo(that.getNome());
 	}
 }

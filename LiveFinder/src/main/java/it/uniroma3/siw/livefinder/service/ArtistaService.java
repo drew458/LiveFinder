@@ -1,7 +1,9 @@
 package it.uniroma3.siw.livefinder.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -42,6 +44,16 @@ public class ArtistaService {
 			artisti.add(a);
 		}
 		return artisti;
+	}
+
+	public Map<Character, List<Artista>> findAllByLetter(){
+		Map<Character, List<Artista>> letteraArtisti = new HashMap<>();
+		for(char alphabet = 'a'; alphabet<='z'; alphabet++){
+			String alphabetString = String.valueOf(alphabet);
+			List<Artista> artisti = artistaRepository.findByNomeStartsWithIgnoreCase(alphabetString);
+			letteraArtisti.put(alphabet, artisti);
+		}
+		return letteraArtisti;
 	}
 
 	public boolean alreadyExists(Artista artista) {
