@@ -1,5 +1,5 @@
 .navbar-color {
-    background-color: black;
+    background-color: #171717;
 }
 
 .container-color {
@@ -7,8 +7,12 @@
 }
 
 .bg-color {
-    background-color: #171717;
+    background-image: url('/images/background.png');
 }
+
+.logo-nrm-style{
+    font-family: Brush Script MT; 
+}  
 
 .logo-style {
     font-family: Brush Script MT; 
@@ -18,4 +22,30 @@
 .logo-big-style {
     font-family: Brush Script MT; 
     font-size: 60px;
+}
+
+.header-section-gradient {
+    background: linear-gradient(to bottom right, #6916c0 0%, #f7f908 100%);
+    border-style: hidden;
+}
+
+.card-header-purple {
+    color: #f7f908;
+    background-color: #6916c0; 
+}
+
+.btn-gradient {
+    background: linear-gradient(to bottom right, #6916c0 10%, #f7f908 100%);
+    border-style: hidden;
+    color: white;
+}
+
+.btn-purple {
+    color: #f7f908;
+    background-color: #6916c0;
+}
+
+.btn-yellow {
+    color: #6916c0;
+    background-color: #f7f908;
 }
