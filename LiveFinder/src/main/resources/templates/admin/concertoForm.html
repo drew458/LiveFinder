@@ -1,79 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='Concerto - LiveFinder')"></head>
-	<body class="bg-color">
-		<div th:replace="base :: navbar"></div>
+<head th:replace="base :: head(titolo='Concerto - LiveFinder')"></head>
+<body class="bg-color">
+	<div th:replace="base :: navbar"></div>
 
-        <div class="container container-color rounded-3 mt-3">
-            <form class="p-5" th:action="@{/admin/concerto}" method="post" th:object="${concerto}">
-                <h2 class="mb-4" th:text="${concerto.id==null} ? 'NUOVO CONCERTO' : 'MODIFICA CONCERTO'">NUOVO CONCERTO</h2>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="tour">Inserisci un tour..</label>
-                        <div class="list-group mx-0 w-auto overflow-auto" style="max-height: 200px;">
-                            <label class="list-group-item d-flex gap-2" th:each="tour : ${listaTour}" th:attr="style=${#fields.hasErrors('tour') ? 'border-color: #dc3545;' : ' '}">
-                                <input class="form-check-input flex-shrink-0" type="radio" th:value="${tour.id}" th:field="*{tour}" 
-                                    th:classappend="${#fields.hasErrors('tour') ? 'is-invalid' : ''}">
-                                <span>
-                                    <div th:text="${tour.nome}"></div>
-                                    <small class="d-block text-muted" th:text="${tour.artista.nome}"></small>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('tour')}" th:errors="*{tour}"></div>
+    <div class="container container-color pb-5 shadow rounded-3 mt-3">
+        <form class="p-5" th:action="@{/admin/concerto}" method="post" th:object="${concerto}">
+            <h2 class="text-center mb-4" th:text="${concerto.id==null} ? 'Aggiungi un concerto' : 'Modifica concerto'">Aggiungi un concerto</h2>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="tour">Inserisci un tour..</label>
+                    <div class="list-group mx-0 w-auto overflow-auto" style="max-height: 200px;">
+                        <label class="list-group-item d-flex gap-2" th:each="tour : ${listaTour}" th:attr="style=${#fields.hasErrors('tour') ? 'border-color: #dc3545;' : ' '}">
+                            <input class="form-check-input flex-shrink-0" type="radio" th:value="${tour.id}" th:field="*{tour}" 
+                                th:classappend="${#fields.hasErrors('tour') ? 'is-invalid' : ''}">
+                            <span>
+                                <div th:text="${tour.nome}"></div>
+                                <small class="d-block text-muted" th:text="${tour.artista.nome}"></small>
+                            </span>
+                        </label>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="concerto-date">Inserisci la data</label>
-                        <div class="input-group date">
-                            <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" class="form-control" th:field="${concerto.data}" id="concerto-data"
-                            th:classappend="${#fields.hasErrors('data') ? 'is-invalid' : ' '}"/>         
-                        </div>
-                        <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></div>
-                    </div>
-                    
+                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('tour')}" th:errors="*{tour}"></div>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="luogo">Seleziona un luogo...</label>
-                        <div class="list-group mx-0 w-auto overflow-auto">
-                            <div class="list-group mx-0 w-auto overflow-auto" style="max-height: 400px;">
-                                <label class="list-group-item d-flex gap-2" th:each="luogo : ${luoghi}" th:attr="style=${#fields.hasErrors('luogo') ? 'border-color: #dc3545;' : ' '}">
-                                    <input class="form-check-input flex-shrink-0" type="radio" th:value="${luogo.id}" th:field="*{luogo}" 
-                                        th:classappend="${#fields.hasErrors('luogo') ? 'is-invalid' : ''}">
-                                <span>
-                                    <div th:text="${luogo.nome}"></div>
-                                    <small class="d-block text-muted" th:text="${luogo.nome}"></small>
-                                </span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('luogo')}" th:errors="*{luogo}"></div>
+                <div class="form-group col-md-4">
+                    <label for="concerto-date">Inserisci la data</label>
+                    <div class="input-group date">
+                        <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" class="form-control" th:field="${concerto.data}" id="concerto-data"
+                        th:classappend="${#fields.hasErrors('data') ? 'is-invalid' : ' '}"/>         
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="numBiglietti">Aggiungi il numero di nuove tipologie biglietto da vendere..</label>
-                        <div class="input-group">
-                            <input class="form-control" type="number" name="numBiglietti" value="0"/>
-                        </div>
-                    </div>
+                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></div>
                 </div>
                 
-
-                <!--Field nascosco così durante l'aggiornamento non perdo l'id-->
-				<input hidden type="text" th:field="*{id}"/>
-
-                <!--Fiel nascosto così durante l'aggiornamento non perdo la lista di biglietti-->
-                <input hidden th:field="*{biglietti}"/>
-                <div class="text-center"><button class="btn btn-dark" type = "submit">Conferma</button></div>
-                <div th:if="${#fields.hasGlobalErrors()}">
-                    <br>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <h4 class="alert-heading">Arcipigna!</h4>
-                        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="luogo">Seleziona un luogo...</label>
+                    <div class="list-group mx-0 w-auto overflow-auto">
+                        <div class="list-group mx-0 w-auto overflow-auto" style="max-height: 400px;">
+                            <label class="list-group-item d-flex gap-2" th:each="luogo : ${luoghi}" th:attr="style=${#fields.hasErrors('luogo') ? 'border-color: #dc3545;' : ' '}">
+                                <input class="form-check-input flex-shrink-0" type="radio" th:value="${luogo.id}" th:field="*{luogo}" 
+                                    th:classappend="${#fields.hasErrors('luogo') ? 'is-invalid' : ''}">
+                            <span>
+                                <div th:text="${luogo.nome}"></div>
+                                <small class="d-block text-muted" th:text="${luogo.nome}"></small>
+                            </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('luogo')}" th:errors="*{luogo}"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="numBiglietti">Aggiungi il numero di nuove tipologie biglietto da vendere..</label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" name="numBiglietti" value="0"/>
                     </div>
                 </div>
-            </form>            
-        </div>
+            </div>
+            
 
-    </body>
+            <!--Field nascosco così durante l'aggiornamento non perdo l'id-->
+			<input hidden type="text" th:field="*{id}"/>
+
+            <!--Fiel nascosto così durante l'aggiornamento non perdo la lista di biglietti-->
+            <input hidden th:field="*{biglietti}"/>
+            <div class="text-center mt-4"><button class="btn btn-dark" type = "submit">Conferma</button></div>
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <br>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">Arcipigna!</h4>
+                    <div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
+                </div>
+            </div>
+        </form>            
+    </div>
+
+</body>
 </html>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Artisti - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 
-		<div class="container mt-4">
-			<h4>Elenco artisti:</h4>
+		<div class="container container-color pb-5 shadow mt-3 rounded-3">
+			<h2 class="p-4">Artisti</h2>
 			<ul>
 				<li th:each="artista : ${artisti}">
 				<span th:text="${artista.nome} + ' ' + ${artista.genere} + ' ' + ${artista.annoFormazione}" >Maneskin Rock 2016</span>

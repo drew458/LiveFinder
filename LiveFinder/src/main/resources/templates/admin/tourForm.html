@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='Inserimento artista - LiveFinder')"></head>
-	<body>
-		<div th:replace="base :: navbar"></div>
+<head th:replace="base :: head(titolo='Inserimento artista - LiveFinder')"></head>
+<body class="bg-color">
+	<div th:replace="base :: navbar"></div>
 
-		<div class="container text-center mt-3"><h1>Aggiungi un tour</h1></div>
+	<div class="container text-center container-color pb-5 shadow mt-3 rounded-3">
+		<h1 class="p-4">Aggiungi un tour</h1>
 		<form th:action = "@{/admin/tour}" method="post" th:object="${tour}">
 			<div class="container p-3">
 				<div class="card col-auto">
@@ -28,7 +29,7 @@
 								<select class="form-select" th:field="*{artista}">
 									<option th:each="artista : ${listaArtisti}" th:value="${artista.id}" th:text="${artista.nome}"></option>
 								</select>
-                                <span th:if="${#fields.hasErrors('artista.id')}" th:errors="*{artista.id}"></span>
+	                            <span th:if="${#fields.hasErrors('artista.id')}" th:errors="*{artista.id}"></span>
 							</div>
 						</div>
 						<br>
@@ -44,5 +45,6 @@
 				</div>
 			</div>
 		</form>
-	</body>
+	</div>
+</body>
 </html>

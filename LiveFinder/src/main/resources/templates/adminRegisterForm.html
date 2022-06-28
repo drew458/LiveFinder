@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base.html :: head(titolo=#{adminRegister.title})">
 </head>
-<body>
+<body class="bg-color">
 	<!-- START Navbar -->
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
-	<div class="container text-center mt-4">
-		<div class="mb-4">
+	<div class="container text-center container-color pb-3 shadow mt-3 rounded-3">
+		<div class="mb-4 p-3">
 		    <h1 th:text="#{adminRegister.registration}">Registrazione Admin</h1>
 		</div>
 		<form th:action="@{/adminRegister}" method="POST">
@@ -49,7 +49,7 @@
 		    </div>
 			  
 			<!-- Submit button -->
-		    <button th:text="#{register.register}" type="submit" class="btn btn-primary btn-block mb-4">Registrati</button>
+		    <button th:text="#{register.register}" type="submit" class="btn btn-dark btn-block mb-4">Registrati</button>
       	</form>      	              
   	</div>
   
