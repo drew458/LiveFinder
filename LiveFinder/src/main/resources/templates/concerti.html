@@ -5,19 +5,19 @@
 		<div th:replace="base :: navbar"></div>       
 
         <div class="container bg-white py-4 shadow">
-        	<div th:replace="base :: page-title(titolo='Tutti i concerti', frase='Scopri qui il tuo prossimo grande evento')"></div>
+        	<div th:replace="base :: page-title(titolo=${titoloConcerti}, frase='Scopri qui il tuo prossimo grande evento')"></div>
         	
-            <div class="container row mt-2" role="search">
+            <div class="row p-4 mt-2" role="search">
                 <form class="p-0" th:action="@{/users/concerti/cerca}" method="post">
-                    <input name="citta" type="search" id="cerca" for="citta" class="form-control shadow" placeholder="Filtra per città"
-                        th:classappend="${#lists.isEmpty(concerti) ? 'is-invalid' : ' '}">
+                    <div class="form-floating mb-3">
+                        <input name="citta" type="search" id="floatingCerca" class="form-control shadow" placeholder="Filtra per città"
+                            th:classappend="${#lists.isEmpty(concerti) ? 'is-invalid' : ' '}">
+                        <label for="floatingCerca">Filtra per città</label>
+                    </div>                    
                 </form>
             </div>
 
             <div th:unless="${#lists.isEmpty(concerti)}">
-                <div class="row p-4">
-                    <h2  th:text="${titoloConcerti}"></h2>
-                </div>
                 <div th:each="concerto : ${concerti}">
                     <div class="row p-4">
                         <div class="card p-0 list-group-item-action list-group-item-light shadow"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
@@ -49,9 +49,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <a class="btn btn-purple" th:href="@{'/users/concerto/'+${concerto.id}}" role="button">VEDI</a>
-                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-dark mx-2" th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">MODIFICA</a>
-                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-dark" role="button">CANCELLA</a>
+                                    <a class="btn btn-purple shadow-sm" th:href="@{'/users/concerto/'+${concerto.id}}" role="button">VEDI</a>
+                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm mx-2" th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">MODIFICA</a>
+                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" role="button">CANCELLA</a>
                                 </div>
                             </div>
                         </div>

@@ -8,7 +8,9 @@
             <form class="p-5" th:action="@{/admin/addBiglietti}" method="post" th:object="${concerto}">
                 <!--Field nascoscosti per non perdere l'oggetto concerto-->
 				<input hidden th:field="*{id}"/>
-                <input hidden th:field="*{luogo}"/>
+                <input hidden th:field="*{luogo.id}"/>
+                <input hidden th:field="*{luogo.nome}"/>
+                <input hidden th:field="*{luogo.citta}"/>
                 <input hidden th:field="*{data}"/>
                 <input hidden th:field="*{tour}"/>
 

@@ -47,6 +47,19 @@ public class Artista implements Comparable<Artista>{
     private boolean isGroup;
 
 	/**
+	 * i metodi generati da lombok con i buleani non sono
+	 * compatibili con i metodi richiesti da thymeleaf
+	 * @return
+	 */
+	public boolean getIsGroup(){
+		return this.isGroup;
+	}
+
+	public void setIsGroup(boolean isGroup){
+		this.isGroup = isGroup;
+	}
+
+	/**
 	 * default fetchtype = LAZY
 	 * Lo lascio così perché non mi interessa sempre sapere la lista dei tour 
 	 */
@@ -55,10 +68,6 @@ public class Artista implements Comparable<Artista>{
 
     @OneToOne
     private Contatto contatto;
-
-	public boolean getIsGroup(){
-		return this.isGroup;
-	}
 
 	@Override
 	public int hashCode() {

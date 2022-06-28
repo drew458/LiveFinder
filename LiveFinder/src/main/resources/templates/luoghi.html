@@ -17,11 +17,11 @@
 							</a>
 							<h6 class="fw-normal" title="Nome" th:text="${luogo.nome}"></h6>
 							<div th:if="${luogo.indirizzo!=null}" title="Indirizzo" th:text="'Via '+${luogo.indirizzo.via}+' '+${luogo.indirizzo.numCivico}+', '+${luogo.indirizzo.cap}+', '+${luogo.indirizzo.citta}"></div>
-							<div class="btn-group">
-								<button type="button" class="btn btn-sm btn-purple" th:data-url="'/users/luogo/'+${luogo.id}" onclick="window.location = this.getAttribute('data-url')">Vedi</button>
-                                <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm btn-dark" th:data-url="@{'/admin/luogoForm/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Modifica</button>
-                                <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm btn-dark" th:data-url="@{'/admin/confermaDeleteLuogo/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Elimina</button>
-                            </div>
+							
+							<button type="button" class="btn btn-sm btn-purple shadow-sm" th:data-url="'/users/luogo/'+${luogo.id}" onclick="window.location = this.getAttribute('data-url')">Vedi</button>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" th:data-url="@{'/admin/luogoForm/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Modifica</button>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" th:data-url="@{'/admin/confermaDeleteLuogo/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Elimina</button>
+                            
 						</div>
 					</div>
 				</div>

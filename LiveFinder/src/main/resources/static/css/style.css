@@ -8,11 +8,7 @@
 
 .bg-color {
     background-image: url('/images/background.png');
-}
-
-.logo-nrm-style{
-    font-family: Brush Script MT; 
-}  
+} 
 
 .logo-style {
     font-family: Brush Script MT; 
@@ -24,6 +20,10 @@
     font-size: 60px;
 }
 
+.text-shadow {
+    text-shadow: 2px 2px 4px #000000;
+}
+
 .header-section-gradient {
     background: linear-gradient(to bottom right, #6916c0 0%, #f7f908 100%);
     border-style: hidden;
@@ -31,13 +31,28 @@
 
 .card-header-purple {
     color: #f7f908;
-    background-color: #6916c0; 
+    background-color: #6916c0;
+    transition: .2s;
+}
+
+.card-header-purple:hover {
+    background-color: #f7f908;
+    color: #6916c0;
+    transition: .2s;
 }
 
 .btn-gradient {
     background: linear-gradient(to bottom right, #6916c0 10%, #f7f908 100%);
     border-style: hidden;
     color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(to bottom right, #f7f908 0%, #6916c0 100%);
+    border-style: hidden;
+    color: white;
+    transition: .3s;
 }
 
 .btn-purple {
@@ -45,7 +60,17 @@
     background-color: #6916c0;
 }
 
+.btn-purple:hover {
+    background-color:  #f7f908;
+    color: #6916c0;
+}
+
 .btn-yellow {
     color: #6916c0;
     background-color: #f7f908;
+}
+
+.btn-yellow:hover {
+    color: #f7f908;
+    background-color: #6916c0;
 }

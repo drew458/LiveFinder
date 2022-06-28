@@ -6,7 +6,7 @@
 
 
 		<div class="container bg-light py-4 shadow">
-			<div th:replace="base :: page-title(titolo='Tutti gli artisti', frase='Ecco tutti i nostri artisti')"></div>
+			<div th:replace="base :: page-title(titolo='Tutti gli artisti', frase='Ecco tutti gli artisti per te')"></div>
 			<div class="container px-5 py-3">
 				<div th:each="letteraEArtisti : ${letteraArtisti}" class="px-5">
 					<div th:unless="${#lists.isEmpty(letteraEArtisti.value)}">
@@ -17,12 +17,12 @@
 						<div class="pb-4">
 							<div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-3">
 								<div class="mt-2 pt-0" th:each="artista : ${letteraEArtisti.value}">
-									<strong><a class="btn btn-purple px-3" style="background-color: #6916c0;" th:href="'/users/artista/'+${artista.id}" th:text="${artista.nome}">
+									<a class="btn btn-purple px-3 shadow-sm" th:href="'/users/artista/'+${artista.id}" th:text="${artista.nome}">
 										<!--<img class="rounded-2" width="70" height="70" s>-->
-									</a></strong>
+									</a>
 								</div>
 								<div class="mt-2 pt-0">
-									<a class="btn btn-outline-dark" th:href="'/users/artisti/'+${letteraEArtisti.key}">
+									<a class="btn btn-yellow shadow-sm" th:href="'/users/artisti/'+${letteraEArtisti.key}">
 										VEDI TUTTI..
 									</a>
 								</div>

@@ -5,7 +5,7 @@
         <div th:replace="base :: navbar"></div>
 
         <div class="container bg-white py-4 shadow">
-            <div th:replace="base :: page-title(titolo='Tutti i nuovi tour in arrivo!', frase='Scopri cosa riservano per te gli artisti che ami')"></div>
+            <div th:replace="base :: page-title(titolo='Tutti i tour', frase='Scopri cosa riservano per te gli artisti che ami')"></div>
             <div th:each="tour : ${listaTour}" class="p-3">
                 <div class="card shadow">
                     <div class="card-header card-header-purple">
@@ -14,9 +14,9 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${tour.nome}"></h5>
                         <p class="card-text" th:text="${tour.anno}"></p>
-                        <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-gradient">Vedi</a>
-                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-dark" th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
-					    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-dark" h:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Cancella</a>
+                        <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-purple shadow-sm">Vedi</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
+					    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" h:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Cancella</a>
                     </div>
                 </div>
                 <br>
