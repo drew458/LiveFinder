@@ -30,10 +30,15 @@
 						<span class="h4">Indirizzo: </span>
 						<span class="h5 fw-normal" th:text="''+${user.indirizzo.via}+' '+${user.indirizzo.numCivico}+', '+${user.indirizzo.cap}+', '+${user.indirizzo.citta}"></span>
 						<span class="ms-1">
-							<button class="btn btn-dark" onclick="makeFormAppear()">
+							<button style="color: black;" onclick="makeFormAppear()">
 								<i class="bi bi-pencil"></i>
 							</button>
 						</span>
+						<span>
+	            			<a th:href="@{'/deleteIndirizzo' + '/' + ${indirizzo.id}}" style="color: black;">
+	            				<i class="bi bi-trash"></i>
+	            			</a>
+		            	</span>
 					</div>
           			
           			<!-- BOTTONE AGGIUNGI INDIRIZZO -->
