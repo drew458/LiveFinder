@@ -16,9 +16,17 @@ public class CittaService {
     @Autowired
     private CittaRepository cittaRepository;
 
+    public Citta findById(Long id){
+        return cittaRepository.findById(id).orElse(null);
+    }
+
     public List<Citta> findAll(){
         return StreamSupport.stream(cittaRepository.findAll().spliterator(), true)
             .collect(Collectors.toList());
+    }
+
+    public Citta save(Citta citta){
+        return cittaRepository.save(citta);
     }
 
     public boolean existsByNome(String nome){

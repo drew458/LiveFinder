@@ -48,6 +48,10 @@ public class ConcertoService {
             .collect(Collectors.toList());
 	}
 
+	public List<Concerto> findByCitta(Citta citta){
+		return concertoRepository.findByLuogoCitta(citta);
+	}
+
 	public List<Concerto> findByCitta(String nomeCitta){
 		if(!cittaService.existsByNome(nomeCitta)){
 			return null;

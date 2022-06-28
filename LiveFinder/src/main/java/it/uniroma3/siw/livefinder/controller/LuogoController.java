@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.livefinder.controller.validator.LuogoValidator;
+import it.uniroma3.siw.livefinder.model.Indirizzo;
 import it.uniroma3.siw.livefinder.model.Luogo;
+import it.uniroma3.siw.livefinder.service.CittaService;
 import it.uniroma3.siw.livefinder.service.LuogoService;
 
 @Controller
@@ -25,20 +27,26 @@ public class LuogoController {
 	
 	@Autowired
 	private LuogoValidator luogoValidator;
+
+	@Autowired
+	private CittaService cittaService;
 	
 	@PostMapping("/admin/luogo")
-	public String addLuogo(@Valid @ModelAttribute(value="luogo") Luogo luogo, 
-			BindingResult bindingResult, Model model) {
-		this.luogoValidator.validate(luogo, bindingResult);
+	public String addLuogo(@Valid @ModelAttribute(value="luogo") Luogo luogo, BindingResult bindingLuogoResult,
+							@Valid @ModelAttribute("indirizzo") Indirizzo indirizzo, 
+							BindingResult bindingIndirizzoResult, Model model) {
+		this.luogoValidator.validate(luogo, bindingLuogoResult);
 		
-		if (!bindingResult.hasErrors()) {
-			
+		if (!bindingIndirizzoResult.hasErrors() && !bindingLuogoResult.hasErrors()) {
+			luogo.setIndirizzo(indirizzo);
+			indirizzo.setCitta(luogo.getCitta().getNome());
 			this.luogoService.save(luogo);
+
 			model.addAttribute("luogo", luogo);
-			
 			return "luogo"; 
 		}
 		else {
+			model.addAttribute("listaCitta", cittaService.findAll());
 			return "admin/luogoForm"; 
 		}
 	}
@@ -70,9 +78,13 @@ public class LuogoController {
 		return "luoghi";
 	}
 	
-	@GetMapping("/admin/luogoForm")
-	public String luogoForm(Model model) {
-		model.addAttribute("luogo", new Luogo());
+	@GetMapping({"/admin/luogoForm", "/admin/luogoForm/{id}"})
+	public String luogoForm(@PathVariable(name="id", required=false) Long id, Model model) {
+		Luogo luogo = id!=null ? luogoService.findById(id) : new Luogo();
+		Indirizzo indirizzo = luogo.getIndirizzo()!=null ? luogo.getIndirizzo() : new Indirizzo();
+		model.addAttribute("luogo", luogo);
+		model.addAttribute("indirizzo", indirizzo);
+		model.addAttribute("listaCitta", cittaService.findAll());
 		return "admin/luogoForm";
 	}
 }

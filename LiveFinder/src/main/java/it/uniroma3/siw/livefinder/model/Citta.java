@@ -8,12 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
 @Data
 @Entity
-public class Citta {
+public class Citta implements Comparable<Citta>{
 	
 	public Citta(String nome, String provincia, String regione) {
 		super();
@@ -30,10 +31,13 @@ public class Citta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+	@NotBlank
     private String nome;
 
+	@NotBlank
     private String provincia;
 
+	@NotBlank
     private String regione;
 
     @OneToMany(mappedBy = "citta")
@@ -67,6 +71,11 @@ public class Citta {
         sb.append(", regione=").append(regione);
         sb.append("}\n");
         return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Citta that) {
+		return this.getNome().compareTo(that.getNome());
 	}
     
 }

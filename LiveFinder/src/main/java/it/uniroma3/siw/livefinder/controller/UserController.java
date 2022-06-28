@@ -80,7 +80,6 @@ public class UserController {
         User user = credentials.getUser();
 
         if(!bindingResult.hasErrors()){
-            Indirizzo vecchioIndirizzo = user.getIndirizzo();
             user.setIndirizzo(indirizzo);
 
             credentialsService.updateCredentials(credentials);

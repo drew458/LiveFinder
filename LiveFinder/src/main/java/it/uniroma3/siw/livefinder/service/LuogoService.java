@@ -44,6 +44,6 @@ public class LuogoService {
     }
     
     public boolean alreadyExists(Luogo target) {
-		return luogoRepository.existsByNomeAndIndirizzoAndCap(target.getNome(), target.getIndirizzo(), target.getCap());
+		return luogoRepository.existsByNomeAndIndirizzo(target.getNome(), target.getIndirizzo());
 	}
 }

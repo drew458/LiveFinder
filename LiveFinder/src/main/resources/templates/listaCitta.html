@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Tour - LiveFinder')"></head>
+    <body>
+        <div th:replace="base :: navbar"></div>
+    
+        <div class="container">
+            <h1>LISTA CITTA</h1>
+            <div th:each="citta : ${listaCitta}">
+                <p th:text="${citta.nome}"></p>
+            </div>
+        </div>
+    
+    </body>
+</html>

@@ -30,5 +30,5 @@ public class Indirizzo {
     private String numCivico; //è una stringa perché potrebbe contenere delle lettere
 
     @NotBlank
-    private String citta;
+    private String citta; //è una stringa perché non mi interessa salvare le città degli user
 }

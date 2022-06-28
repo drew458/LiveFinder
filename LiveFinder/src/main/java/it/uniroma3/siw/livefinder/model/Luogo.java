@@ -3,6 +3,7 @@ package it.uniroma3.siw.livefinder.model;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -17,11 +20,9 @@ import lombok.Data;
 @Entity
 public class Luogo implements Comparable<Luogo>{
     
-    public Luogo(String nome, String indirizzo, String cap) {
+    public Luogo(String nome) {
 		super();
 		this.nome = nome;
-		this.indirizzo = indirizzo;
-		this.cap = cap;
 	}
 
 	public Luogo() {
@@ -32,25 +33,24 @@ public class Luogo implements Comparable<Luogo>{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+	@NotBlank
     private String nome;
 
-    private String indirizzo;
-
-    private String cap;
-
     //private String coordinata;
+
+	@OneToOne(cascade = CascadeType.ALL) //unidirezionale
+	private Indirizzo indirizzo;
 
     @OneToMany(mappedBy = "luogo")
     private List<Concerto> concerti;
 
-    @OneToOne
-    private Contatto contatto;
-
+	@NotNull
     @ManyToOne
     private Citta citta;
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cap, indirizzo, nome);
+		return Objects.hash(nome);
 	}
 
 	@Override
@@ -65,8 +65,7 @@ public class Luogo implements Comparable<Luogo>{
 			return false;
 		}
 		Luogo other = (Luogo) obj;
-		return Objects.equals(cap, other.cap) && Objects.equals(indirizzo, other.indirizzo)
-				&& Objects.equals(nome, other.nome);
+		return Objects.equals(nome, other.nome);
 	}
 
 	@Override
@@ -81,16 +80,6 @@ public class Luogo implements Comparable<Luogo>{
 		if (nome != null) {
 			builder.append("nome=");
 			builder.append(nome);
-			builder.append(", ");
-		}
-		if (indirizzo != null) {
-			builder.append("indirizzo=");
-			builder.append(indirizzo);
-			builder.append(", ");
-		}
-		if (cap != null) {
-			builder.append("cap=");
-			builder.append(cap);
 			builder.append(", ");
 		}
 		builder.append("]");

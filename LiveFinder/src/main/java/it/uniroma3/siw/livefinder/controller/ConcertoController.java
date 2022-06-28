@@ -53,15 +53,8 @@ public class ConcertoController {
 
 	@RequestMapping(value = {"/admin/concertoForm", "/admin/concertoForm/{id}"})
 	public String getConcertoForm(@PathVariable(name = "id", required = false)Long id, Model model){
-		Concerto concerto;
+		Concerto concerto = id!=null ? concertoService.findById(id) : new Concerto();
 
-		if(id!=null){
-			concerto = concertoService.findById(id);
-		}else{
-			concerto = new Concerto();
-		}
-
-		//concerto.setData(new Date());
 		model.addAttribute("concerto", concerto);
 		model.addAttribute("listaTour", tourService.findAll());
 		model.addAttribute("luoghi", luogoService.findAll());
@@ -108,7 +101,7 @@ public class ConcertoController {
 			}
 
 			model.addAttribute("concerto", concerto);
-			return "bigliettiForm";
+			return "admin/bigliettiForm";
 		}else{
 			model.addAttribute("listaTour", tourService.findAll());
 			model.addAttribute("luoghi", luogoService.findAll());

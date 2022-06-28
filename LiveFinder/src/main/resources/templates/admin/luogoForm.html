@@ -4,45 +4,64 @@
 	<body>
 		<div th:replace="base :: navbar"></div>
 
-		<div class="container text-center mt-3"><h1>Aggiungi un luogo</h1></div>
-		<form th:action = "@{/admin/luogo}" method="post" th:object="${luogo}">
-			<div class="container p-3">
-				<div class="card col-auto">
-					<div class="card-header">
-						Luogo
+		<div class="container container-color">
+			<form th:action = "@{/admin/luogo}" method="post">	
+				<div class="row g-3 p-3">
+					<h2 class="mb-4" th:text="${luogo.id==null} ? 'NUOVO LUOGO' : 'MODIFICA LUOGO'">NUOVO LUOGO</h2>
+					<div class="form-group col-md-12">
+						<label for="Nome">Nome:</label>
+						<input class="form-control" placeholder="Ippodromo delle capannelle" type="text" th:field="${luogo.nome}" th:classappend="${#fields.hasErrors('luogo.nome') ? 'is-invalid' : ' '}"/>
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('luogo.nome')}" th:errors="${luogo.nome}"></span>
 					</div>
-					<div class="card-body">
-						<div class="row g-3">
-							<div class="form-group col-md-6">
-								<label for="Nome">Nome:</label>
-								<input class="form-control" placeholder="Ippodromo delle capannelle" type="text" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome') ? 'is-invalid' : ' '}"/>
-								<span class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+					<div class="form-group col-md-6">
+						<label for="Via">Via:</label>
+						<input class="form-control" placeholder="Via Appia Nuova" type="text" th:field="${indirizzo.via}" th:classappend="${#fields.hasErrors('indirizzo.via') ? 'is-invalid' : ' '}"/>
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('indirizzo.via')}" th:errors="${indirizzo.via}"></span>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="numCivico">Numero Civico:</label>
+						<input class="form-control" placeholder="79a" type="text" th:field="${indirizzo.numCivico}" th:classappend="${#fields.hasErrors('indirizzo.numCivico') ? 'is-invalid' : ' '}"/>
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('indirizzo.numCivico')}" th:errors="${indirizzo.numCivico}"></span>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="cap">CAP:</label>
+						<input class="form-control" placeholder="00178" type="text" th:field="${indirizzo.cap}" th:classappend="${#fields.hasErrors('indirizzo.cap') ? 'is-invalid' : ' '}"/>
+						<span class="invalid-feedback" th:if="${#fields.hasErrors('indirizzo.cap')}" th:errors="${indirizzo.cap}"></span>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="citta">Seleziona una citta...</label>
+						<div class="list-group mx-0 w-auto overflow-auto">
+							<div class="list-group mx-0 w-auto overflow-auto" style="max-height: 400px;">
+								<label class="list-group-item d-flex gap-2" th:each="citta : ${listaCitta}" th:attr="style=${#fields.hasErrors('luogo.citta') ? 'border-color: #dc3545;' : ' '}">
+									<input class="form-check-input flex-shrink-0" type="radio" th:value="${citta.id}" th:field="${luogo.citta}" 
+										th:classappend="${#fields.hasErrors('luogo.citta') ? 'is-invalid' : ''}">
+								<span>
+									<div th:text="${citta.nome}"></div>
+									<small class="d-block text-muted" th:text="${citta.regione}"></small>
+								</span>
+								</label>
 							</div>
-							<div class="form-group col-md-6">
-								<label for="Indirizzo">Indirizzo:</label>
-								<input class="form-control" placeholder="Via Appia Nuova" type="text" th:field="*{indirizzo}" th:classappend="${#fields.hasErrors('indirizzo') ? 'is-invalid' : ' '}"/>
-								<span class="invalid-feedback" th:if="${#fields.hasErrors('indirizzo')}" th:errors="*{indirizzo}"></span>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="cap">CAP:</label>
-								<input class="form-control" placeholder="00178" type="text" th:field="*{cap}" th:classappend="${#fields.hasErrors('cap') ? 'is-invalid' : ' '}"/>
-								<span class="invalid-feedback" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}"></span>
-							</div>
-							
 						</div>
-						<br>
-						<div><button class="btn btn-dark" type="submit">Conferma</button></div>
-						<div th:if="${#fields.hasGlobalErrors()}">
-							<br>
-							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								<h4 class="alert-heading">Arcipigna!</h4>
-								<div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
-							</div>
-						</div>
+						<div class="invalid-feedback" style="display: block;" th:if="${#fields.hasErrors('luogo.citta')}" th:errors="${luogo.citta}"></div>
+					</div>
+
+					<!--Field nascosco così durante l'aggiornamento non perdo l'id-->
+					<input hidden type="text" th:field="${luogo.id}"/>
+					<input hidden type="text" th:field="${indirizzo.id}"/>
+					<div><button class="btn btn-dark" type="submit">Conferma</button></div>
+				</div>
+				<!--
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<br>
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<h4 class="alert-heading">Arcipigna!</h4>
+						<div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
 					</div>
 				</div>
-			</div>
-		</form>		
+				-->
+			</form>
+		</div>
+				
 		
 	</body>
 </html>
