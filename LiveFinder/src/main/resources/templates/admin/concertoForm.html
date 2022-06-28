@@ -4,7 +4,7 @@
 	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 
-        <div class="container container-color">
+        <div class="container container-color rounded-3 mt-3">
             <form class="p-5" th:action="@{/admin/concerto}" method="post" th:object="${concerto}">
                 <h2 class="mb-4">NUOVO CONCERTO</h2>
                 <div class="row">
@@ -43,7 +43,7 @@
                                         th:classappend="${#fields.hasErrors('luogo') ? 'is-invalid' : ''}">
                                 <span>
                                     <div th:text="${luogo.nome}"></div>
-                                    <small class="d-block text-muted" th:text="${luogo.citta.nome}"></small>
+                                    <small class="d-block text-muted" th:text="${luogo.nome}"></small>
                                 </span>
                                 </label>
                             </div>
@@ -64,7 +64,7 @@
 
                 <!--Fiel nascosto così durante l'aggiornamento non perdo la lista di biglietti-->
                 <input hidden th:field="*{biglietti}"/>
-                <div class="text-center"><button class="btn btn-dark" type = "submit">Conferma</button></div>
+                <div class="text-center mt-3"><button class="btn btn-dark" type = "submit">Conferma</button></div>
             </form>            
         </div>
 
