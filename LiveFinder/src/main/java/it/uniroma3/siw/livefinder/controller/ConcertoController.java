@@ -58,7 +58,7 @@ public class ConcertoController {
 		model.addAttribute("concerto", concerto);
 		model.addAttribute("listaTour", tourService.findAll());
 		model.addAttribute("luoghi", luogoService.findAll());
-		return "concertoForm";
+		return "admin/concertoForm";
 	}
 
 	@PostMapping("/users/concerti/cerca")
@@ -101,11 +101,11 @@ public class ConcertoController {
 			}
 
 			model.addAttribute("concerto", concerto);
-			return "bigliettiForm";
+			return "admin/bigliettiForm";
 		}else{
 			model.addAttribute("listaTour", tourService.findAll());
 			model.addAttribute("luoghi", luogoService.findAll());
-			return "concertoForm";
+			return "admin/concertoForm";
 		}
 
 	}

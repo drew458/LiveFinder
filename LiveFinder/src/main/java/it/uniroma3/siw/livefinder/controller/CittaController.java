@@ -45,7 +45,7 @@ public class CittaController {
         Citta citta = id!=null ? cittaService.findById(id) : new Citta();
         
         model.addAttribute("citta", citta);
-        return "cittaForm";
+        return "admin/cittaForm";
     }
 
     @PostMapping("/admin/citta")
@@ -58,7 +58,7 @@ public class CittaController {
             model.addAttribute("citta", citta);
             return "listaCitta";
         }else{
-            return "cittaForm";
+            return "admin/cittaForm";
         }
     }
     
