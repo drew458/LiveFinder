@@ -4,9 +4,9 @@
 	<body>
 		<div th:replace="base :: navbar"></div>
 
-		<div class="container"><h4>Aggiungi un artista</h4></div>
 		<form th:action = "@{/admin/artista}" method="post" th:object="${artista}">
 			<div class="container">
+				<h2 class="mb-4" th:text="${artista.id==null} ? 'NUOVO ARTISTA' : 'MODIFICA ARTISTA'">NUOVO ARTISTA</h2>
 				<div class="card col-auto">
 					<div class="card-header">
 						Artista

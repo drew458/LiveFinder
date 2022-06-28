@@ -64,6 +64,7 @@ public class ConcertoController {
 	@PostMapping("/users/concerti/cerca")
 	public String findByCitta(@RequestParam("citta") String cerca, Model model){
 		logger.info("Sto cercando: "+cerca);
+		model.addAttribute("titoloConcerti", "RISULTATI RICERCA: "+cerca);
 		model.addAttribute("concerti", concertoService.findByCitta(cerca.toUpperCase()));
 		return "concerti";
 	}
@@ -83,6 +84,7 @@ public class ConcertoController {
 
 	@GetMapping("/users/concerti")
 	public String getAll(Model model){
+		model.addAttribute("titoloConcerti", "TUTTI I CONCERTI: ");
 		model.addAttribute("concerti", concertoService.getAllConcerti());
 		return "concerti";
 	}
