@@ -4,10 +4,17 @@
 <body class="bg-color">
 	<div th:replace="base :: navbar"></div>
 
-	<div class="container container-color pb-5 shadow mt-3 rounded-3">
-		<form class="p-5" th:action = "@{/admin/luogo}" method="post">	
+	<div class="container bg-white pb-5 shadow">
+		<form th:action = "@{/admin/luogo}" method="post">
+			<div class="pt-3">
+				<div th:if="${luogo.id==null}">
+					<div th:replace="base :: page-title(titolo='Nuovo luogo', frase='Riempi i campi per aggiungere un luogo')"></div>
+				</div>
+				<div th:unless="${luogo.id==null}">
+					<div th:replace="base :: page-title(titolo='Modifica luogo', frase=|Qui puoi modificare i dettagli del luogo|)"></div>
+				</div>
+			</div>
 			<div class="row g-3 p-3">
-				<h2 class="mb-4" th:text="${luogo.id==null} ? 'Nuovo luogo' : 'Modifica luogo'">Nuovo luogo</h2>
 				<div class="form-group col-md-12">
 					<label for="Nome">Nome:</label>
 					<input class="form-control" placeholder="Ippodromo delle capannelle" type="text" th:field="${luogo.nome}" th:classappend="${#fields.hasErrors('luogo.nome') ? 'is-invalid' : ' '}"/>
@@ -49,8 +56,8 @@
 				<input hidden type="text" th:field="${luogo.id}"/>
 				<input hidden type="text" th:field="${indirizzo.id}"/>
 				<div class="text-center pt-3">
-					<button class="btn btn-dark" type="submit">Conferma</button>
-				</div>
+					<button class="btn btn-purple w-50 shadow" type="submit">Conferma</button>
+				</div>		
 			</div>
 			<!--
 			<div th:if="${#fields.hasGlobalErrors()}">

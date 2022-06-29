@@ -9,7 +9,7 @@
 		<div class="album">
 			<div class="container bg-white  py-4">
 				<div th:replace="base :: page-title(titolo='Tutte le località', frase='Tutti i più iconici luoghi dove vivere le tue migliori esperienze!')"></div>
-				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" th:fragment="listaLuoghi">
 					<div class="col" th:each="luogo : ${luoghi}">
 						<div class="text-center">
 							<a th:href="@{'/users/luogo/'+${luogo.id}}">

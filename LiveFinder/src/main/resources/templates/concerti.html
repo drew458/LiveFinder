@@ -58,6 +58,13 @@
                         </div>
                     </div>
                 </div>
+                <div th:unless="${#lists.isEmpty(luoghi)}">
+                    <div class="pb-5">
+                        <h3 class="text-center title-purple">Località</h3>
+                        <p class="text-center">Qui puoi trovare tutte le località in questa città</p>
+                    </div>
+                    <div th:replace="luoghi :: listaLuoghi"></div>
+                </div>
             </div>
 
             <div th:if="${#lists.isEmpty(concerti)}">

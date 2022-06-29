@@ -53,6 +53,9 @@
                             <li class="nav-item">
                                 <a class="nav-link acrive" aria-current="page" th:href="@{/users/luoghi}">LUOGHI</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link acrive" aria-current="page" th:href="@{/users/listaCitta}">CITTA</a>
+                            </li>
                         </ul>
                         
                         <!-- Se l'utente non è loggato, mostra i pulsanti di login e registrazione -->
@@ -92,6 +95,11 @@
 						      		<a th:href="@{/admin/luogoForm}" class="dropdown-item"
 						      			aria-expanded="true">Aggiungi un luogo</a>									
                                 </li>
+
+                                <li>	
+                                    <a th:href="@{/admin/cittaForm}" class="dropdown-item"
+                                        aria-expanded="true">Aggiungi una città</a>									
+                              </li>
                             </ul>
                         </div>
                         

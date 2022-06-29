@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="base :: head(titolo='Inserimento artista - LiveFinder')"></head>
+<head th:replace="base :: head(titolo='Inserimento tour - LiveFinder')"></head>
 <body class="bg-color">
 	<div th:replace="base :: navbar"></div>
 
 
-	<div class="container text-center container-color pb-5 shadow mt-3 rounded-3">
-		<h1 class="p-4">Aggiungi un tour</h1>
+	<div class="container text-center bg-white pb-5 shadow">
 		<form th:action = "@{/admin/tour}" method="post" th:object="${tour}">
-			<div class="container p-3">
-				<h2 class="mb-4" th:text="${tour.id==null} ? 'NUOVO TOUR' : 'MODIFICA TOUR'">NUOVO TOUR</h2>
-				<div class="card col-auto">
-					<div class="card-header">
-						Tour
-					</div>
-					<div class="card-body">
+			<div class="container pt-4">
+				<div th:if="${tour.id==null}">
+					<div th:replace="base :: page-title(titolo='Nuovo tour', frase='Riempi i campi per aggiungere un tour')"></div>
+				</div>
+				<div th:unless="${tour.id==null}">
+					<div th:replace="base :: page-title(titolo='Modifica tour', frase=|Qui puoi modificare i dettagli del tour|)"></div>
+				</div>
+				<div class="col-auto">
 						<div class="row g-3">
 							<div class="form-group col-md-6">
 								<label for="Nome">Nome:</label>
@@ -28,15 +28,22 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="artista">Seleziona un artista</label>
-								<select class="form-select" th:field="*{artista}">
-									<option th:each="artista : ${listaArtisti}" th:value="${artista.id}" th:text="${artista.nome}"></option>
-								</select>
+								<div class="list-group mx-0 w-auto overflow-auto" style="max-height: 200px;">
+									<label class="list-group-item text-start d-flex gap-2" th:each="artista : ${listaArtisti}" th:attr="style=${#fields.hasErrors('artista') ? 'border-color: #dc3545;' : ' '}">
+										<input class="form-check-input flex-shrink-0" type="radio" th:value="${artista.id}" th:field="*{artista}" 
+											th:classappend="${#fields.hasErrors('artista') ? 'is-invalid' : ''}">
+										<span>
+											<div th:text="${artista.nome}"></div>
+											<small class="d-block text-muted" th:text="${artista.genere}"></small>
+										</span>
+									</label>
+								</div>
 	                            <span th:if="${#fields.hasErrors('artista.id')}" th:errors="*{artista.id}"></span>
 							</div>
 						</div>
 						<!--Field nascosco così durante l'aggiornamento non perdo l'id-->
 						<input hidden type="text" th:field="*{id}"/>
-						<div><button class="btn btn-dark mt-2" type="submit">Conferma</button></div>
+						<div><button class="btn btn-purple w-50 shadow mt-4" type="submit">Conferma</button></div>
 						<div th:if="${#fields.hasGlobalErrors()}">
 							<br>
 							<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -44,7 +51,6 @@
 								<div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</form>

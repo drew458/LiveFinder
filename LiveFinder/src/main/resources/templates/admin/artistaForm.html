@@ -5,16 +5,16 @@
 	<div th:replace="base :: navbar"></div>
 
 
-	<div class="container text-center container-color pb-5 shadow mt-3 rounded-3">
-		<h1 class="p-4">Aggiungi un artista</h1>
+	<div class="container text-center pb-5 bg-white shadow">
 		<form th:action = "@{/admin/artista}" method="post" th:object="${artista}">
+			<div th:if="${artista.id==null}" class="pt-4">
+				<div th:replace="base :: page-title(titolo='Nuovo artista', frase='Riempi i campi per aggiungere un artista')"></div>
+			</div>
+			<div th:unless="${artista.id==null}" class="pt-4">
+				<div th:replace="base :: page-title(titolo='Modifica artista', frase=|Qui puoi modificare i dettagli dell'artista|)"></div>
+			</div>
 			<div class="container">
-				<h2 class="mb-4" th:text="${artista.id==null} ? 'NUOVO ARTISTA' : 'MODIFICA ARTISTA'">NUOVO ARTISTA</h2>
-				<div class="card col-auto">
-					<div class="card-header">
-						Artista
-					</div>
-					<div class="card-body">
+				<div class="col-auto">
 						<div class="row g-3">
 							<div class="form-group col-md-6">
 								<label for="Nome">Nome:</label>
@@ -44,7 +44,7 @@
 						<!--Field nascosco così durante l'aggiornamento non perdo l'id-->
 						<input hidden type="text" th:field="*{id}"/>
 
-						<div><button class="btn btn-dark" type="submit">Conferma</button></div>
+						<div><button class="btn btn-purple w-50 shadow" type="submit">Conferma</button></div>
 						<div th:if="${#fields.hasGlobalErrors()}">
 							<br>
 							<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -52,7 +52,6 @@
 								<div th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</form>

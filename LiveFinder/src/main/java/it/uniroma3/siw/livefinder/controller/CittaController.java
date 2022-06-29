@@ -30,7 +30,10 @@ public class CittaController {
 
     @GetMapping("/users/citta/{id}")
     public String findById(@PathVariable("id") Long id, Model model){
-        model.addAttribute("concerti", concertoService.findByCitta(cittaService.findById(id)));
+        Citta citta = cittaService.findById(id);
+        model.addAttribute("concerti", concertoService.findByCitta(citta));
+        model.addAttribute("luoghi", citta.getLuoghi());
+        model.addAttribute("titoloConcerti", citta.getNome());
         return "concerti";
     }
 
