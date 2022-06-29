@@ -59,11 +59,20 @@ public class UserController {
     
             Biglietto biglietto = bigliettoService.findById(idBiglietto);
             user.addBiglietti(Collections.nCopies(numBiglietti, biglietto)); //in questo modo suppongo che lo stesso utente possa comprare biglietti di tipologia diversa
-    
+            
+            Indirizzo nuovoIndirizzo = new Indirizzo();
             if(salva && indirizzo!=null){
                 user.setIndirizzo(indirizzo);
+                nuovoIndirizzo = indirizzo;
+            }else{
+                nuovoIndirizzo = user.getIndirizzo()!=null ? user.getIndirizzo() : new Indirizzo();
             }
+
             credentialsService.updateCredentials(credentials);
+            model.addAttribute("credentials", credentials);
+            model.addAttribute("user", user);
+            model.addAttribute("indirizzo", nuovoIndirizzo);
+            model.addAttribute("biglietti", user.getBiglietti());
             return "userProfile";
         }
         else {
