@@ -46,12 +46,76 @@
 				th:text="${#authentication.getPrincipal().getUsername()}">
 	    	</h3>
 			
-			<div class="pt-3">
-				<a th:href="@{/users/artisti}" class="link-light">Tutti gli artisti</a>
+			<!-- <div class="pt-3">
+				<a th:href="@{/users/artisti}" style="color: black;">Tutti gli artisti</a>
 			</div>
 			
 			<div>
-				<a th:href="@{/users/listaTour}" class="link-light">Tutti i tour</a>
+				<a th:href="@{/users/listaTour}" style="color: black;">Tutti i tour</a>
+			</div> -->
+			
+			<div th:if="${concerti} and ${listaTour}" class="container p-4">
+				<div class="row">
+					<div class="col">
+						<div th:each="concerto : ${concerti}">
+		                    <div class="row p-4">
+		                    	<h5>Concerti</h5>
+		                        <div class="card border-secondary p-0 list-group-item-action list-group-item-light"  
+		                        	th:data-url="@{'/users/concerto/'+${concerto.id}}" onclick="window.location = this.getAttribute('data-url')">
+		                            <div class="row g-0">
+		                                <div class="col">
+		                                    <a th:href="@{'/users/concerto/'+${concerto.id}}">
+		                                        <img src="/images/concerto.jpg" class="img-fluid rounded-start" style="height: 100%; object-fit: cover;">
+		                                    </a>
+		                                </div>
+		                                <div class="col">
+		                                    <div class="card-body">
+		                                        <h5 name="Nome tour" class="card-title" >
+		                                            <a class="link-dark" style="text-decoration: none;" th:href="@{'/users/tour/'+${concerto.tour.id}}" 
+		                                                th:text="${concerto.tour.nome}"></a>
+		                                        </h5>
+		                                        <h6 class="card-subtitle mb-2 text-muted">
+		                                            <a class="link-secondary" style="text-decoration: none;" 
+		                                                th:href="@{'/users/artista/'+${concerto.tour.artista.id}}"  th:text="${concerto.tour.artista.nome}"></a>
+		                                        </h6>
+		                                        <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+		                                                                        ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
+		                                        <p class="card-text text-muted mt-0 pt-0">
+		                                            <span th:text="${#dates.hour(concerto.data)}+' :'"></span>
+		                                            <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
+		                                        </p>
+		                                        <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		            <div class="col">
+		            	<div th:each="tour : ${listaTour}">
+		            		<div class="row p-4">
+		            			<h5>Tour</h5>
+				                <div class="card">
+				                    <div class="card-header mt-1">
+				                        <a class="h5" th:text="${tour.artista.nome}" style="color: black; text-decoration: none;"
+				                        	th:href="@{'/users/artista/'+${tour.artista.id}}"></a>
+				                    </div>
+				                    <div class="card-body">
+			                    		<a class="card-title text-center lead display-6" th:text="${tour.nome}" 
+			                    			style="color: black; text-decoration: none;"	th:href="'/users/tour/'+ ${tour.id}"></a>
+		                        		<p class="card-text p-2" th:text="${tour.anno}" style="color: black;"></p>
+			                        </div>
+				                </div>
+		            		</div>
+			            </div>			            
+		            </div>
+				</div>
+			</div>
+			
+			<div th:unless="${concerti} and ${listaTour}" class="text-center p-4">
+				<h2>Nessun concerto da visualizzare</h2>			 
 			</div>	
 		</div>
 		<!-- END AUTHENTICATED -->
@@ -107,6 +171,66 @@
 					<div class="mt-1">
 						<a th:href="@{/admin/luogoForm}" class="link-light">Aggiungi un luogo</a>
 					</div>
+				</div>
+			</div>
+			
+			<div th:if="${concerti} and ${listaTour}" class="container p-4">
+				<div class="row">
+					<div class="col">
+						<div th:each="concerto : ${concerti}">
+		                    <div class="row p-4">
+		                    	<h5>Concerti</h5>
+		                        <div class="card border-secondary p-0 list-group-item-action list-group-item-light"  
+		                        	th:data-url="@{'/users/concerto/'+${concerto.id}}" onclick="window.location = this.getAttribute('data-url')">
+		                            <div class="row g-0">
+		                                <div class="col">
+		                                    <a th:href="@{'/users/concerto/'+${concerto.id}}">
+		                                        <img src="/images/concerto.jpg" class="img-fluid rounded-start" style="height: 100%; object-fit: cover;">
+		                                    </a>
+		                                </div>
+		                                <div class="col">
+		                                    <div class="card-body">
+		                                        <h5 name="Nome tour" class="card-title" >
+		                                            <a class="link-dark" style="text-decoration: none;" th:href="@{'/users/tour/'+${concerto.tour.id}}" 
+		                                                th:text="${concerto.tour.nome}"></a>
+		                                        </h5>
+		                                        <h6 class="card-subtitle mb-2 text-muted">
+		                                            <a class="link-secondary" style="text-decoration: none;" 
+		                                                th:href="@{'/users/artista/'+${concerto.tour.artista.id}}"  th:text="${concerto.tour.artista.nome}"></a>
+		                                        </h6>
+		                                        <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+		                                                                        ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
+		                                        <p class="card-text text-muted mt-0 pt-0">
+		                                            <span th:text="${#dates.hour(concerto.data)}+' :'"></span>
+		                                            <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
+		                                        </p>
+		                                        <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		            <div class="col">
+		            	<div th:each="tour : ${listaTour}">
+		            		<div class="row p-4">
+		            			<h5>Tour</h5>
+				                <div class="card">
+				                    <div class="card-header mt-1">
+				                        <a class="h5" th:text="${tour.artista.nome}" style="color: black; text-decoration: none;"
+				                        	th:href="@{'/users/artista/'+${tour.artista.id}}"></a>
+				                    </div>
+				                    <div class="card-body">
+			                    		<a class="card-title text-center lead display-6" th:text="${tour.nome}" 
+			                    			style="color: black; text-decoration: none;"	th:href="'/users/tour/'+ ${tour.id}"></a>
+		                        		<p class="card-text p-2" th:text="${tour.anno}" style="color: black;"></p>
+			                        </div>
+				                </div>
+		            		</div>
+			            </div>			            
+		            </div>
 				</div>
 			</div>			
 		</div>
