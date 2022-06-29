@@ -60,7 +60,7 @@ public class ArtistaService {
 	}
 
 	public BigDecimal getMinPrezzoByArtista(Artista artista){
-		return artistaRepository.findMinPrezzoByArtista(artista.getNome());
+		return artistaRepository.findMinPrezzoByArtista(artista.getId());
 	}
 
 	public List<Artista> findByLetter(String primaLettera){

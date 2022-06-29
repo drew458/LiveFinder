@@ -4,6 +4,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -63,7 +64,7 @@ public class Artista implements Comparable<Artista>{
 	 * default fetchtype = LAZY
 	 * Lo lascio così perché non mi interessa sempre sapere la lista dei tour 
 	 */
-    @OneToMany(mappedBy = "artista")
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
     private List<Tour> listaTour;
 
     @OneToOne

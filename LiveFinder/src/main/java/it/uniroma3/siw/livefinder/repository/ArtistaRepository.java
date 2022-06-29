@@ -14,9 +14,9 @@ public interface ArtistaRepository extends CrudRepository<Artista, Long>{
     
 	boolean existsByNomeAndGenereAndAnnoFormazione(String nome, String genere, Year annoDiFormazione);
 
-	@Query(value="SELECT min(b.prezzo) FROM Biglietto b, Concerto c, Tour t, Artista a WHERE c.id=b.concerto_id AND c.tour_id=t.id AND t.artista_id=a.id AND a.nome=?1",
+	@Query(value="SELECT min(b.prezzo) FROM Biglietto b, Concerto c, Tour t, Artista a WHERE c.id=b.concerto_id AND c.tour_id=t.id AND t.artista_id=a.id AND a.id=?1",
 			nativeQuery=true)
-	public BigDecimal findMinPrezzoByArtista(@Param("artista") String artista);
+	public BigDecimal findMinPrezzoByArtista(@Param("id") Long id);
 
 	public List<Artista> findTop5ByNomeStartsWithIgnoreCaseOrderByNome(@Param("nome") String primaLettera);
 

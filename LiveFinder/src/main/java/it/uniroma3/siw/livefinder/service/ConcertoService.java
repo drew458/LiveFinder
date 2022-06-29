@@ -7,6 +7,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.uniroma3.siw.livefinder.model.Artista;
 import it.uniroma3.siw.livefinder.model.Citta;
 import it.uniroma3.siw.livefinder.model.Concerto;
 import it.uniroma3.siw.livefinder.repository.ConcertoRepository;
@@ -50,6 +51,10 @@ public class ConcertoService {
 
 	public List<Concerto> findByCitta(Citta citta){
 		return concertoRepository.findByLuogoCitta(citta);
+	}
+
+	public Long countByTourArtista(Artista artista){
+		return concertoRepository.countByTourArtista(artista);
 	}
 
 	public List<Concerto> findByCitta(String nomeCitta){

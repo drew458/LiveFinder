@@ -29,6 +29,26 @@
     border-style: hidden;
 }
 
+.link-muted {
+    font-weight: bold;
+    color:#6c757d;
+    text-decoration: none;
+}
+
+.text-purple {
+    color: #6916c0;
+}
+
+.link-muted:hover {
+    color:#6916c0;
+    text-decoration: underline;
+}
+
+.link-purple:hover{
+    text-decoration: underline;
+    color:#6916c0;
+}
+
 .card-header-purple-not-hover {
     color: #f7f908;
     background-color: #6916c0;
