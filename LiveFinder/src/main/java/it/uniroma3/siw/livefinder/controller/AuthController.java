@@ -130,7 +130,7 @@ public class AuthController {
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
-		model.addAttribute("concerti", this.concertoService.getAllConcerti());
+		model.addAttribute("concerti", this.concertoService.findAll());
 		model.addAttribute("listaTour", this.tourService.findAll());
 		return "index";
 	}
@@ -191,7 +191,7 @@ public class AuthController {
 		    }
 		}
 		
-		model.addAttribute("concerti", this.concertoService.getAllConcerti());
+		model.addAttribute("concerti", this.concertoService.findAll());
 		model.addAttribute("listaTour", this.tourService.findAll());
 		
 		return "index";

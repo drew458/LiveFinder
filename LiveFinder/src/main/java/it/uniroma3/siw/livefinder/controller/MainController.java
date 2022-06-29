@@ -20,7 +20,7 @@ public class MainController {
 	@GetMapping(value = {"/", "index"})
 	public String index(Model model) {
 		
-		model.addAttribute("concerti", this.concertoService.getAllConcerti());
+		model.addAttribute("concerti", this.concertoService.findAll());
 		model.addAttribute("listaTour", this.tourService.findAll());
 		
 		return "index";
