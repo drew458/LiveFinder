@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='Tour - LiveFinder')"></head>
-    <body class="bg-color">
-        <div th:replace="base :: navbar"></div>
+<head th:replace="base :: head(titolo='Tour - LiveFinder')"></head>
+<body class="bg-color">
+    <div th:replace="base :: navbar"></div>
 
         <div class="container bg-white py-4 shadow">
             <div th:replace="base :: page-title(titolo='Tutti i tour', frase='Scopri cosa riservano per te gli artisti che ami')"></div>
@@ -26,13 +26,13 @@
                         <br>
                     </div>
                 </div>
+
                 <div th:if="${#lists.isEmpty(listaTour)}">
                     <h2 class="text-purple">Non ci sono ancora tour..</h2>
                     <p class="lead">Ritorna più avanti per trovare nuovi tour sempre aggiornati!</p>
                 </div>
             </div>
-            
-        </div>
-        
-    </body>
+        </div>            
+    </div>        
+</body>
 </html>
