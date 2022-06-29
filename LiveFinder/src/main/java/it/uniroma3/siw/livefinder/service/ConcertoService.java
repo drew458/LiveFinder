@@ -21,11 +21,15 @@ public class ConcertoService {
 	@Autowired
 	private ConcertoRepository concertoRepository;
 
+	@Autowired
+	private BigliettoService bigliettoService;
+
 	public Concerto save(Concerto concerto){
 		return concertoRepository.save(concerto);
 	}
 
 	public void deleteById(Long id){
+		bigliettoService.deleteNonCompratiByConcertoId(id);
 		concertoRepository.deleteById(id);
 	}
 

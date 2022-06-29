@@ -93,6 +93,7 @@ public class ConcertoController {
 	public String deleteConcerto(@PathVariable("id") Long id, Model model) {
 		concertoService.deleteById(id);
 		model.addAttribute("concerti", concertoService.findAll());
+		model.addAttribute("titoloConcerti", "Tutti i concerti");
 		return "concerti";
 	}
 
@@ -143,7 +144,7 @@ public class ConcertoController {
 			}
 		});
 		
-		//bigliettoService.deleteIfConcertoNull();
+		bigliettoService.saveAll(concerto.getBiglietti());
 		concertoService.save(concerto);
 
 		model.addAttribute("concerto", concerto);

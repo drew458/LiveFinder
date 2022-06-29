@@ -10,7 +10,7 @@
             </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-3 m-4">
                 <div th:each="citta : ${listaCitta}">
-                    <a class="link-purple" th:href="@{'/users/citta/'+${citta.id}}">
+                    <a class="link-purple" th:href="@{'/users/citta/'+${citta.id}}" >
                         <p th:text="${citta.nome}"></p>
                     </a>
                 </div>
