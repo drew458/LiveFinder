@@ -21,7 +21,9 @@ import it.uniroma3.siw.livefinder.controller.validator.UserValidator;
 import it.uniroma3.siw.livefinder.model.Credentials;
 import it.uniroma3.siw.livefinder.model.Indirizzo;
 import it.uniroma3.siw.livefinder.model.User;
+import it.uniroma3.siw.livefinder.service.ConcertoService;
 import it.uniroma3.siw.livefinder.service.CredentialsService;
+import it.uniroma3.siw.livefinder.service.TourService;
 import it.uniroma3.siw.livefinder.service.UserService;
 
 @Controller
@@ -32,6 +34,12 @@ public class AuthController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TourService tourService;
+	
+	@Autowired
+	private ConcertoService concertoService;
 	
 	@Autowired
 	private UserValidator userValidator;
@@ -122,6 +130,8 @@ public class AuthController {
 
 	@GetMapping("/default")
 	public String defaultAfterLogin(Model model) {
+		model.addAttribute("concerti", this.concertoService.findAll());
+		model.addAttribute("listaTour", this.tourService.findAll());
 		return "index";
 	}
 	
@@ -180,7 +190,10 @@ public class AuthController {
 			    model.addAttribute("user", oauthUser);
 		    }
 		}
-
+		
+		model.addAttribute("concerti", this.concertoService.findAll());
+		model.addAttribute("listaTour", this.tourService.findAll());
+		
 		return "index";
 	}
 	
