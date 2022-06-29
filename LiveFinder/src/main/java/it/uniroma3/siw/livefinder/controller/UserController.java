@@ -73,6 +73,7 @@ public class UserController {
             model.addAttribute("user", user);
             model.addAttribute("indirizzo", nuovoIndirizzo);
             model.addAttribute("biglietti", user.getBiglietti());
+            model.addAttribute("canChange", credentialsService.isLoggedWithEmail());
             return "userProfile";
         }
         else {
