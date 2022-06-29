@@ -4,14 +4,14 @@
 	<body>
 		<div th:replace="base :: navbar"></div>
 		
-		<h4>Luogo da cancellare:</h4>
-		<div>
-			<span th:text="${luogo.nome}">Ippodromo delle capannelle</span>
-			<span th:text="${luogo.indirizzo}">Via Appia Nuova</span>
-			<span th:text="${luogo.cap}">00178</span>
-		</div>
-		<div><a href = "luogo.html" th:href="@{'/deleteLuogo' + '/' +${luogo.id}}"
-					th:text = "CONFERMA">CONFERMA</a>
+		<div class="container">
+			<h2>Luogo da cancellare:</h2>
+			<div>
+				<span th:text="${luogo.nome}">Ippodromo delle capannelle</span>
+			</div>
+			<div><a href = "luogo.html" th:href="@{'/deleteLuogo' + '/' +${luogo.id}}"
+						th:text = "CONFERMA">CONFERMA</a>
+			</div>
 		</div>
 	
 	</body>

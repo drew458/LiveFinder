@@ -4,19 +4,22 @@
 <body class="bg-color">
     <div th:replace="base :: navbar"></div>
 
-    <div class="container container-color pb-5 shadow mt-3 rounded-3">
-        <h2 class="p-4">Tour</h2>
-        <div th:each="tour : ${listaTour}" class="p-3">
-            <div class="card">
-                <div class="card-header">
-                    <div th:text="${tour.artista.nome}"></div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${tour.nome}"></h5>
-                    <p class="card-text" th:text="${tour.anno}"></p>
-                    <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-dark">Vedi</a>
-                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-secondary" th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
-				    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-danger" h:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Cancella</a>
+        <div class="container bg-white py-4 shadow">
+            <div th:replace="base :: page-title(titolo='Tutti i tour', frase='Scopri cosa riservano per te gli artisti che ami')"></div>
+            <div th:each="tour : ${listaTour}" class="p-3">
+                <div class="card shadow">
+                    <div class="card-header card-header-purple">
+                        <div th:text="${tour.artista.nome}"></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${tour.nome}"></h5>
+                        <p class="card-text" th:text="${tour.anno}"></p>
+                        <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-purple shadow-sm">Vedi</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" 
+                            th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
+					    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" 
+                            th:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Elimina</a>
+                    </div>
                 </div>
             </div>
         </div>            

@@ -1,58 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="base :: head(titolo='Cancella artista - LiveFinder')"></head>
+	<head th:replace="base :: head(titolo='Cancella tour - LiveFinder')"></head>
 	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
-
+		
 		<div class="container bg-white"  style="width: 50%;">
 			<div class="row text-center">
-				<h4 class="title-purple py-4">Artista da cancellare:</h4>
+				<h4 class="title-purple py-4">Tour da cancellare:</h4>
 				<div class="row col-6 mx-auto">
+					<div class="col-6 py-0">
+						<p class="lead text-purple">Nome tour:</p>
+					</div>
+					<div class="col-6 py-0">
+						<p th:text="${tour.nome}"></p>
+					</div>
+					<hr style="width: 90%;">
+					<div class="col-6 py-0">
+						<p class="lead text-purple">Anno di svolgimento:</p>
+					</div>
+					<div class="col-6 py-0">
+						<p th:text="${tour.anno}"></p>
+					</div>
+					<hr style="width: 90%;">
 					<div class="col-6 py-0">
 						<p class="lead text-purple">Nome artista:</p>
 					</div>
 					<div class="col-6 py-0">
-						<p th:text="${artista.nome}"></p>
-					</div>
-					<hr style="width: 90%;">
-					<div class="col-6 py-0">
-						<p class="lead text-purple">Genere:</p>
-					</div>
-					<div class="col-6 py-0">
-						<p th:text="${artista.genere}"></p>
-					</div>
-					<hr style="width: 90%;">
-					<div class="col-6 py-0">
-						<p class="lead text-purple">Anno di inizio attività:</p>
-					</div>
-					<div class="col-6 py-0">
-						<p th:text="${artista.annoFormazione}"></p>
-					</div>
-					<hr style="width: 90%;">
-					<div class="col-6 py-0">
-						<p class="lead text-purple">Numero tour:</p>
-					</div>
-					<div class="col-6 py-0">
-						<p th:text="${#lists.size(artista.listaTour)}"></p>
+						<p th:text="${tour.artista.nome}"></p>
 					</div>
 					<hr style="width: 90%;">
 					<div class="col-6 py-0">
 						<p class="lead text-purple">Numero concerti:</p>
 					</div>
 					<div class="col-6 py-0">
-						<p th:text="${numConcerti}"></p>
+						<p th:text="${#lists.size(tour.concerti)}"></p>
 					</div>
 					<hr style="width: 90%;">
 				</div>
 				<div class="d-flex justify-content-center py-3">
 					<div class="w-50 alert alert-danger alert-dismissible fade show shadow" role="alert">
 						<h4 class="alert-heading">Attenzione!</h4>
-						<p>Questo cancellerà anche tutti i <strong>tour</strong> e i relativi <strong>concerti</strong> di questo artista</p>
+						<p>Questo cancellerà anche tutti i <strong>concerti</strong> che fanno parte di questo tour</p>
 					</div>
 				</div>
-				<div class="pb-5"><a class="btn btn-yellow w-25 shadow" href = "tour.html" th:href="@{'/users/artista' + '/' +${artista.id}}"
+				<div class="pb-5"><a class="btn btn-yellow w-25 shadow" href = "tour.html" th:href="@{'/users/tour' + '/' +${tour.id}}"
 					th:text = "Annulla">Annulla</a>
-				<a class="btn btn-purple w-25 shadow" href = "artista.html" th:href="@{'/admin/deleteArtista' + '/' +${artista.id}}"
+				<a class="btn btn-purple w-25 shadow" href = "tour.html" th:href="@{'/admin/deleteTour' + '/' +${tour.id}}"
 							th:text = "Conferma">Conferma</a>
 				</div>
 			</div>

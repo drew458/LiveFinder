@@ -4,6 +4,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,18 +48,27 @@ public class Artista implements Comparable<Artista>{
     private boolean isGroup;
 
 	/**
+	 * i metodi generati da lombok con i buleani non sono
+	 * compatibili con i metodi richiesti da thymeleaf
+	 * @return
+	 */
+	public boolean getIsGroup(){
+		return this.isGroup;
+	}
+
+	public void setIsGroup(boolean isGroup){
+		this.isGroup = isGroup;
+	}
+
+	/**
 	 * default fetchtype = LAZY
 	 * Lo lascio così perché non mi interessa sempre sapere la lista dei tour 
 	 */
-    @OneToMany(mappedBy = "artista")
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
     private List<Tour> listaTour;
 
     @OneToOne
     private Contatto contatto;
-
-	public boolean getIsGroup(){
-		return this.isGroup;
-	}
 
 	@Override
 	public int hashCode() {

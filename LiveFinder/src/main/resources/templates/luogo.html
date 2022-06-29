@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Dettagli luogo - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 		
-		<div>
-		<h4>Dettagli luogo</h4>
+		<div class="container">
+		<h2>Dettagli luogo</h2>
 		<span th:text="${luogo.nome}">Ippodromo delle capannelle</span>
-		<span th:text="'Via/Viale '+${luogo.indirizzo.via}">Via Appia Nuova</span>
-		<span th:text="${luogo.indirizzo.numCivico}">191</span>
-		<span th:text="', '+${luogo.indirizzo.cap}">00145</span>
-		<span th:text="', '+${luogo.indirizzo.citta}">Roma</span>
+		<div th:unless="${luogo.indirizzo==null}">
+			<span th:text="'Via/Viale '+${luogo.indirizzo.via}">Via Appia Nuova</span>
+			<span th:text="${luogo.indirizzo.numCivico}">191</span>
+			<span th:text="', '+${luogo.indirizzo.cap}">00145</span>
+			<span th:text="', '+${luogo.indirizzo.citta}">Roma</span>
+		</div>
 		</div>
 		
 	</body>

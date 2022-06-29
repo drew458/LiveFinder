@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base.html :: head(titolo=#{index.title})">
 </head>
-<body class="bg-color">
+<body class="navbar-color">
 	<!-- START Navbar -->
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
   
-	<div class="container text-center container-color pb-5 shadow mt-3 rounded-3">
+	<div class="container text-center text-white pb-5 mt-3 rounded-3">
 	
 		<!-- ANONYMOUS -->
 		<div sec:authorize="isAnonymous()">
@@ -15,11 +15,11 @@
 			<p class="logo-big-style" th:text="'LiveFinder '+#{index.anonymousWelcomeLogo}">LiveFinder</p>
 			
 			<div>
-				<a th:href="@{/login}" th:text="#{index.login}" style="color: black;">Accedi</a>
+				<a th:href="@{/login}" th:text="#{index.login}" class="link-light">Accedi</a>
 			</div>
 			
 			<div>
-				<a th:href="@{/register}" th:text="#{index.register}" style="color: black;">Registrati</a>
+				<a th:href="@{/register}" th:text="#{index.register}" class="link-light">Registrati</a>
 			</div>
 		</div>
 		<!-- END ANONYMOUS -->
@@ -143,31 +143,31 @@
 			    	</h3>
 					
 					<div class="mt-3">
-						<a th:href="@{/users/artisti}" style="color: black;">Tutti gli artisti</a>
+						<a th:href="@{/users/artisti}" class="link-light">Tutti gli artisti</a>
 					</div>
 					
 					<div class="mt-1">
-						<a th:href="@{/users/listaTour}" style="color: black;">Tutti i tour</a>
+						<a th:href="@{/users/listaTour}" class="link-light">Tutti i tour</a>
 					</div>						
 				</div>
 				
 				<div class="col-lg mb-4 mt-4">
-					<h1 th:text="#{index.adminOperations}" style="color: black;">Operazioni per Admin</h1>
+					<h1 th:text="#{index.adminOperations}" class="link-light">Operazioni per Admin</h1>
 					
 					<div class="mt-2">
-						<a th:href="@{/admin/artistaForm}" style="color: black;">Aggiungi artista</a>
+						<a th:href="@{/admin/artistaForm}" class="link-light">Aggiungi artista</a>
 					</div>
 					
 					<div class="mt-1">
-						<a th:href="@{/admin/tourForm}" style="color: black;">Aggiungi un tour</a>
+						<a th:href="@{/admin/tourForm}" class="link-light">Aggiungi un tour</a>
 		      		</div>
 		      
 					<div class="mt-1">
-						<a th:href="@{/admin/concertoForm}" style="color: black;">Aggiungi un concerto</a>
+						<a th:href="@{/admin/concertoForm}" class="link-light">Aggiungi un concerto</a>
 		      		</div>
 					
 					<div class="mt-1">
-						<a th:href="@{/admin/luogoForm}" style="color: black;">Aggiungi un luogo</a>
+						<a th:href="@{/admin/luogoForm}" class="link-light">Aggiungi un luogo</a>
 					</div>
 				</div>
 			</div>			

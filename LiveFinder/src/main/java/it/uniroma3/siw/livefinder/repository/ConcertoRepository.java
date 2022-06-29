@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import it.uniroma3.siw.livefinder.model.Artista;
 import it.uniroma3.siw.livefinder.model.Citta;
 import it.uniroma3.siw.livefinder.model.Concerto;
 
@@ -20,4 +21,6 @@ public interface ConcertoRepository extends CrudRepository<Concerto, Long>{
 		public boolean existsByTourNomeAndData(String nomeTour, Date data);
 
 		public Concerto findByTourNomeAndData(String nomeTour, Date date);
+
+		public long countByTourArtista(Artista artista);
 }

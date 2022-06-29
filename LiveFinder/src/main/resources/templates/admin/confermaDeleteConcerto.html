@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="base :: head(titolo='Cancella concerto - LiveFinder')"></head>
+	<body class="bg-color">
+		<div th:replace="base :: navbar"></div>
+
+		<div class="container bg-white"  style="width: 50%;">
+			<div class="row text-center">
+				<h4 class="title-purple py-4">Concerto da cancellare:</h4>
+				<div class="row col-6 mx-auto">
+					<div class="col-6 py-0">
+						<p class="lead text-purple">Nome artista:</p>
+					</div>
+					<div class="col-6 py-0">
+						<p th:text="${concerto.tour.artista.nome}"></p>
+					</div>
+					<hr>
+					<div class="col-6 py-0">
+						<p class="lead text-purple">Nome tour di cui fa parte:</p>
+					</div>
+					<div class="col-6 py-0">
+						<p th:text="${concerto.tour.nome}"></p>
+					</div>
+					<hr>
+					<div class="col-6 py-0">
+						<p class="lead text-purple">Data:</p>
+					</div>
+					<div class="col-6 py-0">
+						<p class="lead" >
+                        <span th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+                            ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></span>
+                        <span th:text="${#dates.hour(concerto.data)}+' :'"></span>
+                        <!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
+                        <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
+                        </p>
+					</div>
+					<hr>
+					<div class="col-6 py-0">
+						<p class="lead text-purple">Luogo:</p>
+					</div>
+					<div class="col-6 py-0">
+						<p th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></p>
+					</div>
+					<hr>
+					<div class="col-6 py-0">
+						<p class="lead text-purple">Numero tipoligie biglietti vendute:</p>
+					</div>
+					<div class="col-6 py-0">
+						<p th:text="${#lists.size(concerto.biglietti)}"></p>
+					</div>
+					<hr>
+				</div>
+				<div class="d-flex justify-content-center py-3">
+					<div class="w-50 alert alert-danger alert-dismissible fade show shadow" role="alert">
+						<h4 class="alert-heading">Attenzione!</h4>
+						<p>Questo cancellerà anche tutti i <strong>biglietti</strong> di questo concerto</p>
+					</div>
+				</div>
+				<div class="pb-5"><a class="btn btn-yellow w-25 shadow" href = "tour.html" th:href="@{'/users/concerto' + '/' +${concerto.id}}"
+					th:text = "Annulla">Annulla</a>
+				<a class="btn btn-purple w-25 shadow" href = "concerto.html" th:href="@{'/admin/deleteConcerto' + '/' +${concerto.id}}"
+							th:text = "Conferma">Conferma</a>
+				</div>
+			</div>
+		</div>
+	
+	</body>
+</html>

@@ -51,6 +51,19 @@ public class TourController {
         return "admin/tourForm";
     }
 
+    @GetMapping("/admin/confermaDeleteTour/{id}")
+  public String confermaDeleteTour(@PathVariable("id") Long id, Model model) {
+    model.addAttribute("tour", tourService.findById(id));
+    return "admin/confermaDeleteTour";
+  }
+
+  @GetMapping("/admin/deleteTour/{id}")
+  public String deleteTour(@PathVariable("id") Long id, Model model) {
+    tourService.deleteById(id);
+    model.addAttribute("listaTour", tourService.findAll());
+    return "listaTour";
+  }
+
     @PostMapping("/admin/tour")
     public String newTour(@Valid @ModelAttribute("tour") Tour tour, BindingResult bindingResult, Model model){
         tourValidator.validate(tour, bindingResult);
@@ -60,7 +73,7 @@ public class TourController {
             model.addAttribute("tour", tour);
             return "tour";
         }else{
-            model.addAttribute("listaArtisti", artistaService.findAll());
+            model.addAttribute("listalistaTour", artistaService.findAll());
             return "admin/tourForm";
         }
     }

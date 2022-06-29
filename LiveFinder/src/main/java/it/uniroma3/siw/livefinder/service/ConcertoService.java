@@ -7,6 +7,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.uniroma3.siw.livefinder.model.Artista;
 import it.uniroma3.siw.livefinder.model.Citta;
 import it.uniroma3.siw.livefinder.model.Concerto;
 import it.uniroma3.siw.livefinder.repository.ConcertoRepository;
@@ -22,6 +23,10 @@ public class ConcertoService {
 
 	public Concerto save(Concerto concerto){
 		return concertoRepository.save(concerto);
+	}
+
+	public void deleteById(Long id){
+		concertoRepository.deleteById(id);
 	}
 
 	public Concerto findById(Long id){
@@ -42,7 +47,7 @@ public class ConcertoService {
 	/*
 	 * Ottienere la lista dei concerti
 	 */
-	public List<Concerto> getAllConcerti(){
+	public List<Concerto> findAll(){
 		return StreamSupport.stream(concertoRepository.findAll().spliterator(), true)
 			.sorted()
             .collect(Collectors.toList());
@@ -50,6 +55,10 @@ public class ConcertoService {
 
 	public List<Concerto> findByCitta(Citta citta){
 		return concertoRepository.findByLuogoCitta(citta);
+	}
+
+	public Long countByTourArtista(Artista artista){
+		return concertoRepository.countByTourArtista(artista);
 	}
 
 	public List<Concerto> findByCitta(String nomeCitta){
