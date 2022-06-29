@@ -46,12 +46,74 @@
 				th:text="${#authentication.getPrincipal().getUsername()}">
 	    	</h3>
 			
-			<div class="pt-3">
+			<!-- <div class="pt-3">
 				<a th:href="@{/users/artisti}" style="color: black;">Tutti gli artisti</a>
 			</div>
 			
 			<div>
 				<a th:href="@{/users/listaTour}" style="color: black;">Tutti i tour</a>
+			</div> -->
+			
+			<div th:if="${concerti} and ${listaTour}" class="container p-4">
+				<div class="row">
+					<div class="col">
+						<div th:each="concerto : ${concerti}">
+		                    <div class="row p-4">
+		                    	<h5>Concerti</h5>
+		                        <div class="card border-secondary p-0 list-group-item-action list-group-item-light"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
+		                                onclick="window.location = this.getAttribute('data-url')">
+		                            <div class="row g-0">
+		                                <div class="col-md-2">
+		                                    <a th:href="@{'/users/concerto/'+${concerto.id}}">
+		                                        <img src="/images/concerto.jpg" class="img-fluid rounded-start" style="height: 100%; object-fit: cover;">
+		                                    </a>
+		                                </div>
+		                                <div class="col-md-6">
+		                                    <div class="card-body">
+		                                        <h5 name="Nome tour" class="card-title" >
+		                                            <a class="link-dark" style="text-decoration: none;" th:href="@{'/users/tour/'+${concerto.tour.id}}" 
+		                                                th:text="${concerto.tour.nome}"></a>
+		                                        </h5>
+		                                        <h6 class="card-subtitle mb-2 text-muted">
+		                                            <a class="link-secondary" style="text-decoration: none;" 
+		                                                th:href="@{'/users/artista/'+${concerto.tour.artista.id}}"  th:text="${concerto.tour.artista.nome}"></a>
+		                                        </h6>
+		                                        <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+		                                                                        ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
+		                                        <p class="card-text text-muted mt-0 pt-0">
+		                                            <span th:text="${#dates.hour(concerto.data)}+' :'"></span>
+		                                            <!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
+		                                            <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
+		                                        </p>
+		                                        <h6 class="card-text" th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		            <div class="col">
+		            	<div th:each="tour : ${listaTour}" class="p-2">
+		            		<div class="row p-4">
+		            			<h5>Tour</h5>
+				                <div class="card">
+				                    <div class="card-header mt-1">
+				                        <div class="lead" th:text="${tour.artista.nome}"></div>
+				                    </div>
+				                    <div class="card-body">
+				                        <h5 class="card-title" th:text="${tour.nome}"></h5>
+				                        <p class="card-text" th:text="${tour.anno}"></p>
+				                        <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-dark">Vedi</a>
+				                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-secondary" th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
+									    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-danger" h:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Cancella</a>
+				                    </div>
+				                </div>
+		            		</div>
+			            </div>			            
+		            </div>
+				</div>
 			</div>	
 		</div>
 		<!-- END AUTHENTICATED -->
