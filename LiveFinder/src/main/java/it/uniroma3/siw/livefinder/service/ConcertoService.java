@@ -25,6 +25,10 @@ public class ConcertoService {
 		return concertoRepository.save(concerto);
 	}
 
+	public void deleteById(Long id){
+		concertoRepository.deleteById(id);
+	}
+
 	public Concerto findById(Long id){
 		return concertoRepository.findById(id).orElse(null);
 	}
@@ -43,7 +47,7 @@ public class ConcertoService {
 	/*
 	 * Ottienere la lista dei concerti
 	 */
-	public List<Concerto> getAllConcerti(){
+	public List<Concerto> findAll(){
 		return StreamSupport.stream(concertoRepository.findAll().spliterator(), true)
 			.sorted()
             .collect(Collectors.toList());

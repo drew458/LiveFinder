@@ -76,16 +76,30 @@ public class ConcertoController {
 			List<Concerto> concertiPerCitta = concertoService.getByCitta(citta);
 			model.addAttribute("concerti", concertiPerCitta);
 		}else {
-			List<Concerto> concerti = concertoService.getAllConcerti();
+			List<Concerto> concerti = concertoService.findAll();
 			model.addAttribute("concerti", concerti);
 		}
 		return "index";
 	}
 
+	@GetMapping("/admin/confermaDeleteConcerto/{id}")
+	public String confermaDeleteConcerto(@PathVariable("id") Long id, Model model) {
+		Concerto concerto = concertoService.findById(id);
+		model.addAttribute("concerto", concerto);
+		return "admin/confermaDeleteConcerto";
+	}
+
+	@GetMapping("/admin/deleteConcerto/{id}")
+	public String deleteConcerto(@PathVariable("id") Long id, Model model) {
+		concertoService.deleteById(id);
+		model.addAttribute("concerti", concertoService.findAll());
+		return "concerti";
+	}
+
 	@GetMapping("/users/concerti")
 	public String getAll(Model model){
 		model.addAttribute("titoloConcerti", "Tutti i concerti ");
-		model.addAttribute("concerti", concertoService.getAllConcerti());
+		model.addAttribute("concerti", concertoService.findAll());
 		return "concerti";
 	}
 
