@@ -1,5 +1,5 @@
 .navbar-color {
-    background-color: black;
+    background-color: #171717;
 }
 
 .container-color {
@@ -7,8 +7,8 @@
 }
 
 .bg-color {
-    background-color: #171717;
-}
+    background-image: url('/images/background.png');
+} 
 
 .logo-style {
     font-family: Brush Script MT; 
@@ -18,4 +18,101 @@
 .logo-big-style {
     font-family: Brush Script MT; 
     font-size: 60px;
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.header-section-gradient {
+    background: linear-gradient(to bottom right, #6916c0 0%, #f7f908 100%);
+    border-style: hidden;
+}
+
+.link-muted {
+    font-weight: bold;
+    color:#6c757d;
+    text-decoration: none;
+}
+
+.text-purple {
+    color: #6916c0;
+}
+
+.link-muted:hover {
+    color:#6916c0;
+    text-decoration: underline;
+}
+
+.link-purple:hover{
+    text-decoration: underline;
+    color:#6916c0;
+}
+
+.card-header-purple-not-hover {
+    color: #f7f908;
+    background-color: #6916c0;
+    transition: .2s;
+}
+
+.card-header-purple {
+    color: #f7f908;
+    background-color: #6916c0;
+    transition: .2s;
+}
+
+.title-purple {
+    font-weight: bold;
+    color: #6916c0;
+}
+
+.link-purple {
+    font-weight: bold;
+    color:#6916c0;
+    text-decoration: none;
+}
+
+.link-purple:hover{
+    text-decoration: underline;
+    color:#6916c0;
+}
+
+.card-header-purple:hover {
+    background-color: #f7f908;
+    color: #6916c0;
+    transition: .2s;
+}
+
+.btn-gradient {
+    background: linear-gradient(to bottom right, #6916c0 10%, #f7f908 100%);
+    border-style: hidden;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(to bottom right, #f7f908 0%, #6916c0 100%);
+    border-style: hidden;
+    color: white;
+    transition: .3s;
+}
+
+.btn-purple {
+    color: #f7f908;
+    background-color: #6916c0;
+}
+
+.btn-purple:hover {
+    background-color:  #f7f908;
+    color: #6916c0;
+}
+
+.btn-yellow {
+    color: #6916c0;
+    background-color: #f7f908;
+}
+
+.btn-yellow:hover {
+    color: #f7f908;
+    background-color: #6916c0;
 }

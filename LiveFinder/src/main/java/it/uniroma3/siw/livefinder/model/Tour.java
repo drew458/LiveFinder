@@ -4,6 +4,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,8 +41,10 @@ public class Tour implements Comparable<Tour>{
 	@ManyToOne
 	private Artista artista;
 
-	@OneToMany(mappedBy = "tour")
-	private List<Concerto> concerti;@Override
+	@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+	private List<Concerto> concerti;
+	
+	@Override
 	public int hashCode() {
 		return Objects.hash(anno, nome);
 	}

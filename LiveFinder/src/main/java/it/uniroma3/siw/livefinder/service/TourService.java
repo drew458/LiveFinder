@@ -30,6 +30,10 @@ public class TourService {
 		return tourRepository.findByNome(nome);
 	}
 
+	public void deleteById(Long id){
+		tourRepository.deleteById(id);
+	}
+
 	/**
 	 * per aggiornare un tour esistente con crudRepository si può sempre usare il metodo save
 	 * @param tour

@@ -4,10 +4,17 @@
 	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 
-        <div class="container container-color">
-            <form class="p-5" th:action="@{/admin/citta}" method="post" th:object="${citta}">
-                <h2 class="mb-4" th:text="${citta.id==null} ? 'NUOVA CITTA' : 'MODIFICA CITTA'">NUOVA CITTA</h2>
-                <div class="row">
+        <div class="container bg-white">
+            <form th:action="@{/admin/citta}" method="post" th:object="${citta}">
+                <div class="pt-3">
+                    <div th:if="${citta.id==null}">
+                        <div th:replace="base :: page-title(titolo='Nuova citta', frase='Riempi i campi per aggiungere una citta')"></div>
+                    </div>
+                    <div th:unless="${citta.id==null}">
+                        <div th:replace="base :: page-title(titolo='Modifica citta', frase=|Qui puoi modificare i dettagli della citta|)"></div>
+                    </div>
+                </div>
+                <div class="row p-5 g-4">
                     <div class="form-group col-md-6">
                         <label for="Nome">Nome:</label>
                         <input class="form-control" type="text" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome') ? 'is-invalid' : ' '}"/>
@@ -26,7 +33,7 @@
 
                     <!--Field nascosco così durante l'aggiornamento non perdo l'id-->
 				    <input hidden type="text" th:field="*{id}"/>
-                    <div><button class="btn btn-dark mt-5" type="submit">Conferma</button></div>
+                    <div class="text-center"><button class="btn btn-purple shadow w-50" type="submit">Conferma</button></div>
                 </div>
                 <div th:if="${#fields.hasGlobalErrors()}">
                     <br>

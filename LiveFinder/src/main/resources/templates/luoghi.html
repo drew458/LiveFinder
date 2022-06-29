@@ -3,15 +3,29 @@
 	<head th:replace="base :: head(titolo='Luoghi - LiveFinder')"></head>
 	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
-		<div class="container container-color pb-5 shadow mt-3 rounded-3">
-			<h2 class="p-4">Luoghi</h2>
-			<ul>
-				<li th:each="luogo : ${luoghi}">
-				<span th:text="${luogo.nome} + ' ' + ${luogo.indirizzo} " >Ippodromo delle capannelle Via Appia Nuova 00178</span>
-					<a href="luogo.html" th:href="@{'/users/luogo' + '/' + ${luogo.id}}">Dettagli</a>
-					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/admin/luogoForm/' + ${luogo.id}}">Modifica</a>
-					<a sec:authorize="hasAuthority('ADMIN')" href="confermaDeleteLuogo.html" th:href="@{'/admin/confermaDeleteLuogo' + '/' + ${luogo.id}}">Cancella</a>
-				</ul>
+
+		
+
+		<div class="album">
+			<div class="container bg-white  py-4">
+				<div th:replace="base :: page-title(titolo='Tutte le località', frase='Tutti i più iconici luoghi dove vivere le tue migliori esperienze!')"></div>
+				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" th:fragment="listaLuoghi">
+					<div class="col" th:each="luogo : ${luoghi}">
+						<div class="text-center">
+							<a th:href="@{'/users/luogo/'+${luogo.id}}">
+								<img src="/images/stadio-olimpico.jpg" class="rounded-circle shadow-lg" width="100" height="100" style="object-fit: cover;">
+							</a>
+							<h6 class="fw-normal" title="Nome" th:text="${luogo.nome}"></h6>
+							<div th:if="${luogo.indirizzo!=null}" title="Indirizzo" th:text="'Via '+${luogo.indirizzo.via}+' '+${luogo.indirizzo.numCivico}+', '+${luogo.indirizzo.cap}+', '+${luogo.indirizzo.citta}"></div>
+							
+							<button type="button" class="btn btn-sm btn-purple shadow-sm" th:data-url="'/users/luogo/'+${luogo.id}" onclick="window.location = this.getAttribute('data-url')">Vedi</button>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" th:data-url="@{'/admin/luogoForm/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Modifica</button>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" th:data-url="@{'/admin/confermaDeleteLuogo/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Elimina</button>
+                            
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

@@ -1,5 +1,7 @@
 package it.uniroma3.siw.livefinder.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.livefinder.controller.validator.ArtistaValidator;
 import it.uniroma3.siw.livefinder.model.Artista;
 import it.uniroma3.siw.livefinder.service.ArtistaService;
+import it.uniroma3.siw.livefinder.service.ConcertoService;
 import it.uniroma3.siw.livefinder.service.TourService;
 
 @Controller
@@ -30,6 +33,9 @@ public class ArtistaController {
 	
 	@Autowired
 	private TourService tourService;
+
+	@Autowired
+	private ConcertoService concertoService;
 	
 	/*
 	 * convenzione: get per le operazioni di lettura, post per gli aggiornamenti
@@ -69,13 +75,15 @@ public class ArtistaController {
 	
 	// Metodi per delete
 
-  @GetMapping("/confermaDeleteArtista/{id}")
+  @GetMapping("/admin/confermaDeleteArtista/{id}")
   public String confermaDeleteArtista(@PathVariable("id") Long id, Model model) {
-    model.addAttribute("artista", artistaService.findById(id));
-    return "confermaDeleteArtista";
+	Artista artista = artistaService.findById(id);
+    model.addAttribute("artista", artista);
+	model.addAttribute("numConcerti", concertoService.countByTourArtista(artista));
+    return "admin/confermaDeleteArtista";
   }
 
-  @GetMapping("/deleteArtista/{id}")
+  @GetMapping("/admin/deleteArtista/{id}")
   public String deleteArtista(@PathVariable("id") Long id, Model model) {
     artistaService.deleteById(id);
     model.addAttribute("artisti", artistaService.findAll());
@@ -104,7 +112,13 @@ public class ArtistaController {
 
 	@GetMapping("/users/artisti/{primaLettera}")
 	public String getArtistiByLetter(@PathVariable("primaLettera") String primaLettera, Model model){
-		model.addAttribute("artisti", artistaService.findByLetter(primaLettera));
+		List<Artista> artisti = artistaService.findByLetter(primaLettera);
+		List<BigDecimal> minPrezzi = new ArrayList<>();
+		for(Artista artista : artisti){
+			minPrezzi.add(artistaService.getMinPrezzoByArtista(artista));
+		}
+		model.addAttribute("artisti", artisti);
+		model.addAttribute("minPrezzi", minPrezzi);
 		model.addAttribute("lettera", primaLettera);
 		return "artistiByLetter";
 	}
