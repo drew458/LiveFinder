@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Dettagli artista - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 		
-		<div class="container text-center mt-4">
-			<h1>Dettagli artista</h1>
-			
-			<div class="mt-4">
-      			<h3 th:text="${artista.nome}">Maneskin</h3>
-      		</div>
+		<div class="container bg-white">
+			<div class="pt-3"><div class="p-4 p-md-5 mb-4 text-light shadow header-section-gradient">
+				<div class="col-md-6 px-0">
+					<h4 class="display-5 text-yellow" th:text="${artista.nome}"></h4>
+					<p class="lead text-yellow" th:text="${artista.genere}"></p>
+					<p class="lead" th:text="'In attività dal '+${artista.annoFormazione}"></p>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                                th:data-url="@{'/admin/artistaForm/'+${artista.id}}" onclick="window.location = this.getAttribute('data-url')">Modifica</button>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                                th:data-url="@{'/admin/confermaDeleteArtista/'+${artista.id}}" onclick="window.location = this.getAttribute('data-url')">Elimina</button>					
+				</div>
+			</div>
+
+			<div class="py-4">
+				<div th:replace="listaTour :: tutti-tour"></div>
+			</div>
       		
-      		<div class="mt-2">
-      			<span th:text="${artista.genere}">Rock</span>
-      		</div>
-      		
-			<div class="mt-2">
-      			<span th:text="${artista.annoFormazione}">2016</span>
-      		</div>
-      		
-      		<div class="mt-5">
-      			<a class="btn btn-dark" href="/">Home</a>
+      		<div class="ps-4 pb-5">
+      			<a class="btn btn-purple shadow" href="/">Home</a>
       		</div>		
 		</div>
 	</body>

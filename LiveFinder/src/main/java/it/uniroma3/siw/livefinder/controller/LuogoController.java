@@ -1,6 +1,7 @@
 package it.uniroma3.siw.livefinder.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -68,6 +69,7 @@ public class LuogoController {
 	public String getLuogo(@PathVariable("id")Long id, Model model) {
 		Luogo luogo = luogoService.findById(id);
 		model.addAttribute("luogo", luogo);
+		model.addAttribute("concerti", luogo.getConcerti().parallelStream().sorted().collect(Collectors.toList()));
 		return "luogo";
 	}
 	

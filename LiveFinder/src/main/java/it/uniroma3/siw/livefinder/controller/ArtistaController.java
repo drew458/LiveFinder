@@ -98,6 +98,7 @@ public class ArtistaController {
 		// id è una variabile associata al path
 		Artista artista = artistaService.findById(id);
 		model.addAttribute("artista", artista);
+		model.addAttribute("listaTour", artista.getListaTour());
 		// ritorna la form con i dati dell'entità richiesta
 		return "artista";
 	}

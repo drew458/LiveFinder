@@ -3,16 +3,38 @@
 	<head th:replace="base :: head(titolo='Dettagli luogo - LiveFinder')"></head>
 	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
-		
-		<div class="container">
-		<h2>Dettagli luogo</h2>
-		<span th:text="${luogo.nome}">Ippodromo delle capannelle</span>
-		<div th:unless="${luogo.indirizzo==null}">
-			<span th:text="'Via/Viale '+${luogo.indirizzo.via}">Via Appia Nuova</span>
-			<span th:text="${luogo.indirizzo.numCivico}">191</span>
-			<span th:text="', '+${luogo.indirizzo.cap}">00145</span>
-			<span th:text="', '+${luogo.indirizzo.citta}">Roma</span>
-		</div>
+
+		<div class="container bg-white">
+			<div class="pt-3"><div class="p-4 p-md-5 mb-4 text-light shadow header-section-gradient">
+				<div class="col-md-6 px-0">
+					<h4 class="display-5 text-yellow" th:text="${luogo.nome}"></h4>
+					<p class="lead text-yellow" th:unless="${luogo.indirizzo==null}">
+						<span th:text="'Via/Viale '+${luogo.indirizzo.via}">Via Appia Nuova</span>
+						<span th:text="${luogo.indirizzo.numCivico}">191</span>
+						<span th:text="', '+${luogo.indirizzo.cap}">00145</span>
+						<span th:text="', '+${luogo.indirizzo.citta}">Roma</span>
+					</p>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                                th:data-url="@{'/admin/luogoForm/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Modifica</button>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                                th:data-url="@{'/admin/confermaDeleteLuogo/'+${luogo.id}}" onclick="window.location = this.getAttribute('data-url')">Elimina</button>					
+				</div>
+			</div>
+
+			<div class="py-4">
+				<div th:unless="${#lists.isEmpty(concerti)}">
+					<div th:replace="concerti :: tutti-concerti"></div>
+				</div>
+				<div th:if="${#lists.isEmpty(concerti)}">
+					<h2 class="text-purple">Non ci sono ancora concerti..</h2>
+                    <p class="lead">Ritorna più avanti per trovare nuovi concerti sempre aggiornati!</p>
+				</div>
+			</div>
+
+			<div class="ps-4 pb-5">
+				<a class="btn btn-purple shadow" href="/">Home</a>
+			</div>
+			
 		</div>
 		
 	</body>
