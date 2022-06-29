@@ -8,7 +8,7 @@
             <div th:replace="base :: page-title(titolo=${#strings.toUpperCase(lettera)}, frase='Ecco tutti gli artisti che iniziano per '+${#strings.toUpperCase(lettera)})"></div>
             
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-                <div class="col" th:each="artista : ${artisti}">
+                <div class="col" th:each="artista, itemStat : ${artisti}">
                     <div class="card shadow" style="width: 15rem;">
                         <div class="card-header card-header-purple" th:data-url="@{'/users/artista/'+${artista.id}}" 
                         onclick="window.location = this.getAttribute('data-url')">
@@ -17,6 +17,8 @@
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted" th:text="${artista.genere}"></h6>
                             <h6 class="card-subtitle mb-2" th:text="${artista.isGroup ? 'Gruppo' : 'Solista'}"></h6>
+                            <a th:unless="${minPrezzi[__${itemStat.index}__]} == null" class="link-purple" th:text="'Biglietti da '+${minPrezzi[__${itemStat.index}__]}+'€'"></a>
+                            <small class="text-muted" th:if="${minPrezzi[__${itemStat.index}__] == null}">Biglietti non disponibili</small>
                         </div>
                         <div class="card-footer border-top-0 bg-light">
                             <button type="button" class="btn btn-sm btn-purple shadow-sm" th:data-url="'/users/artista/'+${artista.id}" 

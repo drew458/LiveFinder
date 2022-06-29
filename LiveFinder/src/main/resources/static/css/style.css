@@ -35,6 +35,17 @@
     transition: .2s;
 }
 
+.link-purple {
+    font-weight: bold;
+    color:#6916c0;
+    text-decoration: none;
+}
+
+.link-purple:hover{
+    text-decoration: underline;
+    color:#6916c0;
+}
+
 .card-header-purple:hover {
     background-color: #f7f908;
     color: #6916c0;

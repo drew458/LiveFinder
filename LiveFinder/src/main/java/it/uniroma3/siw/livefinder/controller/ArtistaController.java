@@ -1,5 +1,7 @@
 package it.uniroma3.siw.livefinder.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -104,7 +106,13 @@ public class ArtistaController {
 
 	@GetMapping("/users/artisti/{primaLettera}")
 	public String getArtistiByLetter(@PathVariable("primaLettera") String primaLettera, Model model){
-		model.addAttribute("artisti", artistaService.findByLetter(primaLettera));
+		List<Artista> artisti = artistaService.findByLetter(primaLettera);
+		List<BigDecimal> minPrezzi = new ArrayList<>();
+		for(Artista artista : artisti){
+			minPrezzi.add(artistaService.getMinPrezzoByArtista(artista));
+		}
+		model.addAttribute("artisti", artisti);
+		model.addAttribute("minPrezzi", minPrezzi);
 		model.addAttribute("lettera", primaLettera);
 		return "artistiByLetter";
 	}

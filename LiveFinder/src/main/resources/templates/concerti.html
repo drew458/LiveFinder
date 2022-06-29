@@ -49,9 +49,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 d-flex align-items-center">
-                                    <a class="btn btn-purple shadow-sm" th:href="@{'/users/concerto/'+${concerto.id}}" role="button">VEDI</a>
-                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm mx-2" th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">MODIFICA</a>
-                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" role="button">CANCELLA</a>
+                                    <a class="btn btn-purple shadow-sm" th:href="@{'/users/concerto/'+${concerto.id}}" role="button">Vedi</a>
+                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm mx-2" 
+                                        th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">Modifica</a>
+                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" role="button">Elimina</a>
                                 </div>
                             </div>
                         </div>

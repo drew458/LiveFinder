@@ -1,5 +1,6 @@
 package it.uniroma3.siw.livefinder.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,10 @@ public class ArtistaService {
 			letteraArtisti.put(alphabet, artisti);
 		}
 		return letteraArtisti;
+	}
+
+	public BigDecimal getMinPrezzoByArtista(Artista artista){
+		return artistaRepository.findMinPrezzoByArtista(artista.getNome());
 	}
 
 	public List<Artista> findByLetter(String primaLettera){
