@@ -4,16 +4,20 @@
 	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 
-		<div class="container container-color rounded-3">
-			<div class="p-4 p-md5 mb-4 mt-3">
+		<div class="container bg-white">
+			<div class="pt-3"><div class="p-4 p-md-5 mb-4 text-light shadow header-section-gradient">
 				<div class="col-md-6 px-0">
-					<h4 class="display-5" th:text="${concerto.tour.nome}"></h4>
-					<p class="lead" th:text="${concerto.tour.artista.nome}"></p>
-					<p class="lead">
-						<span th:text="${concerto.luogo.nome}"></span>
-						<span> - </span>
-						<strong th:text="${concerto.luogo.citta.nome}"></strong>
-					</p> 
+					<h4 class="display-5 text-yellow" th:text="${concerto.tour.nome}"></h4>
+					<a class="link-yellow" th:href="@{'/users/artista/'+${concerto.tour.artista.id}}">
+						<p class="lead link-yellow" th:text="${concerto.tour.artista.nome}"></p>
+					</a>
+					<a class="link-white" th:href="@{'/users/luogo/'+${concerto.luogo.id}}">
+						<p class="lead">
+							<span th:text="${concerto.luogo.nome}"></span>
+							<span> - </span>
+							<span th:text="${concerto.luogo.citta.nome}"></span>
+						</p> 
+					</a>
 					<p class="lead" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
                                                                         ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
 					<p class="lead">
@@ -22,9 +26,12 @@
 						<span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
 					</p>
 				</div>
-
+			</div>
+			</div>
+			
+			<div class="p-4 p-md5 mb-4 mt-3">
 				<form th:action="@{/logged/checkout}" method="post">
-					<div class="card p-3 shadow-sm">
+					<div class="p-3">
 						<div class="form-group col-md-6 mb-3">
 							<label>Seleziona il numero di biglietti desiderati:</label>
 							<input class="form-control w-25" type="number" name="numBiglietti" value="2"/>
@@ -41,7 +48,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="text-end mt-3"><button class="btn btn-dark" type = "submit">Compra</button></div>
+						<div class="text-end mt-3"><button class="btn btn-purple shadow" type = "submit">Compra</button></div>
 					</div>
 				</form>
 			</div>

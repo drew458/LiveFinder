@@ -1,6 +1,7 @@
 package it.uniroma3.siw.livefinder.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -32,7 +33,9 @@ public class TourController {
 
     @GetMapping("/users/tour/{id}")
     public String getTourById(@PathVariable("id") Long id, Model model){
-        model.addAttribute("tour", tourService.findById(id));
+        Tour tour = tourService.findById(id);
+        model.addAttribute("tour", tour);
+        model.addAttribute("concerti", tour.getConcerti().parallelStream().sorted().collect(Collectors.toList()));
         return "tour";
     }
 

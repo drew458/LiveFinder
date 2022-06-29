@@ -7,8 +7,8 @@
 	<nav th:replace="base.html :: navbar"></nav>
 	<!-- END Navbar -->
 
-    <div class="container container-color text-center mt-3 rounded-3">
-        <h1 class="p-3" th:text="#{userProfile.header}">Your profile</h1>
+    <div class="container bg-white text-center">
+        <h1 class="px-3" th:text="#{userProfile.header}">Your profile</h1>
 
 		<div class="p-4 p-md5 mb-4">
 			<div class="card">
@@ -43,7 +43,7 @@
           			
           			<!-- BOTTONE AGGIUNGI INDIRIZZO -->
 					<div th:if="${user.indirizzo == null}" class="text-start mt-4">
-						<button class="btn btn-dark" onclick="makeFormAppear()">Aggiungi indirizzo</button>
+						<button class="btn btn-yellow shadow" onclick="makeFormAppear()">Aggiungi indirizzo</button>
 					</div>
           			
           			<!--FORM AGGIUNGI/MODIFICA INDIRIZZO-->
@@ -73,8 +73,8 @@
 	                                </div>
 	                            </div>
 	                            <div class="text-end pt-3">
-	                                <button class="btn btn-sm btn-outline-dark" onclick="makeFormDisappear()" type="button">Annulla</button>
-									<button class="btn btn-sm btn-dark" type = "submit">Conferma</button>
+	                                <button class="btn btn-sm btn-yellow shadow-sm" onclick="makeFormDisappear()" type="button">Annulla</button>
+									<button class="btn btn-sm btn-purple shadow-sm" type = "submit">Conferma</button>
 	                            </div>
 	                        </div>
 	                    </form>
@@ -87,11 +87,15 @@
                     	
 	                    	<div class="row p-2">
 		                    	<div th:each="biglietto : ${biglietti}" class="col-lg-4 col-md-6 mb-4">
-						        	<div class="card">
+						        	<div class="card" th:classappend="${biglietto.concerto == null} ? 'alert alert-danger' : ' '">
+										<div th:unless="${biglietto.concerto == null}" class="card-header card-header-purple" style="height:50px;">
+											<p th:text="${biglietto.concerto.tour.artista.nome}"></p>
+										</div>
+										<p th:if="${biglietto.concerto == null}">Il concerto è stato annullato!</p>
 							          	<div class="card-body">
 							            	<h5 th:text="${biglietto.tipologia}" class="card-title">Tipologia biglietto</h5>
 							            	<div class="text-center mt-1">
-							            		<span th:text="${biglietto.prezzo}" class="card-text">Prezzo</span>
+							            		<span th:text="${biglietto.prezzo}+'€'" class="card-text">Prezzo</span>
 							            	</div>
 							          	</div>
 					        		</div>
@@ -102,7 +106,7 @@
       				
       				<!-- BOTTONE CAMBIA PASSWORD -->
 					<div class="text-start mt-4">
-						<button class="btn btn-dark" onclick='window.location.href="/changePassword"'
+						<button class="btn btn-purple shadow" onclick='window.location.href="/changePassword"'
 							th:text="#{changePassword.change}">Change password</button>
 					</div>
 				</div>						

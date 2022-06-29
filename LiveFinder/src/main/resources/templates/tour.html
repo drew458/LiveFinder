@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Dettagli tour - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
-		
-		<div class="container text-center mt-4">
-			<h1>Dettagli tour</h1>
-			
-			<div class="mt-4">
-      			<h3 th:text="${tour.nome}">Caparezza</h3>
-      		</div>
+
+		<div class="container bg-white">
+			<div class="pt-3"><div class="p-4 p-md-5 mb-4 text-light shadow header-section-gradient">
+				<div class="col-md-6 px-0">
+					<h4 class="display-5 text-yellow" th:text="${tour.nome}"></h4>
+					<p class="lead text-yellow" th:text="${tour.artista.nome}"></p>
+					<p class="lead" th:text="'In tourné nel '+${tour.anno}"></p>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                                th:data-url="@{'/admin/tourForm/'+${tour.id}}" onclick="window.location = this.getAttribute('data-url')">Modifica</button>
+                            <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                                th:data-url="@{'/admin/confermaDeleteTour/'+${tour.id}}" onclick="window.location = this.getAttribute('data-url')">Elimina</button>					
+				</div>
+			</div>
+
+			<div class="py-4">
+				<div th:unless="${#lists.isEmpty(concerti)}">
+					<div th:replace="concerti :: tutti-concerti"></div>
+				</div>
+				<div th:if="${#lists.isEmpty(concerti)}">
+					<h2 class="text-purple">Non ci sono ancora concerti..</h2>
+                    <p class="lead">Ritorna più avanti per trovare nuovi concerti sempre aggiornati!</p>
+				</div>
+			</div>
       		
-      		<div class="mt-2">
-      			<span th:text="${tour.anno}">2022</span>
-      		</div>
-      		
-			<div class="mt-2">
-      			<span th:text="${tour.artista.nome}">Maneskin</span>
-      		</div>
-      		
-      		<div class="mt-5">
-      			<a class="btn btn-dark" href="/">Home</a>
-      		</div>	
+      		<div class="ps-4 pb-5">
+      			<a class="btn btn-purple shadow" href="/">Home</a>
+      		</div>		
 		</div>
+		
 	</body>
 </html>

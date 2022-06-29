@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.livefinder.model.Artista;
+import it.uniroma3.siw.livefinder.model.Concerto;
 import it.uniroma3.siw.livefinder.model.Tour;
 import it.uniroma3.siw.livefinder.repository.TourRepository;
 
@@ -16,6 +17,9 @@ public class TourService {
 
 	@Autowired
 	private TourRepository tourRepository;
+
+	@Autowired
+	private BigliettoService bigliettoService;
 
 	/**
 	 * 
@@ -31,6 +35,9 @@ public class TourService {
 	}
 
 	public void deleteById(Long id){
+		for(Concerto concerto: tourRepository.findById(id).get().getConcerti()){
+			bigliettoService.deleteNonCompratiByConcertoId(concerto.getId());
+		}
 		tourRepository.deleteById(id);
 	}
 

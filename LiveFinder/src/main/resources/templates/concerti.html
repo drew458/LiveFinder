@@ -18,43 +18,45 @@
             </div>
 
             <div th:unless="${#lists.isEmpty(concerti)}">
-                <div th:each="concerto : ${concerti}">
-                    <div class="row p-4">
-                        <div class="card p-0 list-group-item-action list-group-item-light shadow"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
-                                onclick="window.location = this.getAttribute('data-url')">
-                            <div class="row g-0">
-                                <div class="col-md-2">
-                                    <a th:href="@{'/users/concerto/'+${concerto.id}}">
-                                        <img src="/images/concerto.jpg" class="img-fluid rounded-start" style="height: 100%; object-fit: cover;">
-                                    </a>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card-body">
-                                        <h5 name="Nome tour" class="card-title" >
-                                            <a class="link-purple" th:href="@{'/users/artista/'+${concerto.tour.artista.id}}" 
-                                                th:text="${concerto.tour.artista.nome}"></a>
-                                        </h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">
-                                            <a class="link-muted"
-                                                th:href="@{'/users/tour/'+${concerto.tour.id}}"  th:text="${concerto.tour.nome}"></a>
-                                        </h6>
-                                        <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
-                                                                        ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
-                                        <p class="card-text text-muted mt-0 pt-0">
-                                            <span th:text="${#dates.hour(concerto.data)}+' :'"></span>
-                                            <!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
-                                            <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
-                                        </p>
-                                        <a class="link-muted" th:href="@{'/users/luogo/'+${concerto.luogo.id}}">
-                                            <h6 th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+                <div th:fragment="tutti-concerti">
+                    <div th:each="concerto : ${concerti}">
+                        <div class="row p-4">
+                            <div class="card p-0 list-group-item-action list-group-item-light shadow"  th:data-url="@{'/users/concerto/'+${concerto.id}}" 
+                                    onclick="window.location = this.getAttribute('data-url')">
+                                <div class="row g-0">
+                                    <div class="col-md-2">
+                                        <a th:href="@{'/users/concerto/'+${concerto.id}}">
+                                            <img src="/images/concerto.jpg" class="img-fluid rounded-start" style="height: 100%; object-fit: cover;">
                                         </a>
                                     </div>
-                                </div>
-                                <div class="col-md-4 d-flex align-items-center">
-                                    <a class="btn btn-purple shadow-sm" th:href="@{'/users/concerto/'+${concerto.id}}" role="button">Vedi</a>
-                                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm mx-2" 
-                                        th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">Modifica</a>
-                                    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/admin/confermaDeleteConcerto/'+${concerto.id}}" class="btn btn-yellow shadow-sm" role="button">Elimina</a>
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <h5 name="Nome tour" class="card-title" >
+                                                <a class="link-purple" th:href="@{'/users/artista/'+${concerto.tour.artista.id}}" 
+                                                    th:text="${concerto.tour.artista.nome}"></a>
+                                            </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">
+                                                <a class="link-muted"
+                                                    th:href="@{'/users/tour/'+${concerto.tour.id}}"  th:text="${concerto.tour.nome}"></a>
+                                            </h6>
+                                            <p class="card-text mb-0 pb-0" th:text="${#dates.dayOfWeekNameShort(concerto.data)}+' '+${#dates.day(concerto.data)}+' '+
+                                                                            ${#dates.monthName(concerto.data)} + ' '+${#dates.year(concerto.data)}"></p>
+                                            <p class="card-text text-muted mt-0 pt-0">
+                                                <span th:text="${#dates.hour(concerto.data)}+' :'"></span>
+                                                <!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
+                                                <span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
+                                            </p>
+                                            <a class="link-muted" th:href="@{'/users/luogo/'+${concerto.luogo.id}}">
+                                                <h6 th:text="${concerto.luogo.nome}+' - '+${concerto.luogo.citta.nome}"></h6>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-center">
+                                        <a class="btn btn-purple shadow-sm" th:href="@{'/users/concerto/'+${concerto.id}}" role="button">Vedi</a>
+                                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm mx-2" 
+                                            th:href="@{'/admin/concertoForm/'+${concerto.id}}" role="button">Modifica</a>
+                                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/admin/confermaDeleteConcerto/'+${concerto.id}}" class="btn btn-yellow shadow-sm" role="button">Elimina</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

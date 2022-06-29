@@ -64,7 +64,7 @@ public class UserController {
                 user.setIndirizzo(indirizzo);
             }
             credentialsService.updateCredentials(credentials);
-            return "confermaAcquisto";
+            return "userProfile";
         }
         else {
             model.addAttribute("user", user);

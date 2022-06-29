@@ -6,20 +6,30 @@
 
         <div class="container bg-white py-4 shadow">
             <div th:replace="base :: page-title(titolo='Tutti i tour', frase='Scopri cosa riservano per te gli artisti che ami')"></div>
-            <div th:each="tour : ${listaTour}" class="p-3">
-                <div class="card shadow">
-                    <div class="card-header card-header-purple">
-                        <div th:text="${tour.artista.nome}"></div>
+            <div th:fragment="tutti-tour">
+                <div th:unless="${#lists.isEmpty(listaTour)}">
+                    <div th:each="tour : ${listaTour}" class="p-3">
+                        <div class="card shadow">
+                            <div class="card-header card-header-purple-not-hover">
+                                <div th:text="${tour.artista.nome}"></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${tour.nome}"></h5>
+                                <p class="card-text" th:text="${tour.anno}"></p>
+                                <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-purple shadow-sm">Vedi</a>
+                                <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" 
+                                    th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
+                                <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" 
+                                    th:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Elimina</a>
+                            </div>
+                        </div>
+                        <br>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${tour.nome}"></h5>
-                        <p class="card-text" th:text="${tour.anno}"></p>
-                        <a th:href="'/users/tour/'+ ${tour.id}" class="btn btn-purple shadow-sm">Vedi</a>
-                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" 
-                            th:href="@{'/admin/tourForm/' + ${tour.id}}">Modifica</a>
-					    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-yellow shadow-sm" 
-                            th:href="@{'/admin/confermaDeleteTour' + '/' + ${tour.id}}">Elimina</a>
-                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(listaTour)}">
+                    <h2 class="text-purple">Non ci sono ancora tour..</h2>
+                    <p class="lead">Ritorna più avanti per trovare nuovi tour sempre aggiornati!</p>
                 </div>
             </div>
         </div>            
