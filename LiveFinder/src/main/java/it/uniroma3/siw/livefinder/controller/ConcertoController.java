@@ -111,11 +111,12 @@ public class ConcertoController {
 		concertoValidator.validate(concerto, bindingResult);
 		
 		if(!bindingResult.hasErrors()){
-			//concertoService.save(concerto);
 
 			for(int i=1; i<=numBiglietti; i++){
 				concerto.addBiglietto(new Biglietto());
 			}
+			
+			//concertoService.save(concerto);
 
 			model.addAttribute("concerto", concerto);
 			return "admin/bigliettiForm";
@@ -130,22 +131,23 @@ public class ConcertoController {
 	@PostMapping("/admin/addBiglietti")
 	public String addBiglietti(@ModelAttribute("concerto") Concerto concerto, BindingResult bindingResult, Model model){
 		logger.info("Numero biglietti: "+concerto.getBiglietti().size());
+		concertoService.save(concerto);
 		/**
 		 * Con questo metodo rimuovo i biglietti che hanno campi vuoti prima di salvarli.
 		 * Do la possibilità all'admin di inserire un numero più grande di biglietti e in caso di cambiare idea semplicemente non
 		 * riempiendo alcuni cambi biglietto 
 		 */
 		concerto.getBiglietti().removeIf(biglietto -> {
-			if(biglietto.getTipologia().isEmpty() || biglietto.getTipologia() == ""){
-				bigliettoService.delete(biglietto);
+			if(biglietto.getTipologia().isEmpty() || biglietto.getTipologia().equals("")){
+				if(biglietto.getId()!=null)
+					bigliettoService.delete(biglietto);
 				return true;
 			}else{
 				return false;
 			}
 		});
 		
-		bigliettoService.saveAll(concerto.getBiglietti());
-		concertoService.save(concerto);
+		//bigliettoService.saveAll(concerto.getBiglietti());
 
 		model.addAttribute("concerto", concerto);
 		return "concerto";

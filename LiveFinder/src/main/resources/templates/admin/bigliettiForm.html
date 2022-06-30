@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="base :: head(titolo='Concerto - LiveFinder')"></head>
-	<body>
+	<body class="bg-color">
 		<div th:replace="base :: navbar"></div>
 
-        <div class="container bg-light shadow-sm">
+        <div class="container bg-white shadow-sm">
             <form class="p-5" th:action="@{/admin/addBiglietti}" method="post" th:object="${concerto}">
                 <!--Field nascoscosti per non perdere l'oggetto concerto-->
 				<input hidden th:field="*{id}"/>
