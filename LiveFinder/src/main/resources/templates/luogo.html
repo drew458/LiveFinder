@@ -9,7 +9,7 @@
 				<div class="col-md-6 px-0">
 					<h4 class="display-5 text-yellow" th:text="${luogo.nome}"></h4>
 					<p class="lead text-yellow" th:unless="${luogo.indirizzo==null}">
-						<span th:text="'Via/Viale '+${luogo.indirizzo.via}">Via Appia Nuova</span>
+						<span th:text="${luogo.indirizzo.via}">Via Appia Nuova</span>
 						<span th:text="${luogo.indirizzo.numCivico}">191</span>
 						<span th:text="', '+${luogo.indirizzo.cap}">00145</span>
 						<span th:text="', '+${luogo.indirizzo.citta}">Roma</span>

@@ -25,6 +25,10 @@
 						<!--Thymeleaf quando i minuti sono a una cifra li fa vedere ad una cifra soltanto. (&lt; sta per <)-->
 						<span th:text="${#dates.minute(concerto.data) &lt; 10} ? '0'+${#dates.minute(concerto.data)} : ${#dates.minute(concerto.data)}"></span>
 					</p>
+					<button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                        th:data-url="@{'/admin/concertoForm/'+${concerto.id}}" onclick="window.location = this.getAttribute('data-url')">Modifica</button>
+                    <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm shadow-sm btn-yellow" 
+                    	th:data-url="@{'/admin/confermaDeleteConcerto/'+${concerto.id}}" onclick="window.location = this.getAttribute('data-url')">Elimina</button>	
 				</div>
 			</div>
 			</div>

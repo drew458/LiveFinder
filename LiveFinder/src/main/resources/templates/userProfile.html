@@ -87,11 +87,7 @@
                     	
 	                    	<div class="row p-2">
 		                    	<div th:each="biglietto : ${biglietti}" class="col-lg-4 col-md-6 mb-4">
-						        	<div class="card" th:classappend="${biglietto.concerto == null} ? 'alert alert-danger' : ' '">
-										<div th:unless="${biglietto.concerto == null}" class="card-header card-header-purple" style="height:50px;">
-											<p th:text="${biglietto.concerto.tour.artista.nome}"></p>
-										</div>
-										<p th:if="${biglietto.concerto == null}">Il concerto è stato annullato!</p>
+						        	<div class="card">
 							          	<div class="card-body">
 							            	<h5 th:text="${biglietto.tipologia}" class="card-title">Tipologia biglietto</h5>
 							            	<div class="text-center mt-1">

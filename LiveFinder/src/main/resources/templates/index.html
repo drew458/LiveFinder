@@ -25,7 +25,7 @@
 		<!-- END ANONYMOUS -->
 	
 		<!-- AUTHENTICATED -->
-		<div sec:authorize="hasAuthority('DEFAULT')">
+		<div sec:authorize="hasAnyAuthority('DEFAULT', 'ROLE_USER')">
 			<p class="logo-big-style p-3" th:text="'LiveFinder '+#{index.anonymousWelcomeLogo}">LiveFinder</p>
 			<h1 th:text="#{index.welcome}">Benvenuto</h1>
 			<!-- Login via Google OAuth2 -->

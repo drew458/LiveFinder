@@ -37,7 +37,7 @@
                                         th:classappend="${#fields.hasErrors('luogo') ? 'is-invalid' : ''}">
                                 <span>
                                     <div th:text="${luogo.nome}"></div>
-                                    <small class="d-block text-muted" th:text="${luogo.nome}"></small>
+                                    <small class="d-block text-muted" th:text="${luogo.citta.nome}"></small>
                                 </span>
                                 </label>
                             </div>

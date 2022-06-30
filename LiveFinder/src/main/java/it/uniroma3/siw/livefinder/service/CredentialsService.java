@@ -46,22 +46,22 @@ public class CredentialsService {
 		Credentials credentials = null;
         
 		//se loggato con Google
-    if(principal.getClass().equals(DefaultOidcUser.class)){ 
-        DefaultOidcUser user = (DefaultOidcUser) principal;
-        credentials = this.findByUsername(user.getAttribute("given_name"));
-    }
+		if(principal.getClass().equals(DefaultOidcUser.class)){ 
+			DefaultOidcUser user = (DefaultOidcUser) principal;
+			credentials = this.findByUsername(user.getAttribute("email"));
+		}
 		
 		//se loggato con GitHub
-    else if(principal.getClass().equals(DefaultOAuth2User.class)){ 
-        DefaultOAuth2User user = (DefaultOAuth2User) principal;
-        credentials = this.findByUsername(user.getAttribute("login"));
-    }
+		else if(principal.getClass().equals(DefaultOAuth2User.class)){ 
+			DefaultOAuth2User user = (DefaultOAuth2User) principal;
+			credentials = this.findByUsername(user.getAttribute("login"));
+		}
         
-    //se loggato con email e pwd
-    else if(principal.getClass().equals(User.class)){
-        User user = (User) principal;
-        credentials = this.findByUsername(user.getUsername());
-    }
+    	//se loggato con email e pwd
+		else if(principal.getClass().equals(User.class)){
+			User user = (User) principal;
+			credentials = this.findByUsername(user.getUsername());
+		}
 
 		return credentials;
 	}

@@ -111,11 +111,12 @@ public class ConcertoController {
 		concertoValidator.validate(concerto, bindingResult);
 		
 		if(!bindingResult.hasErrors()){
-			//concertoService.save(concerto);
 
 			for(int i=1; i<=numBiglietti; i++){
 				concerto.addBiglietto(new Biglietto());
 			}
+			
+			//concertoService.save(concerto);
 
 			model.addAttribute("concerto", concerto);
 			return "admin/bigliettiForm";
@@ -136,13 +137,15 @@ public class ConcertoController {
 		 * riempiendo alcuni cambi biglietto 
 		 */
 		concerto.getBiglietti().removeIf(biglietto -> {
-			if(biglietto.getTipologia().isEmpty() || biglietto.getTipologia() == ""){
-				bigliettoService.delete(biglietto);
+			if(biglietto.getTipologia().isEmpty() || biglietto.getTipologia().equals("")){
+				if(biglietto.getId()!=null)
+					bigliettoService.delete(biglietto);
 				return true;
 			}else{
 				return false;
 			}
 		});
+		
 		
 		bigliettoService.saveAll(concerto.getBiglietti());
 		concertoService.save(concerto);
