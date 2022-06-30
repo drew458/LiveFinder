@@ -146,9 +146,9 @@ public class ConcertoController {
 			}
 		});
 		
-		logger.info("Stop");
-		concertoService.save(concerto);
+		
 		bigliettoService.saveAll(concerto.getBiglietti());
+		concertoService.save(concerto);
 
 		model.addAttribute("concerto", concerto);
 		return "concerto";

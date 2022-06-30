@@ -7,7 +7,7 @@
         <div class="container py-4 bg-light">
             <div th:replace="base :: page-title(titolo=${#strings.toUpperCase(lettera)}, frase='Ecco tutti gli artisti che iniziano per '+${#strings.toUpperCase(lettera)})"></div>
             
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-3">
                 <div class="col" th:each="artista, itemStat : ${artisti}">
                     <div class="card shadow" style="width: 15rem;">
                         <div class="card-header card-header-purple" th:data-url="@{'/users/artista/'+${artista.id}}" 
