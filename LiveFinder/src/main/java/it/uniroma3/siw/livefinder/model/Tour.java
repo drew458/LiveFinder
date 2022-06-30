@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -38,6 +39,7 @@ public class Tour implements Comparable<Tour>{
 	
 	private Year anno;
 
+	@NotNull
 	@ManyToOne
 	private Artista artista;
 

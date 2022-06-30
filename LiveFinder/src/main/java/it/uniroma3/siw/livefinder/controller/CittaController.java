@@ -58,7 +58,7 @@ public class CittaController {
 
         if(!bindingResult.hasErrors()){
             cittaService.save(citta);
-            model.addAttribute("citta", citta);
+            model.addAttribute("listaCitta", cittaService.findAll());
             return "listaCitta";
         }else{
             return "admin/cittaForm";
