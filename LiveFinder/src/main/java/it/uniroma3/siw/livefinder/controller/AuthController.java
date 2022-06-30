@@ -158,15 +158,16 @@ public class AuthController {
 				if(nome!=null){
 					nomeCompleto = nome.split(" ");
 					oauthUser.setNome(nomeCompleto[0]);
-					oauthUser.setCognome(nomeCompleto[1]);
+					if(nomeCompleto.length>1)
+                        oauthUser.setCognome(nomeCompleto[1]);
 				}
 
 			    oauthCredentials.setUser(oauthUser);
 			    oauthCredentials.setUsername(email);
 			    credentialsService.saveCredentials(oauthCredentials, false);
-			    model.addAttribute("user", oauthUser);
 		    }
 		}
+		
 		if(authentication.getAuthorizedClientRegistrationId().equals("github")) {
 			String username= (String) attributes.get("login");
 			Credentials userCredentials = credentialsService.getCredentials(username);
@@ -181,16 +182,19 @@ public class AuthController {
 				if(nome!=null){
 					nomeCompleto = nome.split(" ");
 					oauthUser.setNome(nomeCompleto[0]);
-					oauthUser.setCognome(nomeCompleto[1]);
+					if(nomeCompleto.length>1)	
+						oauthUser.setCognome(nomeCompleto[1]);
 				}
+				else
+					oauthUser.setNome(username);
 
 			    oauthCredentials.setUser(oauthUser);
 			    oauthCredentials.setUsername(username);
 			    credentialsService.saveCredentials(oauthCredentials, false);
-			    model.addAttribute("user", oauthUser);
 		    }
 		}
 		
+		model.addAttribute("role", this.credentialsService.getCredentials().getRole());
 		model.addAttribute("concerti", this.concertoService.findAll());
 		model.addAttribute("listaTour", this.tourService.findAll());
 		
@@ -289,7 +293,7 @@ public class AuthController {
 			Model model) {
 		// validate credentials fields
 		this.credentialsValidator.validateReset(credentials, credentialsBindingResult);
-		
+		 
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		// if it hasn't invalid contents, store the Credentials into the DB

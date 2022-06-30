@@ -20,26 +20,48 @@
             <nav class="navbar navbar-dark navbar-color navbar-expand-lg p-0">
                 <div class="container-fluid">
 
-                    <a th:if="${#authentication.getPrincipal().getClass() == 
-						T(org.springframework.security.core.userdetails.User)}" 
-						class="navbar-brand logo-style p-0" th:href="@{/default}" th:text="'LiveFinder '+#{index.anonymousWelcomeLogo}">LiveFinder</a>
-					<a th:unless="${#authentication.getPrincipal().getClass() == 
-						T(org.springframework.security.core.userdetails.User)}"
-						class="navbar-brand logo-style p-0" th:href="@{/oauthDefault}" th:text="'LiveFinder '+#{index.anonymousWelcomeLogo}">LiveFinder</a>
+	                <!-- anonymous user -->
+					<div sec:authorize="isAnonymous()">
+						<a class="navbar-brand link-success" th:href="@{/}">Catering</a>
+					</div>
+					
+					<!-- authenticated user -->
+					<div sec:authorize="isAuthenticated()">
+						<!-- if the user logged in via email and password -->
+						<a th:if="${#authentication.getPrincipal().getClass() ==
+							T(org.springframework.security.core.userdetails.User)}" 
+							class="navbar-brand link-success lead" th:href="@{/default}">Catering</a>
+						<!-- if the user logged in via OAuth2 -->
+						<a th:unless="${#authentication.getPrincipal().getClass() ==
+							T(org.springframework.security.core.userdetails.User)}"
+							class="navbar-brand link-success" th:href="@{/oauthDefault}">Catering</a>
+					</div>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a th:if="${#authentication.getPrincipal().getClass() == 
+                            	<!-- anonymous user -->
+								<span sec:authorize="isAnonymous()">
+									<a class="nav-link active" aria-current="page" th:href="@{/}">HOME</a>
+								</span>
+								
+								<!-- authenticated user -->
+								<span sec:authorize="isAuthenticated()">
+									<!-- if the user logged in via email and password -->
+									<a th:if="${#authentication.getPrincipal().getClass() == 
 					            			T(org.springframework.security.core.userdetails.User)}"
-		                			class="nav-link active" aria-current="page" th:href="@{/default}">HOME</a>
-		                		<a th:unless="${#authentication.getPrincipal().getClass() == 
+		                				class="nav-link active" aria-current="page" th:href="@{/default}">HOME</a>
+									<!-- if the user logged in via OAuth2 -->
+									<a th:unless="${#authentication.getPrincipal().getClass() == 
 					            			T(org.springframework.security.core.userdetails.User)}"
-		                			class="nav-link active" aria-current="page" th:href="@{/oauthDefault}">HOME</a>
+		                				class="nav-link active" aria-current="page" th:href="@{/oauthDefault}">HOME</a>
+								</span>                          
+		                		
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link acrive" aria-current="page" th:href="@{/users/artisti}">ARTISTI</a>

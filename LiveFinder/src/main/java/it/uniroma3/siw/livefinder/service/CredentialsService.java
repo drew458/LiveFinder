@@ -46,23 +46,23 @@ public class CredentialsService {
 		Credentials credentials = null;
         
 		//se loggato con Google
-    if(principal.getClass().equals(DefaultOidcUser.class)){ 
-        DefaultOidcUser user = (DefaultOidcUser) principal;
-        credentials = this.findByUsername(user.getAttribute("given_name"));
-    }
-		
-		//se loggato con GitHub
-    else if(principal.getClass().equals(DefaultOAuth2User.class)){ 
-        DefaultOAuth2User user = (DefaultOAuth2User) principal;
-        credentials = this.findByUsername(user.getAttribute("login"));
-    }
-        
-    //se loggato con email e pwd
-    else if(principal.getClass().equals(User.class)){
-        User user = (User) principal;
-        credentials = this.findByUsername(user.getUsername());
-    }
-
+	    if(principal.getClass().equals(DefaultOidcUser.class)){ 
+	        DefaultOidcUser user = (DefaultOidcUser) principal;
+	        credentials = this.findByUsername(user.getAttribute("email"));
+	    }
+			
+			//se loggato con GitHub
+	    else if(principal.getClass().equals(DefaultOAuth2User.class)){ 
+	        DefaultOAuth2User user = (DefaultOAuth2User) principal;
+	        credentials = this.findByUsername(user.getAttribute("login"));
+	    }
+	        
+	    //se loggato con email e pwd
+	    else if(principal.getClass().equals(User.class)){
+	        User user = (User) principal;
+	        credentials = this.findByUsername(user.getUsername());
+	    }
+	
 		return credentials;
 	}
 	
@@ -86,10 +86,9 @@ public class CredentialsService {
         else {
         	credentials.setRole(Credentials.DEFAULT_ROLE);
         }
-    	
         
         if(credentials.getUser().getCognome()==null) {
-        	credentials.getUser().setCognome("OAuthDefault");
+        	credentials.getUser().setCognome(".");
         }
 
         try {
