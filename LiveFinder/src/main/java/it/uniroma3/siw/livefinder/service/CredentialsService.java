@@ -62,7 +62,6 @@ public class CredentialsService {
 	        User user = (User) principal;
 	        credentials = this.findByUsername(user.getUsername());
 	    }
-	
 		return credentials;
 	}
 	

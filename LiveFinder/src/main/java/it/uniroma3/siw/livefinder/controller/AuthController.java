@@ -141,9 +141,6 @@ public class AuthController {
 		OAuth2User oAuth2User = authentication.getPrincipal();
 		Map<String,Object> attributes = oAuth2User.getAttributes();
 		
-		String[] nomeCompleto;
-		String nome = ((String) attributes.get("name"));
-		
 		if(authentication.getAuthorizedClientRegistrationId().equals("google")) {
 			String email = (String) attributes.get("email");
 			Credentials userCredentials = credentialsService.getCredentials(email);
@@ -154,13 +151,9 @@ public class AuthController {
 		    else {
 		    	Credentials oauthCredentials = new Credentials();
 			    User oauthUser = new User();
-
-				if(nome!=null){
-					nomeCompleto = nome.split(" ");
-					oauthUser.setNome(nomeCompleto[0]);
-					if(nomeCompleto.length>1)
-                        oauthUser.setCognome(nomeCompleto[1]);
-				}
+			    
+				oauthUser.setNome((String) attributes.get("given_name"));
+				oauthUser.setCognome((String) attributes.get("family_name"));
 
 			    oauthCredentials.setUser(oauthUser);
 			    oauthCredentials.setUsername(email);
@@ -178,6 +171,10 @@ public class AuthController {
 		    else {
 		    	Credentials oauthCredentials = new Credentials();
 			    User oauthUser = new User();
+
+				
+				String[] nomeCompleto;
+				String nome = ((String) attributes.get("name"));
 
 				if(nome!=null){
 					nomeCompleto = nome.split(" ");

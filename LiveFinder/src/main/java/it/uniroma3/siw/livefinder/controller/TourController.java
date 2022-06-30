@@ -76,7 +76,7 @@ public class TourController {
             model.addAttribute("tour", tour);
             return "tour";
         }else{
-            model.addAttribute("listalistaTour", artistaService.findAll());
+            model.addAttribute("listaArtisti", artistaService.findAll());
             return "admin/tourForm";
         }
     }

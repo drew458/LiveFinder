@@ -9,6 +9,10 @@ import it.uniroma3.siw.livefinder.model.Citta;
 
 public interface CittaRepository extends CrudRepository<Citta, Long>{
 
+    public Optional<Citta> findByNome(String nome);
+
+    public boolean existsByNome(String nome);
+
     /**
      * Con l'aggiunta di @Param questo errore non salta fuori
      * @param nome

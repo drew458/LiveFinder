@@ -60,8 +60,7 @@
 									<a th:unless="${#authentication.getPrincipal().getClass() == 
 					            			T(org.springframework.security.core.userdetails.User)}"
 		                				class="nav-link active" aria-current="page" th:href="@{/oauthDefault}">HOME</a>
-								</span>                          
-		                		
+								</span>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link acrive" aria-current="page" th:href="@{/users/artisti}">ARTISTI</a>

@@ -22,6 +22,7 @@ public class CittaService {
 
     public List<Citta> findAll(){
         return StreamSupport.stream(cittaRepository.findAll().spliterator(), true)
+            .sorted()
             .collect(Collectors.toList());
     }
 
@@ -31,6 +32,17 @@ public class CittaService {
 
     public boolean existsByNome(String nome){
         return cittaRepository.existsByNomeContainingIgnoreCase(nome);
+    }
+
+    public boolean alreadyExists(Citta citta){
+        if(citta.getId()==null){
+            return cittaRepository.existsByNome(citta.getNome());
+        }else if(cittaRepository.existsByNome(citta.getNome())){
+            Citta cittaEsistente = cittaRepository.findByNome(citta.getNome()).get();
+            return !(citta.getId().equals(cittaEsistente.getId()));
+        }else{
+            return false;
+        }
     }
 
 	public Citta findByNome(String nome){
