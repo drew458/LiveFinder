@@ -22,7 +22,7 @@
 
 	                <!-- anonymous user -->
 					<div sec:authorize="isAnonymous()">
-						<a class="navbar-brand link-success" th:href="@{/}">Catering</a>
+						<a class="navbar-brand link-success" th:href="@{/}">LiveFinder</a>
 					</div>
 					
 					<!-- authenticated user -->
@@ -30,11 +30,11 @@
 						<!-- if the user logged in via email and password -->
 						<a th:if="${#authentication.getPrincipal().getClass() ==
 							T(org.springframework.security.core.userdetails.User)}" 
-							class="navbar-brand link-success lead" th:href="@{/default}">Catering</a>
+							class="navbar-brand link-success lead" th:href="@{/default}">LiveFinder</a>
 						<!-- if the user logged in via OAuth2 -->
 						<a th:unless="${#authentication.getPrincipal().getClass() ==
 							T(org.springframework.security.core.userdetails.User)}"
-							class="navbar-brand link-success" th:href="@{/oauthDefault}">Catering</a>
+							class="navbar-brand link-success" th:href="@{/oauthDefault}">LiveFinder</a>
 					</div>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
