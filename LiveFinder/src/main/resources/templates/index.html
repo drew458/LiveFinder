@@ -49,9 +49,9 @@
 			<div th:if="${concerti} and ${listaTour}" class="container p-4">
 				<div class="row">
 					<div class="col">
+						<h5>Concerti</h5>
 						<div th:each="concerto : ${concerti}">
 		                    <div class="row p-4">
-		                    	<h5>Concerti</h5>
 		                        <div class="card border-secondary p-0 list-group-item-action list-group-item-light"  
 		                        	th:data-url="@{'/users/concerto/'+${concerto.id}}" onclick="window.location = this.getAttribute('data-url')">
 		                            <div class="row g-0">
@@ -86,9 +86,9 @@
 		            </div>
 		            
 		            <div class="col">
+		            	<h5>Tour</h5>
 		            	<div th:each="tour : ${listaTour}">
 		            		<div class="row p-4">
-		            			<h5>Tour</h5>
 				                <div class="card">
 				                    <div class="card-header mt-1">
 				                        <a class="h5" th:text="${tour.artista.nome}" style="color: black; text-decoration: none;"
